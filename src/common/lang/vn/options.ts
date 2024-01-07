@@ -8,6 +8,26 @@ const options_vn = {
     admin: "Quản trị",
     customer: "Khách hàng",
   },
+  productStatus: {
+    draft: "Bản nháp",
+    active: "Kích hoạt",
+  },
+  inventoryStatus: {
+    inStock: "Còn hàng",
+    outOfStock: "Hết hàng",
+  },
+  productOrigin: {
+    vn: "Việt Nam",
+  },
+  productUnit: {
+    kg: "Kg",
+    pack: "Gói",
+    box: "Hộp",
+    bin: "Thùng",
+    piece: "Cái",
+    bottle: "Chai",
+    can: "Lon",
+  },
   orderStatus: {
     delivering: "Đang giao",
     delivered: "Đã giao",

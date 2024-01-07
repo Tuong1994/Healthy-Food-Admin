@@ -21,8 +21,8 @@ const CustomerAuth: React.FC<CustomerAuthProps> = ({ lang }) => {
 
   const colProps: GridColProps = {
     xs: 24,
-    md: 24,
-    lg: 24,
+    md: 12,
+    lg: 12,
     span: 12,
   };
 

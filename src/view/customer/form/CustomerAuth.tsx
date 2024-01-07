@@ -29,10 +29,10 @@ const CustomerAuth: React.FC<CustomerAuthProps> = ({ lang, isUpdate }) => {
     <React.Fragment>
       <Card rootClassName="card-section">
         <Row justify="between">
-          <Col xs={24} span={6}>
+          <Col xs={24} md={6} lg={6} span={6}>
             <SingleImageUpload />
           </Col>
-          <Col xs={24} span={18}>
+          <Col xs={24} md={18} lg={18} span={18}>
             <FormItem name="email" disabled={isUpdate}>
               <Input label={lang.common.form.label.email} />
             </FormItem>

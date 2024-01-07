@@ -1,13 +1,13 @@
 import { Comment } from "../comment/type";
 import { ImageUpload } from "../image/type";
 import { Rate } from "../rate/type";
-import { EInventoryStatus, EProductStatus, EProductUnit } from "./enum";
+import { EInventoryStatus, EProductOrigin, EProductStatus, EProductUnit } from "./enum";
 
 export type Product = {
   id?: string;
 
-  name: string;
-  langCode: string;
+  nameEn: string;
+  nameVn: string;
   costPrice: number;
   profit: number;
   totalPrice: number;
@@ -15,8 +15,9 @@ export type Product = {
   unit: EProductUnit;
   status: EProductStatus;
   inventoryStatus: EInventoryStatus;
+  origin: EProductOrigin;
   supplier: string;
-  origin: string;
+  isNew: boolean;
   categoryId: string;
   subCategoryId: string;
 

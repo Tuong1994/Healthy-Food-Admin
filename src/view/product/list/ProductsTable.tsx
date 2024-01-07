@@ -1,0 +1,212 @@
+import React from "react";
+import { UI } from "@/components";
+import type { Lang } from "@/common/type";
+import type { Columns } from "@/components/UI/Table/type";
+import type { Product } from "@/services/product/type";
+import { ELang } from "@/common/enum";
+import { EInventoryStatus, EProductOrigin, EProductStatus, EProductUnit } from "@/services/product/enum";
+import {
+  useLang,
+  useDisplayInventoryStatus,
+  useDisplayProductStatus,
+  useDisplayProductOrigin,
+  useDisplayProductUnit,
+} from "@/hooks";
+import { Link } from "react-router-dom";
+import ProductsTableFilter from "./ProductsTableFilter";
+import url from "@/common/constant/url";
+import moment from "moment";
+import utils from "@/utils";
+
+const { PRODUCT_FORM } = url;
+
+const { Image, Badge, Table, Button } = UI;
+
+interface ProductsTableProps {
+  lang: Lang;
+}
+
+const ProductsTable: React.FC<ProductsTableProps> = ({ lang }) => {
+  const { type } = useLang();
+
+  const dataSource: Product[] = [
+    {
+      id: "1",
+      nameEn: "Name En",
+      nameVn: "Name Vn",
+      costPrice: 50000,
+      profit: 25,
+      totalPrice: 75000,
+      inventory: 1000,
+      supplier: "Healthy Food",
+      unit: EProductUnit.KG,
+      status: EProductStatus.ACTIVE,
+      inventoryStatus: EInventoryStatus.IN_STOCK,
+      origin: EProductOrigin.VN,
+      categoryId: "CATE_1",
+      subCategoryId: "SUBCATE_1",
+      isNew: false,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      id: "2",
+      nameEn: "Name En",
+      nameVn: "Name Vn",
+      costPrice: 150000,
+      profit: 25,
+      totalPrice: 175000,
+      inventory: 1000,
+      supplier: "Healthy Food",
+      unit: EProductUnit.BIN,
+      status: EProductStatus.ACTIVE,
+      inventoryStatus: EInventoryStatus.IN_STOCK,
+      origin: EProductOrigin.VN,
+      categoryId: "CATE_1",
+      subCategoryId: "SUBCATE_1",
+      isNew: true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      id: "3",
+      nameEn: "Name En",
+      nameVn: "Name Vn",
+      costPrice: 50000,
+      profit: 25,
+      totalPrice: 75000,
+      inventory: 1000,
+      supplier: "Healthy Food",
+      unit: EProductUnit.KG,
+      status: EProductStatus.DRAFT,
+      inventoryStatus: EInventoryStatus.OUT_OF_STOCK,
+      origin: EProductOrigin.VN,
+      categoryId: "CATE_1",
+      subCategoryId: "SUBCATE_1",
+      isNew: true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+  ];
+
+  const columns: Columns<Product> = [
+    {
+      id: "image",
+      title: lang.common.table.head.image,
+      dataIndex: "id",
+      render: () => <Image imgWidth={60} imgHeight={60} />,
+    },
+    {
+      id: "name",
+      title: lang.common.table.head.productName,
+      dataIndex: type === ELang.EN ? "nameEn" : "nameVn",
+      render: (name: string, data: Product) => (
+        <Link to={PRODUCT_FORM} state={{ id: data.id }}>
+          <Button text>{name}</Button>
+        </Link>
+      ),
+    },
+    {
+      id: "price",
+      title: lang.common.table.head.price,
+      dataIndex: "totalPrice",
+      render: (price: number) => <>{utils.formatPrice(type, price)}</>,
+    },
+    {
+      id: "inventory",
+      title: lang.common.table.head.inventory,
+      dataIndex: "inventory",
+      render: (inventory: number) => <>{inventory.toLocaleString()}</>,
+    },
+    {
+      id: "inventoryStatus",
+      title: lang.common.table.head.inventoryStatus,
+      dataIndex: "inventoryStatus",
+      render: (status: EInventoryStatus) => {
+        const badgeColor: Record<number, any> = {
+          [EInventoryStatus.IN_STOCK]: "blue",
+          [EInventoryStatus.OUT_OF_STOCK]: "red",
+        };
+        return (
+          <Badge shape="square" ghost color={badgeColor[status]}>
+            {useDisplayInventoryStatus(status)}
+          </Badge>
+        );
+      },
+    },
+    {
+      id: "status",
+      title: lang.common.table.head.status,
+      dataIndex: "status",
+      render: (status: EProductStatus) => {
+        const badgeColor: Record<number, any> = {
+          [EProductStatus.DRAFT]: "orange",
+          [EProductStatus.ACTIVE]: "blue",
+        };
+        return (
+          <Badge shape="square" color={badgeColor[status]}>
+            {useDisplayProductStatus(status)}
+          </Badge>
+        );
+      },
+    },
+    {
+      id: "origin",
+      title: lang.common.table.head.origin,
+      dataIndex: "origin",
+      render: (origin: EProductOrigin) => {
+        const badgeColor: Record<number, any> = {
+          [EProductOrigin.VN]: "red",
+        };
+        return (
+          <Badge shape="square" color={badgeColor[origin]}>
+            {useDisplayProductOrigin(origin)}
+          </Badge>
+        );
+      },
+    },
+    {
+      id: "supplier",
+      title: lang.common.table.head.supplier,
+      dataIndex: "supplier",
+    },
+    {
+      id: "unit",
+      title: lang.common.table.head.unit,
+      dataIndex: "unit",
+      render: (unit: EProductUnit) => (
+        <Badge shape="square" color="green">
+          {useDisplayProductUnit(unit)}
+        </Badge>
+      ),
+    },
+    {
+      id: "createdAt",
+      title: lang.common.table.head.createdAt,
+      dataIndex: "createdAt",
+      render: (date: Date) => <>{moment(date).format("DD/MM/YYYY")}</>,
+    },
+    {
+      id: "updatedAt",
+      title: lang.common.table.head.updatedAt,
+      dataIndex: "updatedAt",
+      render: (date: Date) => <>{moment(date).format("DD/MM/YYYY")}</>,
+    },
+  ];
+
+  return (
+    <React.Fragment>
+      <Table<Product>
+        color="green"
+        hasFilter
+        hasPagination
+        hasRowSelection
+        dataSource={dataSource}
+        columns={columns}
+        filter={<ProductsTableFilter />}
+      />
+    </React.Fragment>
+  );
+};
+
+export default ProductsTable;

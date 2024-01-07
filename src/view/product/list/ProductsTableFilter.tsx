@@ -8,13 +8,14 @@ const { Col } = Grid;
 
 const { Input, Select } = Control;
 
-interface CustomersTableFilterProps {}
+interface ProductsTableFilterProps {}
 
-const CustomersTableFilter: React.FC<CustomersTableFilterProps> = () => {
+const ProductsTableFilter: React.FC<ProductsTableFilterProps> = () => {
   const commonProps: GridColProps = {
     xs: 24,
     md: 12,
     lg: 12,
+    span: 6,
   };
 
   return (
@@ -31,8 +32,11 @@ const CustomersTableFilter: React.FC<CustomersTableFilterProps> = () => {
       <Col {...commonProps}>
         <Select sizes="sm" />
       </Col>
+      <Col {...commonProps}>
+        <Select sizes="sm" />
+      </Col>
     </React.Fragment>
   );
 };
 
-export default CustomersTableFilter;
+export default ProductsTableFilter;

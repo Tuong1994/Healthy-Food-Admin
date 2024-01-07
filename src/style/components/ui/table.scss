@@ -146,6 +146,7 @@
     margin-bottom: $m-1;
     border-radius: $rounded;
     background: $bg-slate;
+    transition: all $transition-time-sm $transition-fn;
   }
   .table-empty {
     width: $w-full;

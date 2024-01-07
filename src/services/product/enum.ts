@@ -17,3 +17,7 @@ export enum EInventoryStatus {
   IN_STOCK = 1,
   OUT_OF_STOCK = 2,
 }
+
+export enum EProductOrigin {
+  VN = 1,
+}

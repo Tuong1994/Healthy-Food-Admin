@@ -7,6 +7,7 @@
   align-items: center;
   justify-content: center;
   font-size: $text-xxs;
+  transition: all $transition-time-sm $transition-fn;
   * {
     font-size: $text-xxs;
   }

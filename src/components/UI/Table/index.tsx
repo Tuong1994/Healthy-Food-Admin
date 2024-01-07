@@ -1,15 +1,16 @@
 import React from "react";
-import { ButtonProps } from "../Button";
-import { ComponentColor } from "@/common/type";
-import { Columns } from "./type";
-import Pagination, { PaginationProps } from "../Pagination";
+import type { ButtonProps } from "../Button";
+import type { ComponentColor } from "@/common/type";
+import type { Columns } from "./type";
+import { useLang } from "@/hooks";
+import Pagination, { type PaginationProps } from "../Pagination";
 import TableHead from "./TableHead";
 import TableBody from "./TableBody";
 import TableEmpty from "./TableEmpty";
 import TableLoading from "./TableLoading";
-import utils from "@/utils";
-import useLayout from "../Layout/useLayout";
 import TableFilter from "./TableFilter";
+import useLayout from "../Layout/useLayout";
+import utils from "@/utils";
 
 export type TableColor = Exclude<ComponentColor, "black" | "white" | "red" | "gray">;
 
@@ -66,6 +67,8 @@ const Table = <M extends object>(
   }: TableProps<M>,
   ref: React.ForwardedRef<HTMLTableElement>
 ) => {
+  const { lang } = useLang();
+
   const { layoutValue } = useLayout();
 
   const { layoutTheme: theme } = layoutValue;
@@ -106,7 +109,13 @@ const Table = <M extends object>(
     <React.Fragment>
       <div style={style} className={mainClassName}>
         {hasFilter && (
-          <TableFilter color={color} filter={filter} onFilter={onFilter} onCancelFilter={onCancelFilter} />
+          <TableFilter
+            lang={lang}
+            color={color}
+            filter={filter}
+            onFilter={onFilter}
+            onCancelFilter={onCancelFilter}
+          />
         )}
 
         <div className="table-content">

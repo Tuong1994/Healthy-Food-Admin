@@ -67,7 +67,7 @@ const CustomersTable: React.FC<CustomersTableProps> = ({ lang }) => {
   const columns: Columns<Customer> = [
     {
       id: "image",
-      title: "",
+      title: lang.common.table.head.image,
       dataIndex: "id",
       render: () => <Image imgWidth={60} imgHeight={60} />,
     },

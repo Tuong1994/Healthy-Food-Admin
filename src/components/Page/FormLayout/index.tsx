@@ -33,9 +33,9 @@ const FormLayout = <M extends object>({
 
   const rowDefaultProps: GridRowProps = { ...rowProps };
 
-  const leftSpanDefaultProps: GridColProps = { xs: 24, md: 12, lg: 14, span: 14, ...leftSpanProps };
+  const leftSpanDefaultProps: GridColProps = { xs: 24, md: 24, lg: 24, span: 14, ...leftSpanProps };
 
-  const rightSpanDefaultProps: GridColProps = { xs: 24, md: 12, lg: 10, span: 10, ...rightSpanProps };
+  const rightSpanDefaultProps: GridColProps = { xs: 24, md: 24, lg: 24, span: 10, ...rightSpanProps };
 
   return (
     <Form<M> {...formDefaultProps}>

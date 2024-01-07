@@ -1,11 +1,11 @@
 import React from "react";
 import { UI } from "@/components";
-import { useLang } from "@/hooks";
+import { useLang, useHasLocationState } from "@/hooks";
 import { EGender, ERole } from "@/services/customer/enum";
 import type { Customer } from "@/services/customer/type";
 import type { ContentHeaderProps } from "@/components/Page/ContentHeader";
 import type { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import FormLayout from "@/components/Page/FormLayout";
 import CustomerAuth from "./CustomerAuth";
 import CustomerInfo from "./CustomerInfo";
@@ -22,9 +22,7 @@ interface CustomerProps {}
 const Customer: React.FC<CustomerProps> = () => {
   const { lang } = useLang();
 
-  const location = useLocation();
-
-  const isUpdate = location.state !== null;
+  const isUpdate = useHasLocationState();
 
   const pageTitle = isUpdate ? lang.customer.form.editTitle : lang.customer.form.addTitle;
 
@@ -32,6 +30,17 @@ const Customer: React.FC<CustomerProps> = () => {
     { id: "1", label: <Link to={CUSTOMER_LIST}>{lang.customer.list.title}</Link> },
     { id: "2", label: pageTitle, actived: true },
   ];
+
+  const initialData: Customer = {
+    email: "",
+    password: "",
+    phone: "",
+    lastName: "",
+    firstName: "",
+    birthday: new Date(),
+    gender: EGender.MALE,
+    role: ERole.CUSTOMER,
+  };
 
   const headerProps: ContentHeaderProps = {
     headTitle: pageTitle,
@@ -51,17 +60,6 @@ const Customer: React.FC<CustomerProps> = () => {
       <CustomerAddress lang={lang} />
     </React.Fragment>
   );
-
-  const initialData: Customer = {
-    email: "",
-    password: "",
-    phone: "",
-    lastName: "",
-    firstName: "",
-    birthday: new Date(),
-    gender: EGender.MALE,
-    role: ERole.CUSTOMER,
-  };
 
   return (
     <React.Fragment>

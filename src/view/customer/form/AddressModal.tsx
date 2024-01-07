@@ -39,10 +39,10 @@ const AddressModal: React.FC<AddressModalProps> = ({ lang, ...restProps }) => {
     <Modal {...modalDefaultProps} onOk={form?.handleSubmit}>
       <Form<CustomerAddress> color="green" initialData={initialData} onFinish={handleSubmit}>
         <FormItem name="addressEn">
-          <Input label={lang.common.form.label.address_en} />
+          <Input label={lang.common.form.label.addressEn} />
         </FormItem>
         <FormItem name="addressVn">
-          <Input label={lang.common.form.label.address_vn} />
+          <Input label={lang.common.form.label.addressVn} />
         </FormItem>
         <FormItem name="cityCode">
           <Select label={lang.common.form.label.city} />

@@ -1,3 +1,4 @@
+import { ELang } from "@/common/enum";
 import { SelectOptions } from "@/components/Control/type";
 
 const utils = {
@@ -20,6 +21,12 @@ const utils = {
 
   formatClassName: (...classNames: string[]) => {
     return classNames.filter((name) => name).join(" ");
+  },
+
+  formatPrice: (type: ELang, price: number) => {
+    const displayPrice = price.toLocaleString();
+    const currency = type === ELang.VN ? "đ" : "VND";
+    return `${displayPrice} ${currency}`;
   },
 
   mapDataToOptions: <M extends object>(list: M[], label: keyof M, value: keyof M) => {
