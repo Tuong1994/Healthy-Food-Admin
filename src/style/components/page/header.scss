@@ -1,0 +1,26 @@
+.header {
+  width: $w-full;
+  padding: 0 $p-5;
+  .header-mobile-btn {
+    border: unset;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  @include respond(mdPhone) {
+    padding: 0;
+  }
+}
+
+.header-translate {
+  .translate-label {
+    width: $w-8;
+    padding: $p-1 - 0.5;
+    border-radius: $rounded;
+    border: 1px solid $bg-gray;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}

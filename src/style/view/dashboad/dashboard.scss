@@ -1,0 +1,67 @@
+.dashboard-general {
+  margin-bottom: $m-5;
+  .general-item {
+    border-radius: $rounded;
+    .card-head,
+    .card-body {
+      padding: $p-1;
+      border: unset;
+    }
+    .card-head {
+      border-bottom: 0.5px solid $bg-gray;
+    }
+    .item-total,
+    .item-head {
+      color: $text-white;
+      * {
+        color: $text-white;
+      }
+    }
+  }
+  .general-item-1 {
+    background: $bg-blue;
+  }
+  .general-item-2 {
+    background: $bg-green;
+  }
+  .general-item-3 {
+    background: $bg-orange;
+  }
+  .general-item-4 {
+    background: $bg-purple;
+  }
+}
+.dashboard-chart {
+  overflow-y: hidden;
+  overflow-x: auto;
+  .chart-tooltip {
+    background: $bg-green !important;
+    border-color: $bg-green !important;
+    border-radius: $rounded;
+    * {
+      color: $text-white;
+      font-size: $text-xs;
+    }
+  }
+}
+.dashboard-list {
+  height: $h-10 * 4;
+  .list-head {
+    height: $h-6;
+  }
+  .list-body {
+    padding: $p-1;
+    height: calc($h-full - 6rem);
+    overflow-y: auto;
+    .body-item {
+      margin-bottom: $m-1;
+      display: block;
+      &:last-child {
+        margin-bottom: 0;
+      }
+      .item-content {
+        padding: $p-1;
+      }
+    }
+  }
+}
