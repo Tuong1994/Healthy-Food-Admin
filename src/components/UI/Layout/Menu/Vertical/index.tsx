@@ -2,9 +2,8 @@ import React from "react";
 import { MenuItems } from "../type";
 import LayoutContext, { LayoutColor } from "../../Context";
 import MenuVerticalItem from "./Item";
+import useMenuStore, { STORAGE_KEY } from "../MenuStore";
 import utils from "@/utils";
-
-const STORAGE_KEY = "memu_key";
 
 export interface MenuVerticalProps {
   rootClassName?: string;
@@ -29,7 +28,7 @@ const MenuVertical: React.ForwardRefRenderFunction<HTMLDivElement, MenuVerticalP
 ) => {
   const { theme, layouted, color: layoutColor } = React.useContext(LayoutContext);
 
-  const [activeId, setActiveId] = React.useState<string[]>(defaultActiveId);
+  const [activeId, setActiveId] = useMenuStore((state) => [state.activeId, state.setActiveId]);
 
   const themeClassName = theme === "dark" ? "menu-vertical-dark" : "";
 
@@ -38,16 +37,15 @@ const MenuVertical: React.ForwardRefRenderFunction<HTMLDivElement, MenuVerticalP
   const className = utils.formatClassName("menu-vertical", themeClassName, colorClassName, rootClassName);
 
   React.useEffect(() => {
-    if (!sessionStorage.getItem(STORAGE_KEY)) return;
+    if (!sessionStorage.getItem(STORAGE_KEY))
+      return setActiveId(defaultActiveId.length ? defaultActiveId : []);
     const id: string[] = JSON.parse(sessionStorage.getItem(STORAGE_KEY) ?? "");
-    if (!id.length) return setActiveId(defaultActiveId);
     setActiveId(id);
   }, [defaultActiveId]);
 
-
   const handleSelectMenu = (id: string) => {
     if (activeId.length) setActiveId([]);
-    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(id));
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify([id]));
     setActiveId([id]);
   };
 

@@ -10,9 +10,9 @@ import FormLayout from "@/components/Page/FormLayout";
 import ProductInfo from "./ProductInfo";
 import ProductPrice from "./ProductPrice";
 import ProductCategory from "./ProductCategory";
-import url from "@/common/constant/url";
 import ProductStorage from "./ProductStorage";
 import ProductOthers from "./ProductOthers";
+import url from "@/common/constant/url";
 
 const { PRODUCT_LIST } = url;
 

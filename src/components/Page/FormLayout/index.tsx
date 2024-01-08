@@ -29,6 +29,8 @@ const FormLayout = <M extends object>({
   rightItems,
   ...restProps
 }: FormLayoutProps<M>) => {
+  const headerDefaultProps: ContentHeaderProps = { hasTotal: false, ...headerProps };
+
   const formDefaultProps: FormProps<M> = { color: "green", ...restProps };
 
   const rowDefaultProps: GridRowProps = { ...rowProps };
@@ -39,7 +41,7 @@ const FormLayout = <M extends object>({
 
   return (
     <Form<M> {...formDefaultProps}>
-      <ContentHeader {...headerProps} />
+      <ContentHeader {...headerDefaultProps} />
       <Row {...rowDefaultProps}>
         <Col {...leftSpanDefaultProps}>{leftItems}</Col>
         <Col {...rightSpanDefaultProps}>{rightItems}</Col>

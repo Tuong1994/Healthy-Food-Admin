@@ -19,11 +19,12 @@ export type OrderItem = {
 export type Order = {
   id?: string;
 
-  orderNumber: string;
+  orderNumber?: string;
   status: EOrderStatus;
   paymentMethod: EPaymentMethod;
   paymentStatus: EPaymentStatus;
   customerId: string;
+  note?: string;
   items: OrderItem[];
   shipment?: Shipment;
 

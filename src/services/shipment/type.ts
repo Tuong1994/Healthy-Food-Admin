@@ -5,7 +5,7 @@ export type Shipment = {
   phone: string;
   email: string;
   address: string;
-  orderId?: string;
+  orderId: string;
 
   createdAt?: Date | string;
   updatedAt?: Date | string;

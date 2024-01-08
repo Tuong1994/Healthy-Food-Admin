@@ -42,6 +42,10 @@ const common_en = {
       category: "Category",
       subCategory: "Sub-category",
       supplier: "Supplier",
+      paymentStatus: "Payment status",
+      paymentMethod: "Payment method",
+      customer: 'Customer',
+      orderNumber: 'Order number',
       optional: "Optional",
     },
     placeholder: {

@@ -116,7 +116,7 @@ const Modal: React.ForwardRefRenderFunction<HTMLDivElement, ModalProps> = (
       modalRef.current.style.zIndex = `${modalzIndex}`;
       modalBackdropRef.current.style.zIndex = `${backdropszIndex}`;
     }
-  });
+  }, []);
 
   return (
     <Portal>

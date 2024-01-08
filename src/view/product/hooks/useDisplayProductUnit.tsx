@@ -1,7 +1,8 @@
 import { EProductUnit } from "@/services/product/enum";
-import useLang from "../features/useLang";
+import { Badge } from "@/components/UI";
+import { useLang } from "@/hooks";
 
-const useDisplayProductUnit = (unitEnum: EProductUnit) => {
+const useDisplayProductUnit = (unit: EProductUnit) => {
   const { lang } = useLang();
 
   const productUnits: Record<number, string> = {
@@ -14,9 +15,11 @@ const useDisplayProductUnit = (unitEnum: EProductUnit) => {
     [EProductUnit.PIECE]: lang.options.productUnit.piece,
   };
 
-  const unit = productUnits[unitEnum] ?? "";
-
-  return unit;
+  return (
+    <Badge shape="square" color="green">
+      {productUnits[unit]}
+    </Badge>
+  );
 };
 
 export default useDisplayProductUnit;

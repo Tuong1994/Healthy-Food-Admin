@@ -5,14 +5,12 @@ import type { Columns } from "@/components/UI/Table/type";
 import type { Product } from "@/services/product/type";
 import { ELang } from "@/common/enum";
 import { EInventoryStatus, EProductOrigin, EProductStatus, EProductUnit } from "@/services/product/enum";
-import {
-  useLang,
-  useDisplayInventoryStatus,
-  useDisplayProductStatus,
-  useDisplayProductOrigin,
-  useDisplayProductUnit,
-} from "@/hooks";
+import { useLang } from "@/hooks";
 import { Link } from "react-router-dom";
+import useDisplayInventoryStatus from "../hooks/useDisplayInventoryStatus";
+import useDisplayProductStatus from "../hooks/useDisplayProductStatus";
+import useDisplayProductOrigin from "../hooks/useDisplayProductOrigin";
+import useDisplayProductUnit from "../hooks/useDisplayProductUnit";
 import ProductsTableFilter from "./ProductsTableFilter";
 import url from "@/common/constant/url";
 import moment from "moment";
@@ -20,7 +18,7 @@ import utils from "@/utils";
 
 const { PRODUCT_FORM } = url;
 
-const { Image, Badge, Table, Button } = UI;
+const { Image, Table, Button } = UI;
 
 interface ProductsTableProps {
   lang: Lang;
@@ -122,48 +120,19 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ lang }) => {
       id: "inventoryStatus",
       title: lang.common.table.head.inventoryStatus,
       dataIndex: "inventoryStatus",
-      render: (status: EInventoryStatus) => {
-        const badgeColor: Record<number, any> = {
-          [EInventoryStatus.IN_STOCK]: "blue",
-          [EInventoryStatus.OUT_OF_STOCK]: "red",
-        };
-        return (
-          <Badge shape="square" ghost color={badgeColor[status]}>
-            {useDisplayInventoryStatus(status)}
-          </Badge>
-        );
-      },
+      render: (status: EInventoryStatus) => <>{useDisplayInventoryStatus(status)}</>,
     },
     {
       id: "status",
       title: lang.common.table.head.status,
       dataIndex: "status",
-      render: (status: EProductStatus) => {
-        const badgeColor: Record<number, any> = {
-          [EProductStatus.DRAFT]: "orange",
-          [EProductStatus.ACTIVE]: "blue",
-        };
-        return (
-          <Badge shape="square" color={badgeColor[status]}>
-            {useDisplayProductStatus(status)}
-          </Badge>
-        );
-      },
+      render: (status: EProductStatus) => <>{useDisplayProductStatus(status)}</>,
     },
     {
       id: "origin",
       title: lang.common.table.head.origin,
       dataIndex: "origin",
-      render: (origin: EProductOrigin) => {
-        const badgeColor: Record<number, any> = {
-          [EProductOrigin.VN]: "red",
-        };
-        return (
-          <Badge shape="square" color={badgeColor[origin]}>
-            {useDisplayProductOrigin(origin)}
-          </Badge>
-        );
-      },
+      render: (origin: EProductOrigin) => <>{useDisplayProductOrigin(origin)}</>,
     },
     {
       id: "supplier",
@@ -174,11 +143,7 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ lang }) => {
       id: "unit",
       title: lang.common.table.head.unit,
       dataIndex: "unit",
-      render: (unit: EProductUnit) => (
-        <Badge shape="square" color="green">
-          {useDisplayProductUnit(unit)}
-        </Badge>
-      ),
+      render: (unit: EProductUnit) => <>{useDisplayProductUnit(unit)}</>,
     },
     {
       id: "createdAt",

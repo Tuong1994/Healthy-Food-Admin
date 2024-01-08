@@ -3,17 +3,19 @@ import { UI } from "@/components";
 import type { Lang } from "@/common/type";
 import type { Customer, CustomerAddress } from "@/services/customer/type";
 import type { Columns } from "@/components/UI/Table/type";
-import { EGender, ERole } from "@/services/customer/enum";
-import { useDisplayGender, useDisplayRole, useLang } from "@/hooks";
-import { Link } from "react-router-dom";
 import { ELang } from "@/common/enum";
+import { EGender, ERole } from "@/services/customer/enum";
+import { useLang } from "@/hooks";
+import { Link } from "react-router-dom";
+import useDisplayGender from "../hooks/useDisplayGender";
+import useDisplayRole from "../hooks/useDisplayRole";
 import CustomersTableFilter from "./CustomersTableFilter";
 import url from "@/common/constant/url";
 import moment from "moment";
 
 const { CUSTOMER_FORM } = url;
 
-const { Image, Badge, Table, Button } = UI;
+const { Image, Table, Button } = UI;
 
 interface CustomersTableProps {
   lang: Lang;
@@ -95,13 +97,7 @@ const CustomersTable: React.FC<CustomersTableProps> = ({ lang }) => {
       id: "gender",
       title: lang.common.table.head.gender,
       dataIndex: "gender",
-      render: (gender: EGender) => {
-        const badgeColors: Record<number, any> = {
-          [EGender.MALE]: "blue",
-          [EGender.FEMALE]: "pink",
-        };
-        return <Badge shape="square" color={badgeColors[gender]}>{useDisplayGender(gender)}</Badge>;
-      },
+      render: (gender: EGender) => <>{useDisplayGender(gender)}</>,
     },
     {
       id: "birthday",
@@ -121,14 +117,7 @@ const CustomersTable: React.FC<CustomersTableProps> = ({ lang }) => {
       id: "role",
       title: lang.common.table.head.role,
       dataIndex: "role",
-      render: (role: ERole) => {
-        const badgeColors: Record<number, any> = {
-          [ERole.SUPER_ADMIN]: "red",
-          [ERole.ADMIN]: "purple",
-          [ERole.CUSTOMER]: "green",
-        };
-        return <Badge shape="square" color={badgeColors[role]}>{useDisplayRole(role)}</Badge>;
-      },
+      render: (role: ERole) => <>{useDisplayRole(role)}</>,
     },
     {
       id: "createdAt",

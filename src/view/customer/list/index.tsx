@@ -3,8 +3,8 @@ import { UI } from "@/components";
 import { useLang } from "@/hooks";
 import { Link } from "react-router-dom";
 import ContentHeader from "@/components/Page/ContentHeader";
-import url from "@/common/constant/url";
 import CustomersTable from "./CustomersTable";
+import url from "@/common/constant/url";
 
 const { CUSTOMER_FORM } = url;
 
@@ -14,6 +14,7 @@ interface CustomersProps {}
 
 const Customers: React.FC<CustomersProps> = () => {
   const { lang } = useLang();
+  
   return (
     <React.Fragment>
       <ContentHeader

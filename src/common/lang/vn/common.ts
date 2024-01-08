@@ -42,6 +42,10 @@ const common_vn = {
       category: "Danh mục",
       subCategory: "Danh mục phụ",
       supplier: "Nhà cung cấp",
+      paymentStatus: "Tình trạng thanh toán",
+      paymentMethod: "Phương thức thanh toán",
+      customer: "Khách hàng",
+      orderNumber: 'Số đơn hàng',
       optional: "Không bắt buộc",
     },
     placeholder: {

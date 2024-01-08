@@ -19,6 +19,7 @@ const AddressModal: React.FC<AddressModalProps> = ({ lang, ...restProps }) => {
   const modalDefaultProps: ModalProps = {
     color: "green",
     sizes: "sm",
+    cancelButtonProps: { ghost: true },
     head: lang.customer.form.changePass,
     ...restProps,
   };

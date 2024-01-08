@@ -8,8 +8,8 @@ export type Product = {
 
   nameEn: string;
   nameVn: string;
-  costPrice: number;
-  profit: number;
+  costPrice?: number;
+  profit?: number;
   totalPrice: number;
   inventory: number;
   unit: EProductUnit;

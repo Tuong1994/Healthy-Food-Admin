@@ -2,14 +2,14 @@
   margin: $m-1 0;
 }
 
-// Theme
-.note-message-dark {
-  color: $text-white;
-}
-
 // Type
 .note-message-default {
   color: $text-black;
+}
+
+// Theme
+.note-message-dark {
+  color: $text-white;
 }
 
 .note-message-error {

@@ -1,0 +1,21 @@
+.select-product-modal {
+  .modal-list {
+    height: $h-10 * 2.5;
+    padding: $p-1 - 0.5 0;
+    padding-right: $p-1;
+    overflow-y: auto;
+    .list-product {
+      margin-bottom: $m-1;
+      cursor: pointer;
+      &:last-child {
+        margin-bottom: 0;
+      }
+      .product-content {
+        padding: $p-1;
+      }
+      .product-selected {
+        border-color: $bg-green;
+      }
+    }
+  }
+}
