@@ -1,15 +1,15 @@
-import { ELang } from "@/common/enum"
-import { ImageUpload } from "../image/type"
+import { ImageUpload } from "../image/type";
+import { Product } from "../product/type";
 
 export type SubCategory = {
-    id?: string
+  id?: string;
 
-    name: string
-    langCode: ELang
-    categoryId: string
-    path?: string;
-    image?: ImageUpload;
+  nameEn: string;
+  nameVn: string;
+  categoryId: string;
+  products?: Product[];
+  image?: ImageUpload;
 
-    createdAt?: Date | string
-    updatedAt?: Date | string
-}
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+};

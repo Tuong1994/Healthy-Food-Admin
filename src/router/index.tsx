@@ -9,7 +9,7 @@ import Orders from "@/view/order/list";
 import Order from "@/view/order/form";
 import Shipments from "@/view/shipment/list";
 import Shipment from "@/view/shipment/form";
-import Gallery from "@/view/gallery";
+import Category from "@/view/category";
 
 const {
   DASHBOARD,
@@ -21,7 +21,7 @@ const {
   ORDER_FORM,
   SHIPMENT_LIST,
   SHIPMENT_FORM,
-  GALLERY,
+  CATEGORY,
 } = url;
 
 const routes: RouteProps[] = [
@@ -71,9 +71,9 @@ const routes: RouteProps[] = [
     element: <Shipment />,
   },
   {
-    id: "gallery",
-    path: GALLERY,
-    element: <Gallery />,
+    id: "category",
+    path: CATEGORY,
+    element: <Category />,
   },
 ];
 

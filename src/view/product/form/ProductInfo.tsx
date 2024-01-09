@@ -25,10 +25,10 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ lang }) => {
         </Col>
         <Col xs={24} md={24} lg={18} span={18}>
           <FormItem name="nameEn">
-            <Input label={lang.common.form.label.nameEn} />
+            <Input label={lang.common.form.label.productNameEn} />
           </FormItem>
           <FormItem name="nameVn">
-            <Input label={lang.common.form.label.nameVn} />
+            <Input label={lang.common.form.label.productNameVn} />
           </FormItem>
         </Col>
       </Row>

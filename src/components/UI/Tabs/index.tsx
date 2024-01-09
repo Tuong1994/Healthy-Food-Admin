@@ -13,6 +13,7 @@ export interface TabsProps extends React.HTMLAttributes<HTMLDivElement> {
   headStyle?: React.CSSProperties;
   contentStyle?: React.CSSProperties;
   items: TabsItems;
+  defaultActiveId?: string;
   color?: Exclude<ComponentColor, "black" | "white" | "gray">;
 }
 
@@ -26,6 +27,7 @@ const Tabs: React.ForwardRefRenderFunction<HTMLDivElement, TabsProps> = (
     contentStyle,
     color = "blue",
     items = [],
+    defaultActiveId,
     ...restProps
   },
   ref
@@ -34,7 +36,7 @@ const Tabs: React.ForwardRefRenderFunction<HTMLDivElement, TabsProps> = (
 
   const { layoutTheme: theme } = layoutValue;
 
-  const [tabActive, setTabActive] = React.useState<string>("1");
+  const [tabActive, setTabActive] = React.useState<string>(defaultActiveId ?? items[0]?.id);
 
   const colorClassName = `tabs-${color}`;
 

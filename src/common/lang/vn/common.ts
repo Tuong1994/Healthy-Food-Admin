@@ -6,7 +6,8 @@ const common_vn = {
     product: "Sản phẩm",
     order: "Đơn hàng",
     shipment: "Vận chuyển",
-    gallery: "Thư viện ảnh",
+    category: "Danh mục",
+    subcategory: "Danh mục phụ",
   },
   form: {
     label: {
@@ -25,8 +26,8 @@ const common_vn = {
       fullAddress: "Địa chỉ",
       addressEn: "Địa chỉ (EN)",
       addressVn: "Địa chỉ (VN)",
-      nameEn: "Tên sản phẩm (EN)",
-      nameVn: "Tên sản phẩm (VN)",
+      productNameEn: "Tên sản phẩm (EN)",
+      productNameVn: "Tên sản phẩm (VN)",
       city: "Thành phố/Tỉnh",
       district: "Quận/Huyện",
       ward: "Phường/Xã",
@@ -45,7 +46,11 @@ const common_vn = {
       paymentStatus: "Tình trạng thanh toán",
       paymentMethod: "Phương thức thanh toán",
       customer: "Khách hàng",
-      orderNumber: 'Số đơn hàng',
+      orderNumber: "Số đơn hàng",
+      categoryNameEn: "Tên danh mục (EN)",
+      categoryNameVn: "Tên danh mục (VN)",
+      subCategoryNameEn: "Tên danh mục phụ (EN)",
+      subCategoryNameVn: "Tên danh mục phụ (VN)",
       optional: "Không bắt buộc",
     },
     placeholder: {
@@ -77,6 +82,7 @@ const common_vn = {
   },
   table: {
     head: {
+      name: "Tên",
       customerName: "Họ và Tên",
       phone: "Điện thoại",
       email: "Email",

@@ -5,14 +5,13 @@ import { useLang } from "@/hooks";
 import { BrowserRouter as Router, Routes, Link } from "react-router-dom";
 import { MenuItems } from "@/components/UI/Layout/Menu/type";
 import { GridAppContext } from "@/components/UI/Grid/Context";
-import { HiChartBar, HiInbox, HiShoppingCart, HiTruck, HiUser } from "react-icons/hi2";
-import { BsImage } from "react-icons/bs";
-import url from "@/common/constant/url";
+import { HiChartBar, HiInbox, HiListBullet, HiShoppingCart, HiTruck, HiUser } from "react-icons/hi2";
 import HeaderTranslate from "../Header/HeaderTranslate";
 import HeaderAuth from "../Header/HeaderAuth";
 import useLayout from "@/components/UI/Layout/useLayout";
+import url from "@/common/constant/url";
 
-const { DASHBOARD, PRODUCT_LIST, CUSTOMER_LIST, ORDER_LIST, SHIPMENT_LIST, GALLERY } = url;
+const { DASHBOARD, PRODUCT_LIST, CUSTOMER_LIST, ORDER_LIST, SHIPMENT_LIST, CATEGORY } = url;
 
 const { Section, Space, Divider, Layout } = UI;
 
@@ -55,6 +54,16 @@ const AppContainer: React.FC<AppContainerProps> = ({ children }) => {
       isRoot: true,
     },
     {
+      id: "category",
+      label: (
+        <Link to={CATEGORY} onClick={handleHideSide}>
+          {lang.common.menu.category}
+        </Link>
+      ),
+      icon: <HiListBullet size={ICON_SIZE} />,
+      isRoot: true,
+    },
+    {
       id: "product",
       label: (
         <Link to={PRODUCT_LIST} onClick={handleHideSide}>
@@ -82,16 +91,6 @@ const AppContainer: React.FC<AppContainerProps> = ({ children }) => {
         </Link>
       ),
       icon: <HiTruck size={ICON_SIZE} />,
-      isRoot: true,
-    },
-    {
-      id: "gallery",
-      label: (
-        <Link to={GALLERY} onClick={handleHideSide}>
-          {lang.common.menu.gallery}
-        </Link>
-      ),
-      icon: <BsImage size={ICON_SIZE} />,
       isRoot: true,
     },
   ];

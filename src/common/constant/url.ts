@@ -8,7 +8,7 @@ const url = {
   ORDER_FORM: "/order/form",
   SHIPMENT_LIST: "/shipment/list",
   SHIPMENT_FORM: "/shipment/form",
-  GALLERY: "/gallery",
+  CATEGORY: "/category",
 };
 
 export default url;

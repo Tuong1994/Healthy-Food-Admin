@@ -1,3 +1,4 @@
+import category_en from "./category";
 import common_en from "./common";
 import customer_en from "./customer";
 import dashboard_en from "./dashboard";
@@ -16,6 +17,7 @@ const en = {
   product: product_en,
   order: order_en,
   shipment: shipment_en,
+  category: category_en,
 };
 
 export type EN = typeof en;
