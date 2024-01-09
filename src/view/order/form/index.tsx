@@ -26,13 +26,13 @@ interface OrderProps {}
 const Order: React.FC<OrderProps> = () => {
   const { lang } = useLang();
 
+  const { isUpdate } = useHasLocationState();
+
   const [openSelect, setOpenSelect] = React.useState<boolean>(false);
 
   const [openCreate, setOpenCreate] = React.useState<boolean>(false);
 
   const [openShipment, setOpenShipment] = React.useState<boolean>(false);
-
-  const isUpdate = useHasLocationState();
 
   const pageTitle = isUpdate ? lang.order.form.editTitle : lang.order.form.addTitle;
 
@@ -61,10 +61,6 @@ const Order: React.FC<OrderProps> = () => {
   const handleCloseCreate = () => setOpenCreate(false);
 
   const handleCloseShipment = () => setOpenShipment(false);
-
-  const handleSelect = () => {
-
-  };
 
   const headerProps: ContentHeaderProps = {
     headTitle: pageTitle,

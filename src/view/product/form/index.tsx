@@ -23,7 +23,7 @@ interface ProductProps {}
 const Product: React.FC<ProductProps> = () => {
   const { lang } = useLang();
 
-  const isUpdate = useHasLocationState();
+  const { isUpdate } = useHasLocationState();
 
   const pageTitle = isUpdate ? lang.product.form.editTitle : lang.product.form.addTitle;
 

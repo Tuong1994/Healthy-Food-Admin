@@ -19,7 +19,7 @@ interface ShipmentProps {}
 const Shipment: React.FC<ShipmentProps> = () => {
   const { lang } = useLang();
 
-  const isUpdate = useHasLocationState();
+  const { isUpdate } = useHasLocationState();
 
   const pageTitle = isUpdate ? lang.shipment.form.editTitle : lang.shipment.form.addTitle;
 

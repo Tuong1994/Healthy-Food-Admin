@@ -22,13 +22,18 @@ interface CustomerProps {}
 const Customer: React.FC<CustomerProps> = () => {
   const { lang } = useLang();
 
-  const isUpdate = useHasLocationState();
+  const { isUpdate, state } = useHasLocationState();
 
-  const pageTitle = isUpdate ? lang.customer.form.editTitle : lang.customer.form.addTitle;
+  const isUserUpdate = state && state.isUser;
+
+  const pageTitle = () => {
+    if (isUserUpdate) return lang.pageComponent.header.profile.user;
+    return isUpdate ? lang.customer.form.editTitle : lang.customer.form.addTitle;
+  };
 
   const items: BreadcrumbItems = [
     { id: "1", label: <Link to={CUSTOMER_LIST}>{lang.customer.list.title}</Link> },
-    { id: "2", label: pageTitle, actived: true },
+    { id: "2", label: pageTitle(), actived: true },
   ];
 
   const initialData: Customer = {
@@ -43,7 +48,7 @@ const Customer: React.FC<CustomerProps> = () => {
   };
 
   const headerProps: ContentHeaderProps = {
-    headTitle: pageTitle,
+    headTitle: pageTitle(),
     right: () => <Button>{lang.common.actions.save}</Button>,
   };
 
@@ -63,7 +68,7 @@ const Customer: React.FC<CustomerProps> = () => {
 
   return (
     <React.Fragment>
-      <Breadcrumb items={items} />
+      {!isUserUpdate && <Breadcrumb items={items} />}
       <FormLayout<Customer>
         initialData={initialData}
         headerProps={headerProps}

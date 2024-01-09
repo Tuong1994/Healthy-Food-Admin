@@ -24,7 +24,7 @@ const HeaderAuth: React.FC<HeaderAuthProps> = ({ lang }) => {
       label: (
         <Space align="middle">
           <HiUser />
-          <Link to={CUSTOMER_FORM}>{lang.pageComponent.header.profile.user}</Link>
+          <Link to={CUSTOMER_FORM} state={{id: '', isUser: true}}>{lang.pageComponent.header.profile.user}</Link>
         </Space>
       ),
     },
