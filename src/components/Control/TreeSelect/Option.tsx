@@ -17,6 +17,7 @@ export interface SelectOptionProps {
   iconSize: () => number | undefined;
   handleSelect: (option: Option) => void;
   handleChangePage: (type: "prev" | "next") => void;
+  dropdownRender?: (menu: React.ReactNode) => React.ReactNode | React.ReactNode[];
 }
 
 const SelectOption: React.ForwardRefRenderFunction<HTMLDivElement, SelectOptionProps> = (
@@ -31,6 +32,7 @@ const SelectOption: React.ForwardRefRenderFunction<HTMLDivElement, SelectOptionP
     iconSize,
     handleSelect,
     handleChangePage,
+    dropdownRender,
   },
   ref
 ) => {
@@ -47,7 +49,7 @@ const SelectOption: React.ForwardRefRenderFunction<HTMLDivElement, SelectOptionP
   const renderContent = () => {
     if (loading) return <OptionLoading />;
     if (!options.length) return <OptionEmpty />;
-    return options.map((option, idx) => (
+    const menu = options.map((option, idx) => (
       <OptionItem
         key={idx}
         option={option}
@@ -56,6 +58,8 @@ const SelectOption: React.ForwardRefRenderFunction<HTMLDivElement, SelectOptionP
         handleSelect={handleSelect}
       />
     ));
+    if (dropdownRender) return dropdownRender(menu);
+    return menu;
   };
 
   return (

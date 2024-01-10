@@ -31,9 +31,11 @@ export interface SelectTagProps extends React.InputHTMLAttributes<HTMLInputEleme
   required?: boolean;
   optional?: boolean;
   hasClear?: boolean;
+  hasSearch?: boolean;
   onChangeSearch?: (text: string) => void;
   onChangeSelect?: (tags: any[]) => void;
   onChangePage?: (page: number) => void;
+  dropdownRender?: (menu: React.ReactNode) => React.ReactNode | React.ReactNode[];
 }
 
 const SelectTag: React.ForwardRefRenderFunction<HTMLInputElement, SelectTagProps> = (
@@ -58,11 +60,13 @@ const SelectTag: React.ForwardRefRenderFunction<HTMLInputElement, SelectTagProps
     async = false,
     loading = false,
     hasClear = true,
+    hasSearch = true,
     required,
     optional,
     onChangeSearch,
     onChangeSelect,
     onChangePage,
+    dropdownRender,
     ...restProps
   },
   ref
@@ -117,7 +121,7 @@ const SelectTag: React.ForwardRefRenderFunction<HTMLInputElement, SelectTagProps
 
   const controlPlaceHolder = React.useMemo(() => {
     if (placeholder) return placeholder;
-    if (dropdown) return "Search";
+    if (dropdown && hasSearch) return "Search";
     return "Select option";
   }, [placeholder, dropdown]);
 
@@ -243,6 +247,7 @@ const SelectTag: React.ForwardRefRenderFunction<HTMLInputElement, SelectTagProps
           loading={loading}
           rhfError={rhfError}
           dropdown={dropdown}
+          readOnly={!hasSearch}
           controlDisabled={controlDisabled}
           placeholder={controlPlaceHolder}
           showClearIcon={showClearIcon}
@@ -266,6 +271,7 @@ const SelectTag: React.ForwardRefRenderFunction<HTMLInputElement, SelectTagProps
             iconSize={iconSize}
             handleSelect={handleSelect}
             handleChangePage={handleChangePage}
+            dropdownRender={dropdownRender}
           />
         )}
       </div>

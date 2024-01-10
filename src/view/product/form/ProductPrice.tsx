@@ -9,7 +9,7 @@ const { Row, Col } = Grid;
 
 const { Paragraph } = Typography;
 
-const { FormItem, Input, Select } = Control;
+const { FormItem, InputNumber, Select } = Control;
 
 interface ProductPriceProps {
   lang: Lang;
@@ -30,12 +30,12 @@ const ProductPrice: React.FC<ProductPriceProps> = ({ lang }) => {
       <Row justify="between">
         <Col xs={24} md={24} lg={12} span={12}>
           <FormItem name="costPrice">
-            <Input label={lang.common.form.label.cost} />
+            <InputNumber label={lang.common.form.label.cost} />
           </FormItem>
         </Col>
         <Col xs={24} md={24} lg={12} span={12}>
           <FormItem name="profit">
-            <Select label={lang.common.form.label.profit} addonAfter="%" options={options.profit} />
+            <Select hasSearch={false} label={lang.common.form.label.profit} addonAfter="%" options={options.profit} />
           </FormItem>
         </Col>
       </Row>

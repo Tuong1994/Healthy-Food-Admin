@@ -10,7 +10,7 @@ const { Row, Col } = Grid;
 
 const { Paragraph } = Typography;
 
-const { FormItem, Input, Select, DatePicker } = Control;
+const { FormItem, Input, InputPhone, Select, DatePicker } = Control;
 
 interface CustomerAuthProps {
   lang: Lang;
@@ -47,7 +47,7 @@ const CustomerAuth: React.FC<CustomerAuthProps> = ({ lang }) => {
         </Col>
         <Col {...colProps}>
           <FormItem name="phone">
-            <Input label={lang.common.form.label.phone} />
+            <InputPhone label={lang.common.form.label.phone} />
           </FormItem>
         </Col>
         <Col {...colProps}>

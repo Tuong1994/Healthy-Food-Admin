@@ -2,7 +2,8 @@ import * as Upload from "./Upload";
 import Form from "./Form";
 import FormItem from "./Form/Item";
 import Input from "./Input";
-import InputNumber from "./InputNumber"
+import InputNumber from "./InputNumber";
+import InputPhone from "./InputPhone"
 import InputPassword from "./Password";
 import TextArea from "./TextArea";
 import Select from "./Select";
@@ -18,6 +19,7 @@ export {
   FormItem,
   Input,
   InputNumber,
+  InputPhone,
   InputPassword,
   TextArea,
   Select,

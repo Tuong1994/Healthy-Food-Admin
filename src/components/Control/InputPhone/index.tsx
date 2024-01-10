@@ -6,11 +6,11 @@ import { ComponentSize } from "@/common/type";
 import { ONLY_DIGIT_REGEX } from "../regex";
 import FormItemContext from "../Form/FormItemContext";
 import FormContext from "../Form/FormContext";
-import formatNumber from "./formatNumber";
+import formatPhoneNumber from "./formatPhoneNumber";
 import useLayout from "@/components/UI/Layout/useLayout";
 import utils from "@/utils";
 
-export interface InputNumberProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface InputPhoneProps extends React.InputHTMLAttributes<HTMLInputElement> {
   rootClassName?: string;
   labelClassName?: string;
   inputClassName?: string;
@@ -25,10 +25,10 @@ export interface InputNumberProps extends React.InputHTMLAttributes<HTMLInputEle
   required?: boolean;
   optional?: boolean;
   hasClear?: boolean;
-  onChangeInput?: (number: number) => void;
+  onChangeInput?: (text: string) => void;
 }
 
-const InputNumber: React.ForwardRefRenderFunction<HTMLInputElement, InputNumberProps> = (
+const InputPhone: React.ForwardRefRenderFunction<HTMLInputElement, InputPhoneProps> = (
   {
     rootClassName = "",
     labelClassName = "",
@@ -63,7 +63,7 @@ const InputNumber: React.ForwardRefRenderFunction<HTMLInputElement, InputNumberP
 
   const { isRhf, rhfName, rhfError, rhfValue, rhfDisabled } = React.useContext(FormItemContext);
 
-  const [inputValue, setInputValue] = React.useState<InputValue>(value);
+  const [inputValue, setInputValue] = React.useState<InputValue>("");
 
   const [touched, setTouched] = React.useState<boolean>(false);
 
@@ -127,11 +127,11 @@ const InputNumber: React.ForwardRefRenderFunction<HTMLInputElement, InputNumberP
   // Set default value
   React.useEffect(() => {
     if (isRhf) {
-      const numberFormatRhfValue = formatNumber(String(rhfValue));
-      return setInputValue(numberFormatRhfValue);
+      const phoneFormatRhfValue = formatPhoneNumber(rhfValue as string);
+      return setInputValue(phoneFormatRhfValue);
     }
-    const numberFormatValue = formatNumber(String(value));
-    setInputValue(numberFormatValue);
+    const phoneFormatValue = formatPhoneNumber(value as string);
+    setInputValue(phoneFormatValue);
   }, [value, isRhf, rhfValue]);
 
   const iconSize = () => {
@@ -146,17 +146,17 @@ const InputNumber: React.ForwardRefRenderFunction<HTMLInputElement, InputNumberP
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    const inputFormatValue = formatNumber(value);
-    const numberValue = value.replace(ONLY_DIGIT_REGEX, "");
+    const inputFormatValue = formatPhoneNumber(value);
+    const inputValue = value.replace(ONLY_DIGIT_REGEX, "");
     setInputValue(inputFormatValue);
-    onChangeInput?.(Number(numberValue));
-    if (isRhf) rhfMethods.setValue(rhfName, Number(numberValue));
+    onChangeInput?.(inputValue);
+    if (isRhf) rhfMethods.setValue(rhfName, inputValue);
   };
 
   const handleClearInput = () => {
-    if (isRhf) return rhfMethods.setValue(rhfName, 0);
-    setInputValue(0);
-    onChangeInput?.(0);
+    if (isRhf) return rhfMethods.setValue(rhfName, "");
+    setInputValue("");
+    onChangeInput?.("");
   };
 
   return (
@@ -178,6 +178,7 @@ const InputNumber: React.ForwardRefRenderFunction<HTMLInputElement, InputNumberP
               ref={ref}
               {...restProps}
               type="text"
+              maxLength={14}
               value={inputValue}
               disabled={controlDisabled}
               placeholder={placeholder}
@@ -200,4 +201,4 @@ const InputNumber: React.ForwardRefRenderFunction<HTMLInputElement, InputNumberP
   );
 };
 
-export default React.forwardRef(InputNumber);
+export default React.forwardRef(InputPhone);

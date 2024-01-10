@@ -31,9 +31,11 @@ export interface SelectProps extends React.InputHTMLAttributes<HTMLInputElement>
   required?: boolean;
   optional?: boolean;
   hasClear?: boolean;
+  hasSearch?: boolean;
   onChangeSearch?: (text: string) => void;
   onChangeSelect?: (value: string | number | boolean) => void;
   onChangePage?: (page: number) => void;
+  dropdownRender?: (menu: React.ReactNode) => React.ReactNode | React.ReactNode[];
 }
 
 const Select: React.ForwardRefRenderFunction<HTMLInputElement, SelectProps> = (
@@ -58,11 +60,13 @@ const Select: React.ForwardRefRenderFunction<HTMLInputElement, SelectProps> = (
     async = false,
     loading = false,
     hasClear = true,
+    hasSearch = true,
     required,
     optional,
     onChangeSearch,
     onChangeSelect,
     onChangePage,
+    dropdownRender,
     ...restProps
   },
   ref
@@ -119,7 +123,7 @@ const Select: React.ForwardRefRenderFunction<HTMLInputElement, SelectProps> = (
 
   const controlPlaceHolder = React.useMemo(() => {
     if (placeholder) return placeholder;
-    if (dropdown) return "Search";
+    if (dropdown && hasSearch) return "Search";
     return "Select option";
   }, [placeholder, dropdown]);
 
@@ -236,6 +240,7 @@ const Select: React.ForwardRefRenderFunction<HTMLInputElement, SelectProps> = (
           loading={loading}
           rhfError={rhfError}
           dropdown={dropdown}
+          readOnly={!hasSearch}
           controlDisabled={controlDisabled}
           placeholder={controlPlaceHolder}
           showClearIcon={showClearIcon}
@@ -258,6 +263,7 @@ const Select: React.ForwardRefRenderFunction<HTMLInputElement, SelectProps> = (
             iconSize={iconSize}
             handleSelect={handleSelect}
             handleChangePage={handleChangePage}
+            dropdownRender={dropdownRender}
           />
         )}
       </div>
