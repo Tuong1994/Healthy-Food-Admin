@@ -6,6 +6,7 @@ export type Shipment = {
   email: string;
   address: string;
   orderId: string;
+  shipmentNumber?: string;
 
   createdAt?: Date | string;
   updatedAt?: Date | string;

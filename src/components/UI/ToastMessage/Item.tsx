@@ -43,7 +43,7 @@ const ToastMessageItem: React.FC<ToastMessageItemProps> = ({
   }, []);
 
   const iconType = () => {
-    const icon: Record<string, any> = {
+    const icon: Record<any, any> = {
       success: successIcon,
       error: errorIcon,
       warning: warningIcon,

@@ -47,7 +47,7 @@ const Alert: React.ForwardRefRenderFunction<HTMLDivElement, AlertProps> = (
   });
 
   const iconType = () => {
-    const icon: Record<string, any> = {
+    const icon: Record<any, any> = {
       success: icons?.successIcon,
       error: icons?.errorIcon,
       warning: icons?.warningIcon,

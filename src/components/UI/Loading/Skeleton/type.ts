@@ -14,7 +14,7 @@ type ParagraphOptions = CommonOptions & {
   lines?: number;
 };
 
-type ImageOptions = {
+type ImageOptions = CommonOptions & {
   size?: number;
   shape?: ComponentShape;
 };

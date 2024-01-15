@@ -33,10 +33,22 @@ const Skeleton: React.ForwardRefRenderFunction<HTMLDivElement, SkeletonProps> = 
 
   const inlineStyle = (): React.CSSProperties => {
     const rootStyle = { ...style };
-    if (type !== "image")
-      return { ...rootStyle, width: `${options?.width}px`, height: `${options?.height}px` };
-    if (type === "image")
-      return { ...rootStyle, width: `${options?.size ?? 100}px`, height: `${options?.size ?? 100}px` };
+    if (type !== "image") {
+      const width = typeof options?.width === "number" ? `${options?.width}px` : options?.width;
+      const height = typeof options?.height === "number" ? `${options?.height}px` : options?.height;
+      return { ...rootStyle, width, height };
+    }
+    if (type === "image") {
+      if (options?.size) {
+        const optionSize = options?.size ?? 100;
+        return { ...rootStyle, width: `${optionSize}px`, height: `${optionSize}px` };
+      }
+      const optionWidth = options?.width ?? 100;
+      const optionHeight = options?.height ?? 100;
+      const width = typeof options?.width === "number" ? `${optionWidth}px` : optionWidth;
+      const height = typeof options?.height === "number" ? `${optionHeight}px` : optionHeight;
+      return { ...rootStyle, width, height };
+    }
     return rootStyle;
   };
 
