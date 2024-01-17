@@ -8,8 +8,8 @@ import {
 import { ComponentColor, ComponentShape } from "@/common/type";
 import { GridAppContext } from "../Grid/Context";
 import usePagination from "./usePagination";
-import utils from "@/utils";
 import useLayout from "../Layout/useLayout";
+import utils from "@/utils";
 
 export type PageType = "first" | "prev" | "page" | "next" | "last";
 
@@ -160,6 +160,8 @@ const Pagination: React.ForwardRefRenderFunction<HTMLDivElement, PaginationProps
       }
     }
   };
+
+  if(totalPages === 1) return null
 
   return (
     <div ref={ref} style={style} className={mainClassName}>

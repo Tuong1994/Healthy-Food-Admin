@@ -1,14 +1,9 @@
 import React from "react";
-import type { ParagraphProps } from "@/components/UI/Typography/Paragraph";
-import type { GridColProps } from "../Grid/Col";
-import type { GridRowProps } from "../Grid/Row";
-import { Grid, Typography } from "..";
+import Paragraph, { ParagraphProps } from "@/components/UI/Typography/Paragraph";
+import Row, { GridRowProps } from "../Grid/Row";
+import Col, { GridColProps } from "../Grid/Col";
 import useLayout from "../Layout/useLayout";
 import utils from "@/utils";
-
-const { Row, Col } = Grid;
-
-const { Paragraph } = Typography;
 
 export interface InfoRowProps extends GridRowProps {
   label?: string;
