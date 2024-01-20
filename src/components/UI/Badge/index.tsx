@@ -1,17 +1,17 @@
-import React from "react";
+import { HTMLAttributes, ReactNode, ForwardRefRenderFunction, forwardRef } from "react";
 import { ComponentColor, ComponentShape } from "@/common/type";
 import utils from "@/utils";
 import useLayout from "../Layout/useLayout";
 
-export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface BadgeProps extends HTMLAttributes<HTMLDivElement> {
   rootClassName?: string;
-  children?: React.ReactNode | React.ReactNode[];
+  children?: ReactNode | ReactNode[];
   ghost?: boolean;
   shape?: Exclude<ComponentShape, "circle">;
   color?: Exclude<ComponentColor, "white" | "gray">;
 }
 
-const Badge: React.ForwardRefRenderFunction<HTMLDivElement, BadgeProps> = (
+const Badge: ForwardRefRenderFunction<HTMLDivElement, BadgeProps> = (
   { rootClassName = "", ghost, color, shape = "round", children, ...restProps },
   ref
 ) => {
@@ -45,4 +45,4 @@ const Badge: React.ForwardRefRenderFunction<HTMLDivElement, BadgeProps> = (
   );
 };
 
-export default React.forwardRef(Badge);
+export default forwardRef(Badge);

@@ -1,20 +1,20 @@
-import React from "react";
+import { HTMLAttributes, CSSProperties, ReactNode, ForwardRefRenderFunction, forwardRef } from "react";
 import { ComponentColor, ComponentPlacement } from "@/common/type";
 import utils from "@/utils";
 
-export interface TooltipProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface TooltipProps extends HTMLAttributes<HTMLDivElement> {
   rootClassName?: string;
   titleClassName?: string;
   labelClassName?: string;
-  titleStyle?: React.CSSProperties;
-  labelStyle?: React.CSSProperties;
-  children?: React.ReactNode | React.ReactNode[];
-  label?: React.ReactNode | React.ReactNode[];
+  titleStyle?: CSSProperties;
+  labelStyle?: CSSProperties;
+  children?: ReactNode | ReactNode[];
+  label?: ReactNode | ReactNode[];
   placement?: ComponentPlacement;
   color?: Exclude<ComponentColor, "white" | "gray">;
 }
 
-const Tooltip: React.ForwardRefRenderFunction<HTMLDivElement, TooltipProps> = (
+const Tooltip: ForwardRefRenderFunction<HTMLDivElement, TooltipProps> = (
   {
     rootClassName = "",
     titleClassName = "",
@@ -44,11 +44,7 @@ const Tooltip: React.ForwardRefRenderFunction<HTMLDivElement, TooltipProps> = (
   const tooltipArrowClassName = utils.formatClassName("title-arrow", arrowColorClassName);
 
   return (
-    <div
-      ref={ref}
-      {...restProps}
-      className={mainClassName}
-    >
+    <div ref={ref} {...restProps} className={mainClassName}>
       <div style={titleStyle} className={tooltipTitleClassName}>
         {children}
         {label && <span className={tooltipArrowClassName}></span>}
@@ -62,4 +58,4 @@ const Tooltip: React.ForwardRefRenderFunction<HTMLDivElement, TooltipProps> = (
   );
 };
 
-export default React.forwardRef(Tooltip);
+export default forwardRef(Tooltip);

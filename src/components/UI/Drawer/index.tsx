@@ -1,4 +1,4 @@
-import React from "react";
+import { CSSProperties, ReactNode, ForwardRefRenderFunction, Fragment, forwardRef } from "react";
 import { HiXMark } from "react-icons/hi2";
 import { useOverflow, useRender } from "@/hooks";
 import Portal from "@/components/Portal";
@@ -8,17 +8,17 @@ export interface DrawerProps {
   rootClassName?: string;
   headClassName?: string;
   bodyClassName?: string;
-  style?: React.CSSProperties;
-  headStyle?: React.CSSProperties;
-  bodyStyle?: React.CSSProperties;
+  style?: CSSProperties;
+  headStyle?: CSSProperties;
+  bodyStyle?: CSSProperties;
   open?: boolean;
   hasHead?: boolean;
-  head?: React.ReactNode | React.ReactNode[];
-  children?: React.ReactNode | React.ReactNode[];
+  head?: ReactNode | ReactNode[];
+  children?: ReactNode | ReactNode[];
   onClose?: () => void;
 }
 
-const Drawer: React.ForwardRefRenderFunction<HTMLDivElement, DrawerProps> = (
+const Drawer: ForwardRefRenderFunction<HTMLDivElement, DrawerProps> = (
   {
     rootClassName = "",
     headClassName = "",
@@ -53,7 +53,7 @@ const Drawer: React.ForwardRefRenderFunction<HTMLDivElement, DrawerProps> = (
   return (
     <Portal>
       {render && (
-        <React.Fragment>
+        <Fragment>
           <div className={backdropClassName} onClick={onClose} />
 
           <div ref={ref} style={style} className={mainClassName}>
@@ -67,10 +67,10 @@ const Drawer: React.ForwardRefRenderFunction<HTMLDivElement, DrawerProps> = (
               {children}
             </div>
           </div>
-        </React.Fragment>
+        </Fragment>
       )}
     </Portal>
   );
 };
 
-export default React.forwardRef(Drawer);
+export default forwardRef(Drawer);

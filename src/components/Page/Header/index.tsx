@@ -1,24 +1,22 @@
-import React from "react";
-import { UI } from "@/components";
+import { FC } from "react";
+import { Space, Grid } from "@/components/UI";
 import { Link } from "react-router-dom";
-import { useLang } from "@/hooks";
 import { HiBars3 } from "react-icons/hi2";
+import { useLang } from "@/hooks";
 import Logo from "@/components/Page/Logo";
 import HeaderAuth from "./HeaderAuth";
 import HeaderTranslate from "./HeaderTranslate";
-import url from "@/common/constant/url";
-import useLayout from "@/components/UI/Layout/useLayout";
 import HeaderTheme from "./HeaderTheme";
+import useLayout from "@/components/UI/Layout/useLayout";
+import url from "@/common/constant/url";
 
 const { DASHBOARD } = url;
-
-const { Space, Grid } = UI;
 
 const { Row, Col } = Grid;
 
 interface HeaderProps {}
 
-const Header: React.FC<HeaderProps> = () => {
+const Header: FC<HeaderProps> = () => {
   const { lang } = useLang();
 
   const { layoutApi } = useLayout();

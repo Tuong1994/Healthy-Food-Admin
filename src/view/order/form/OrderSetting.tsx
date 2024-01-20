@@ -1,19 +1,16 @@
-import React from "react";
-import { UI, Control } from "@/components";
-import type { Lang } from "@/common/type";
+import { FC } from "react";
+import { Card, Typography } from "@/components/UI";
+import { FormItem, Select } from "@/components/Control";
 import { useSelectOption } from "@/hooks";
-
-const { Card, Typography } = UI;
+import type { Lang } from "@/common/type";
 
 const { Paragraph } = Typography;
-
-const { FormItem, Select } = Control;
 
 interface OrderSettingProps {
   lang: Lang;
 }
 
-const OrderSetting: React.FC<OrderSettingProps> = ({ lang }) => {
+const OrderSetting: FC<OrderSettingProps> = ({ lang }) => {
   const options = useSelectOption();
 
   return (

@@ -1,15 +1,12 @@
-import React from "react";
-import { UI, Control } from "@/components";
+import { FC } from "react";
+import { Modal, Grid } from "@/components/UI";
+import { Form, FormItem, Input, Upload } from "@/components/Control";
 import type { ModalProps } from "@/components/UI/Modal";
 import type { Lang } from "@/common/type";
 import type { ActiveModal } from ".";
 import type { Category } from "@/services/category/type";
 
-const { Modal, Grid } = UI;
-
 const { Row, Col } = Grid;
-
-const { Form, FormItem, Input, Upload } = Control;
 
 const { ImageUpload } = Upload;
 
@@ -20,7 +17,7 @@ interface FormModalProps extends ModalProps {
   openModal: ActiveModal;
 }
 
-const FormModal: React.FC<FormModalProps> = ({ lang, openModal, ...restProps }) => {
+const FormModal: FC<FormModalProps> = ({ lang, openModal, ...restProps }) => {
   const modalDefaultProps: ModalProps = {
     sizes: "sm",
     color: "green",

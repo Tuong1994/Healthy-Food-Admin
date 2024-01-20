@@ -1,4 +1,4 @@
-import React from "react";
+import { CSSProperties, ForwardRefRenderFunction, Fragment, forwardRef } from "react";
 import { MenuItems } from "./type";
 import { LayoutColor } from "../Context";
 import Horizontal from "./Horizontal";
@@ -9,26 +9,26 @@ type MenuType = "horizontal" | "vertical";
 export interface LayoutMenuProps {
   rootClassName?: string;
   itemClassName?: string;
-  style?: React.CSSProperties;
-  itemStyle?: React.CSSProperties;
+  style?: CSSProperties;
+  itemStyle?: CSSProperties;
   items?: MenuItems;
   type?: MenuType;
   color?: LayoutColor;
   defaultActiveId?: string[];
 }
 
-const LayoutMenu: React.ForwardRefRenderFunction<HTMLDivElement, LayoutMenuProps> = (
+const LayoutMenu: ForwardRefRenderFunction<HTMLDivElement, LayoutMenuProps> = (
   { type = "horizontal", color = "blue", defaultActiveId = [], ...restProps },
   ref
 ) => {
   const commonProps = { ref, color, defaultActiveId, ...restProps };
 
   return (
-    <React.Fragment>
+    <Fragment>
       {type === "horizontal" && <Horizontal {...commonProps} />}
       {type === "vertical" && <Vertical {...commonProps} />}
-    </React.Fragment>
+    </Fragment>
   );
 };
 
-export default React.forwardRef(LayoutMenu);
+export default forwardRef(LayoutMenu);

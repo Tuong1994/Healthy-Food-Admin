@@ -1,5 +1,5 @@
-import React from "react";
-import { UI } from "@/components";
+import { FC, Fragment } from "react";
+import { Table, Button } from "@/components/UI";
 import type { Lang } from "@/common/type";
 import type { Columns } from "@/components/UI/Table/type";
 import type { Shipment } from "@/services/shipment/type";
@@ -10,13 +10,11 @@ import moment from "moment";
 
 const { SHIPMENT_FORM } = url;
 
-const { Table, Button } = UI;
-
 interface ShipmentsTableProps {
   lang: Lang;
 }
 
-const ShipmentsTable: React.FC<ShipmentsTableProps> = ({ lang }) => {
+const ShipmentsTable: FC<ShipmentsTableProps> = ({ lang }) => {
   const dataSource: Shipment[] = [
     {
       id: "1",
@@ -81,7 +79,7 @@ const ShipmentsTable: React.FC<ShipmentsTableProps> = ({ lang }) => {
   ];
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Table<Shipment>
         color="green"
         hasFilter
@@ -91,7 +89,7 @@ const ShipmentsTable: React.FC<ShipmentsTableProps> = ({ lang }) => {
         columns={columns}
         filter={<ShipmentsTableFilter />}
       />
-    </React.Fragment>
+    </Fragment>
   );
 };
 

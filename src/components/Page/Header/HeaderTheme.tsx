@@ -1,13 +1,11 @@
-import React from "react";
-import { UI } from "@/components";
+import { FC } from "react";
+import { Space, Switch } from "@/components/UI";
 import { HiLightBulb, HiMoon } from "react-icons/hi2";
 import useLayout from "@/components/UI/Layout/useLayout";
 
-const { Space, Switch } = UI;
-
 interface HeaderThemeProps {}
 
-const HeaderTheme: React.FC<HeaderThemeProps> = () => {
+const HeaderTheme: FC<HeaderThemeProps> = () => {
   const { layoutValue, layoutApi } = useLayout();
 
   const { layoutTheme: theme } = layoutValue;

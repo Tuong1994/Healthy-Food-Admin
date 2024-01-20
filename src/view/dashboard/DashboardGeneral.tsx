@@ -1,10 +1,8 @@
-import React from "react";
-import { UI } from "@/components";
+import { FC } from "react";
 import type { Lang } from "@/common/type";
+import { Space, Card, Grid, Typography } from "@/components/UI";
 import { HiInbox, HiShoppingCart, HiUser } from "react-icons/hi2";
 import { HiCash } from "react-icons/hi";
-
-const { Space, Card, Grid, Typography } = UI;
 
 const { Row, Col } = Grid;
 
@@ -16,7 +14,7 @@ interface DashboardGeneralProps {
   lang: Lang;
 }
 
-const DashboardGeneral: React.FC<DashboardGeneralProps> = ({ lang }) => {
+const DashboardGeneral: FC<DashboardGeneralProps> = ({ lang }) => {
   const items = [
     { id: "customers", title: lang.dashboard.customers, icon: <HiUser size={ICON_SIZE} />, total: 2350 },
     { id: "products", title: lang.dashboard.products, icon: <HiInbox size={ICON_SIZE} />, total: 500 },

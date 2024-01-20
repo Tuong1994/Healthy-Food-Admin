@@ -1,23 +1,20 @@
-import React from "react";
-import { UI, Control } from "@/components";
+import { FC, useState } from "react";
+import { Card, Space, Divider, Image, Modal, Pagination, Typography } from "@/components/UI";
+import { Input } from "@/components/Control";
 import type { Lang } from "@/common/type";
 import type { ModalProps } from "@/components/UI/Modal";
 import type { OrderItem } from "@/services/order/type";
 import type { Product } from "@/services/product/type";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 
-const { Card, Space, Divider, Image, Modal, Pagination, Typography } = UI;
-
 const { Paragraph } = Typography;
-
-const { Input } = Control;
 
 interface SelectProductModalProps extends ModalProps {
   lang: Lang;
 }
 
-const SelectProductModal: React.FC<SelectProductModalProps> = ({ lang, ...restProps }) => {
-  const [selectedProducts, setSelectedProducts] = React.useState<OrderItem[]>([]);
+const SelectProductModal: FC<SelectProductModalProps> = ({ lang, ...restProps }) => {
+  const [selectedProducts, setSelectedProducts] = useState<OrderItem[]>([]);
 
   const modalDefaultProps: ModalProps = {
     color: "green",
@@ -28,9 +25,7 @@ const SelectProductModal: React.FC<SelectProductModalProps> = ({ lang, ...restPr
     ...restProps,
   };
 
-  const handleSelect = (product: Product) => {
-    
-  };
+  const handleSelect = (product: Product) => {};
 
   const renderProducts = () => {
     return [...Array(10)].map((_, idx) => (

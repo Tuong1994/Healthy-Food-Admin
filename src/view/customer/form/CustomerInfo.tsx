@@ -1,22 +1,19 @@
-import React from "react";
-import { UI, Control } from "@/components";
+import { FC } from "react";
+import { Card, Typography, Grid } from "@/components/UI";
+import { FormItem, Input, InputPhone, Select, DatePicker } from "@/components/Control";
 import type { Lang } from "@/common/type";
+import type { GridColProps } from "@/components/UI/Grid/Col";
 import { useSelectOption } from "@/hooks";
-import { GridColProps } from "@/components/UI/Grid/Col";
-
-const { Card, Typography, Grid } = UI;
 
 const { Row, Col } = Grid;
 
 const { Paragraph } = Typography;
 
-const { FormItem, Input, InputPhone, Select, DatePicker } = Control;
-
 interface CustomerAuthProps {
   lang: Lang;
 }
 
-const CustomerAuth: React.FC<CustomerAuthProps> = ({ lang }) => {
+const CustomerAuth: FC<CustomerAuthProps> = ({ lang }) => {
   const options = useSelectOption();
 
   const colProps: GridColProps = {

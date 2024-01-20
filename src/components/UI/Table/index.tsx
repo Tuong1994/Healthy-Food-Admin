@@ -1,4 +1,14 @@
-import React from "react";
+import {
+  TableHTMLAttributes,
+  CSSProperties,
+  Key,
+  ReactNode,
+  ForwardedRef,
+  Fragment,
+  useState,
+  useEffect,
+  forwardRef,
+} from "react";
 import type { ButtonProps } from "../Button";
 import type { ComponentColor } from "@/common/type";
 import type { Columns } from "./type";
@@ -14,10 +24,10 @@ import utils from "@/utils";
 
 export type TableColor = Exclude<ComponentColor, "black" | "white" | "red" | "gray">;
 
-export interface TableProps<M> extends React.TableHTMLAttributes<HTMLTableElement> {
+export interface TableProps<M> extends TableHTMLAttributes<HTMLTableElement> {
   rootClassName?: string;
-  style?: React.CSSProperties;
-  rowKey?: React.Key;
+  style?: CSSProperties;
+  rowKey?: Key;
   dataSource: M[];
   columns: Columns<M>;
   color?: TableColor;
@@ -26,17 +36,17 @@ export interface TableProps<M> extends React.TableHTMLAttributes<HTMLTableElemen
   hasRowSelection?: boolean;
   hasRowExpand?: boolean;
   hasPagination?: boolean;
-  removeButtonTitle?: React.ReactNode | React.ReactNode[];
-  cancelButtonTitle?: React.ReactNode | React.ReactNode[];
-  filter?: React.ReactNode | React.ReactNode[];
+  removeButtonTitle?: ReactNode | ReactNode[];
+  cancelButtonTitle?: ReactNode | ReactNode[];
+  filter?: ReactNode | ReactNode[];
   removeButtonProps?: ButtonProps;
   cancelButtonProps?: ButtonProps;
   paginationProps?: PaginationProps;
   onFilter?: () => void;
   onCancelFilter?: () => void;
-  onSelectRows?: (keys: React.Key[]) => void;
+  onSelectRows?: (keys: Key[]) => void;
   onChangePage?: (page: number) => void;
-  expandRowTable?: (data: M) => React.ReactNode | null;
+  expandRowTable?: (data: M) => ReactNode | null;
 }
 
 const Table = <M extends object>(
@@ -65,7 +75,7 @@ const Table = <M extends object>(
     expandRowTable,
     ...restProps
   }: TableProps<M>,
-  ref: React.ForwardedRef<HTMLTableElement>
+  ref: ForwardedRef<HTMLTableElement>
 ) => {
   const { lang } = useLang();
 
@@ -73,7 +83,7 @@ const Table = <M extends object>(
 
   const { layoutTheme: theme } = layoutValue;
 
-  const [rowSelectedKeys, setRowSelectedKeys] = React.useState<React.Key[]>([]);
+  const [rowSelectedKeys, setRowSelectedKeys] = useState<Key[]>([]);
 
   const paginationDefaultProps: PaginationProps = {
     color,
@@ -89,7 +99,7 @@ const Table = <M extends object>(
 
   const mainClassName = utils.formatClassName("table", colorClassName, themeClassName, rootClassName);
 
-  React.useEffect(() => {
+  useEffect(() => {
     onSelectRows?.(rowSelectedKeys);
   }, [rowSelectedKeys.length]);
 
@@ -98,7 +108,7 @@ const Table = <M extends object>(
     setRowSelectedKeys([...dataSource.map((data, idx) => (rowKey ? data[rowKey as keyof M] : `row-${idx}`))]);
   };
 
-  const handleSelectRow = (key: React.Key) => {
+  const handleSelectRow = (key: Key) => {
     if (rowSelectedKeys.indexOf(key) === -1) return setRowSelectedKeys((prev) => [...prev, key]);
     setRowSelectedKeys((prev) => [...prev].filter((k) => k !== key));
   };
@@ -106,7 +116,7 @@ const Table = <M extends object>(
   const handleCancelSelect = () => setRowSelectedKeys([]);
 
   return (
-    <React.Fragment>
+    <Fragment>
       <div style={style} className={mainClassName}>
         {hasFilter && (
           <TableFilter
@@ -156,8 +166,8 @@ const Table = <M extends object>(
         {loading && <TableLoading />}
       </div>
       {hasPagination && <Pagination {...paginationDefaultProps} />}
-    </React.Fragment>
+    </Fragment>
   );
 };
 
-export default React.forwardRef(Table);
+export default forwardRef(Table);

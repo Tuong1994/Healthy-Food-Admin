@@ -1,23 +1,20 @@
-import React from "react";
+import { ReactNode } from "react";
 import ContentHeader, { type ContentHeaderProps } from "../ContentHeader";
-import { UI, Control } from "@/components";
+import { Grid } from "@/components/UI";
+import { Form } from "@/components/Control";
 import type { FormProps } from "@/components/Control/Form";
 import type { GridRowProps } from "@/components/UI/Grid/Row";
 import type { GridColProps } from "@/components/UI/Grid/Col";
 
-const { Grid } = UI;
-
 const { Row, Col } = Grid;
-
-const { Form } = Control;
 
 interface FormLayoutProps<M> extends FormProps<M> {
   headerProps?: ContentHeaderProps;
   rowProps?: GridRowProps;
   leftSpanProps?: GridColProps;
   rightSpanProps?: GridColProps;
-  leftItems?: React.ReactNode;
-  rightItems?: React.ReactNode;
+  leftItems?: ReactNode;
+  rightItems?: ReactNode;
 }
 
 const FormLayout = <M extends object>({

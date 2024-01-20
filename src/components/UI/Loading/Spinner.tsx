@@ -1,4 +1,4 @@
-import React from "react";
+import { CSSProperties, FC, Fragment } from "react";
 import { ComponentColor } from "@/common/type";
 import { FaSpinner } from "react-icons/fa";
 import utils from "@/utils";
@@ -7,13 +7,13 @@ type SpinnerType = "default" | "bubble";
 
 export interface SpinnerProps {
   rootClassName?: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   type?: SpinnerType;
   size?: number;
   color?: ComponentColor;
 }
 
-const Spinner: React.FC<SpinnerProps> = ({
+const Spinner: FC<SpinnerProps> = ({
   rootClassName = "",
   style,
   size = 14,
@@ -29,7 +29,7 @@ const Spinner: React.FC<SpinnerProps> = ({
   const bubbleClassName = utils.formatClassName("spinner-bubble", colorClassName, rootClassName);
 
   return (
-    <React.Fragment>
+    <Fragment>
       {type === "default" && <FaSpinner style={style} size={size} className={defaultClassName} />}
 
       {type === "bubble" && (
@@ -42,7 +42,7 @@ const Spinner: React.FC<SpinnerProps> = ({
           ))}
         </div>
       )}
-    </React.Fragment>
+    </Fragment>
   );
 };
 

@@ -1,13 +1,11 @@
-import React from "react";
-import { UI } from "@/components";
+import { FC, Fragment, useState } from "react";
+import { Tabs } from "@/components/UI";
 import { useLang } from "@/hooks";
-import { TabsItems } from "@/components/UI/Tabs/type";
+import type { TabsItems } from "@/components/UI/Tabs/type";
 import CategoriesTable from "./CategoriesTable";
 import SubCategoriesTable from "./SubCategoriesTable";
 import CategoryFormModal from "./CategoryFormModal";
 import SubCategoryFormModal from "./SubCategoryFormModal";
-
-const { Tabs } = UI;
 
 export type ActiveModal = {
   open: boolean;
@@ -16,15 +14,15 @@ export type ActiveModal = {
 
 interface CategoryProps {}
 
-const Category: React.FC<CategoryProps> = () => {
+const Category: FC<CategoryProps> = () => {
   const { type, lang } = useLang();
 
-  const [openCategoryModal, setOpenCategoryModal] = React.useState<ActiveModal>({
+  const [openCategoryModal, setOpenCategoryModal] = useState<ActiveModal>({
     open: false,
     activeId: null,
   });
 
-  const [openSubCategoryModal, setOpenSubCategoryModal] = React.useState<ActiveModal>({
+  const [openSubCategoryModal, setOpenSubCategoryModal] = useState<ActiveModal>({
     open: false,
     activeId: null,
   });
@@ -59,7 +57,7 @@ const Category: React.FC<CategoryProps> = () => {
   ];
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Tabs color="green" items={items} />
       <CategoryFormModal openModal={openCategoryModal} lang={lang} onCancel={handleCloseCategoryModal} />
       <SubCategoryFormModal
@@ -67,7 +65,7 @@ const Category: React.FC<CategoryProps> = () => {
         lang={lang}
         onCancel={handleCloseSubCategoryModal}
       />
-    </React.Fragment>
+    </Fragment>
   );
 };
 

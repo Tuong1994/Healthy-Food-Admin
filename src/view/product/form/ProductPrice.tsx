@@ -1,21 +1,18 @@
-import React from "react";
-import { UI, Control } from "@/components";
-import type { Lang } from "@/common/type";
+import { FC } from "react";
+import { Space, Divider, Card, Typography, Grid } from "@/components/UI";
+import { FormItem, InputNumber, Select } from "@/components/Control";
 import { useSelectOption } from "@/hooks";
-
-const { Space, Divider, Card, Typography, Grid } = UI;
+import type { Lang } from "@/common/type";
 
 const { Row, Col } = Grid;
 
 const { Paragraph } = Typography;
 
-const { FormItem, InputNumber, Select } = Control;
-
 interface ProductPriceProps {
   lang: Lang;
 }
 
-const ProductPrice: React.FC<ProductPriceProps> = ({ lang }) => {
+const ProductPrice: FC<ProductPriceProps> = ({ lang }) => {
   const options = useSelectOption();
 
   return (
@@ -35,7 +32,12 @@ const ProductPrice: React.FC<ProductPriceProps> = ({ lang }) => {
         </Col>
         <Col xs={24} md={24} lg={12} span={12}>
           <FormItem name="profit">
-            <Select hasSearch={false} label={lang.common.form.label.profit} addonAfter="%" options={options.profit} />
+            <Select
+              hasSearch={false}
+              label={lang.common.form.label.profit}
+              addonAfter="%"
+              options={options.profit}
+            />
           </FormItem>
         </Col>
       </Row>

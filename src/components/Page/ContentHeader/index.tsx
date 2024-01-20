@@ -1,11 +1,9 @@
-import React from "react";
-import { UI } from "@/components";
+import { ReactNode, FC } from "react";
+import { Space, Grid, Typography } from "@/components/UI";
 import type { GridColProps } from "@/components/UI/Grid/Col";
 import type { GridRowProps } from "@/components/UI/Grid/Row";
-import { TitleProps } from "@/components/UI/Typography/Title";
+import type { TitleProps } from "@/components/UI/Typography/Title";
 import { useLang } from "@/hooks";
-
-const { Space, Grid, Typography } = UI;
 
 const { Row, Col } = Grid;
 
@@ -13,14 +11,14 @@ const { Title, Paragraph } = Typography;
 
 export interface ContentHeaderProps extends GridRowProps {
   hasTotal?: boolean;
-  headTitle?: React.ReactNode;
+  headTitle?: ReactNode;
   headTitleProps?: TitleProps;
   leftSpanProps?: GridColProps;
   rightSpanProps?: GridColProps;
-  right?: () => React.ReactNode;
+  right?: () => ReactNode;
 }
 
-const ContentHeader: React.FC<ContentHeaderProps> = ({
+const ContentHeader: FC<ContentHeaderProps> = ({
   hasTotal = true,
   headTitle,
   headTitleProps,

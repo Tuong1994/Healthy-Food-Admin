@@ -1,5 +1,6 @@
-import React from "react";
-import { UI, Control } from "@/components";
+import { FC, Fragment } from "react";
+import { Breadcrumb, Card, Button } from "@/components/UI";
+import { FormItem, Input, Select } from "@/components/Control";
 import { useLang, useHasLocationState } from "@/hooks";
 import { Link } from "react-router-dom";
 import type { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
@@ -10,13 +11,9 @@ import url from "@/common/constant/url";
 
 const { SHIPMENT_LIST } = url;
 
-const { Breadcrumb, Card, Button } = UI;
-
-const { FormItem, Input, Select } = Control;
-
 interface ShipmentProps {}
 
-const Shipment: React.FC<ShipmentProps> = () => {
+const Shipment: FC<ShipmentProps> = () => {
   const { lang } = useLang();
 
   const { isUpdate } = useHasLocationState();
@@ -62,10 +59,10 @@ const Shipment: React.FC<ShipmentProps> = () => {
   );
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Breadcrumb items={items} />
       <FormLayout<Shipment> headerProps={headerProps} initialData={initialData} leftItems={leftItems} />
-    </React.Fragment>
+    </Fragment>
   );
 };
 

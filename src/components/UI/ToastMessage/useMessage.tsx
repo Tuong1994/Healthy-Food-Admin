@@ -1,10 +1,10 @@
-import React from "react";
+import { useEffect } from "react";
 import useToastStore, { MessageOptions } from "./ToastStore";
 
 const useMessage = (options?: MessageOptions) => {
   const [addToast, configOptions] = useToastStore((state) => [state.addToast, state.configOptions]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (options) configOptions(options);
   }, []);
 

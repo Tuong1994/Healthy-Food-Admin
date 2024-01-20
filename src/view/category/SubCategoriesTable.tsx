@@ -1,5 +1,5 @@
-import React from "react";
-import { UI } from "@/components";
+import { FC, Fragment } from "react";
+import { Image, Table, Button } from "@/components/UI";
 import type { Lang } from "@/common/type";
 import type { Columns } from "@/components/UI/Table/type";
 import type { SubCategory } from "@/services/subcategory/type";
@@ -8,15 +8,13 @@ import ContentHeader from "@/components/Page/ContentHeader";
 import SubCategoriesTableFilter from "./SubCategoriesTableFilter";
 import moment from "moment";
 
-const { Image, Table, Button } = UI;
-
 interface SubCategoriesTableProps {
   type: ELang;
   lang: Lang;
   handleOpenModal: (activeId: string | null) => void;
 }
 
-const SubCategoriesTable: React.FC<SubCategoriesTableProps> = ({ type, lang, handleOpenModal }) => {
+const SubCategoriesTable: FC<SubCategoriesTableProps> = ({ type, lang, handleOpenModal }) => {
   const dataSource: SubCategory[] = [
     {
       id: "1",
@@ -100,7 +98,7 @@ const SubCategoriesTable: React.FC<SubCategoriesTableProps> = ({ type, lang, han
   ];
 
   return (
-    <React.Fragment>
+    <Fragment>
       <ContentHeader
         headTitle={lang.category.subCategoryTitle}
         right={() => (
@@ -118,7 +116,7 @@ const SubCategoriesTable: React.FC<SubCategoriesTableProps> = ({ type, lang, han
         columns={columns}
         filter={<SubCategoriesTableFilter />}
       />
-    </React.Fragment>
+    </Fragment>
   );
 };
 

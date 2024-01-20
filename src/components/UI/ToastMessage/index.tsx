@@ -1,19 +1,19 @@
-import React from "react";
+import { CSSProperties, ForwardRefRenderFunction, forwardRef } from "react";
+import { useRender } from "@/hooks";
 import ToastMessageItem from "./Item";
 import Portal from "@/components/Portal";
-import { useRender } from "@/hooks";
 import useToastStore from "./ToastStore";
 import utils from "@/utils";
 
 export interface ToastMessageProps {
   rootClassName?: string;
   itemClassName?: string;
-  style?: React.CSSProperties;
-  itemStyle?: React.CSSProperties;
+  style?: CSSProperties;
+  itemStyle?: CSSProperties;
   showProgress?: boolean;
 }
 
-const ToastMessage: React.ForwardRefRenderFunction<HTMLDivElement, ToastMessageProps> = (
+const ToastMessage: ForwardRefRenderFunction<HTMLDivElement, ToastMessageProps> = (
   { rootClassName = "", itemClassName = "", style, itemStyle, showProgress = true },
   ref
 ) => {
@@ -42,4 +42,4 @@ const ToastMessage: React.ForwardRefRenderFunction<HTMLDivElement, ToastMessageP
   );
 };
 
-export default React.forwardRef(ToastMessage);
+export default forwardRef(ToastMessage);

@@ -1,3 +1,4 @@
+import { RefObject } from "react";
 import { ELang } from "@/common/enum";
 import { SelectOptions } from "@/components/Control/type";
 
@@ -10,7 +11,7 @@ const utils = {
     return `${s4()}-${s4()}-${s4()}/${s4()}-${s4()}-${s4()}`;
   },
 
-  collapse: (ref: React.RefObject<any>) => {
+  collapse: (ref: RefObject<any>) => {
     if (!ref.current) return;
     if (ref.current === null) return;
 
@@ -23,9 +24,9 @@ const utils = {
     return classNames.filter((name) => name).join(" ");
   },
 
-  formatPrice: (type: ELang, price: number) => {
+  formatPrice: (locale: ELang, price = 0) => {
     const displayPrice = price.toLocaleString();
-    const currency = type === ELang.VN ? "đ" : "VND";
+    const currency = locale === ELang.VN ? "đ" : "VND";
     return `${displayPrice} ${currency}`;
   },
 

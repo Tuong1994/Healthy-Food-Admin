@@ -1,5 +1,5 @@
-import React from "react";
-import { UI } from "@/components";
+import { FC, Fragment, useState } from "react";
+import { Breadcrumb, Button } from "@/components/UI";
 import { useLang, useHasLocationState } from "@/hooks";
 import type { Order } from "@/services/order/type";
 import type { ContentHeaderProps } from "@/components/Page/ContentHeader";
@@ -19,20 +19,18 @@ import url from "@/common/constant/url";
 
 const { ORDER_LIST } = url;
 
-const { Breadcrumb, Button } = UI;
-
 interface OrderProps {}
 
-const Order: React.FC<OrderProps> = () => {
+const Order: FC<OrderProps> = () => {
   const { lang } = useLang();
 
   const { isUpdate } = useHasLocationState();
 
-  const [openSelect, setOpenSelect] = React.useState<boolean>(false);
+  const [openSelect, setOpenSelect] = useState<boolean>(false);
 
-  const [openCreate, setOpenCreate] = React.useState<boolean>(false);
+  const [openCreate, setOpenCreate] = useState<boolean>(false);
 
-  const [openShipment, setOpenShipment] = React.useState<boolean>(false);
+  const [openShipment, setOpenShipment] = useState<boolean>(false);
 
   const pageTitle = isUpdate ? lang.order.form.editTitle : lang.order.form.addTitle;
 
@@ -68,22 +66,22 @@ const Order: React.FC<OrderProps> = () => {
   };
 
   const leftItems = (
-    <React.Fragment>
+    <Fragment>
       <OrderProduct lang={lang} handleOpenSelect={handleOpenSelect} handleOpenCreate={handleOpenCreate} />
       <OrderGeneral lang={lang} />
-    </React.Fragment>
+    </Fragment>
   );
 
   const rightItems = (
-    <React.Fragment>
+    <Fragment>
       <OrderSetting lang={lang} />
       <OrderCustomer lang={lang} />
       <OrderShipment lang={lang} handleOpenShipment={handleOpenShipment} />
-    </React.Fragment>
+    </Fragment>
   );
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Breadcrumb items={items} />
       <FormLayout<Order>
         initialData={initialData}
@@ -94,7 +92,7 @@ const Order: React.FC<OrderProps> = () => {
       <SelectProductModal lang={lang} open={openSelect} onCancel={handleCloseSelect} />
       <CreateProductModal lang={lang} open={openCreate} onCancel={handleCloseCreate} />
       <ShipmentModal lang={lang} open={openShipment} onCancel={handleCloseShipment} />
-    </React.Fragment>
+    </Fragment>
   );
 };
 

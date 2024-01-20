@@ -1,5 +1,5 @@
-import React from "react";
-import { UI } from "@/components";
+import { FC, Fragment } from "react";
+import { Breadcrumb, Button } from "@/components/UI";
 import { useLang, useHasLocationState } from "@/hooks";
 import { EGender, ERole } from "@/services/customer/enum";
 import type { Customer } from "@/services/customer/type";
@@ -15,11 +15,9 @@ import url from "@/common/constant/url";
 
 const { CUSTOMER_LIST } = url;
 
-const { Breadcrumb, Button } = UI;
-
 interface CustomerProps {}
 
-const Customer: React.FC<CustomerProps> = () => {
+const Customer: FC<CustomerProps> = () => {
   const { lang } = useLang();
 
   const { isUpdate, state } = useHasLocationState();
@@ -53,21 +51,21 @@ const Customer: React.FC<CustomerProps> = () => {
   };
 
   const leftItems = (
-    <React.Fragment>
+    <Fragment>
       <CustomerAuth lang={lang} isUpdate={isUpdate} />
       <CustomerInfo lang={lang} />
-    </React.Fragment>
+    </Fragment>
   );
 
   const rightItems = (
-    <React.Fragment>
+    <Fragment>
       <CustomerPermission lang={lang} />
       <CustomerAddress lang={lang} />
-    </React.Fragment>
+    </Fragment>
   );
 
   return (
-    <React.Fragment>
+    <Fragment>
       {!isUserUpdate && <Breadcrumb items={items} />}
       <FormLayout<Customer>
         initialData={initialData}
@@ -75,7 +73,7 @@ const Customer: React.FC<CustomerProps> = () => {
         leftItems={leftItems}
         rightItems={rightItems}
       />
-    </React.Fragment>
+    </Fragment>
   );
 };
 

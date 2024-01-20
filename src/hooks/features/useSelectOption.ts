@@ -1,6 +1,6 @@
 import useLang from "./useLang";
-import { EGender, ERole } from "@/services/customer/enum";
 import type { SelectOptions } from "@/components/Control/type";
+import { EGender, ERole } from "@/services/customer/enum";
 import { EInventoryStatus, EProductOrigin, EProductStatus, EProductUnit } from "@/services/product/enum";
 import { EOrderStatus, EPaymentMethod, EPaymentStatus } from "@/services/order/enum";
 

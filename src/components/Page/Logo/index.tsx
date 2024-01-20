@@ -1,19 +1,14 @@
-import React from "react";
-import { UI } from "@/components";
+import { ForwardRefRenderFunction, forwardRef } from "react";
+import { Image } from "@/components/UI";
 import useLayout from "@/components/UI/Layout/useLayout";
 import utils from "@/utils";
-
-const { Image } = UI;
 
 interface LogoProps {
   width?: number;
   height?: number;
 }
 
-const Logo: React.ForwardRefRenderFunction<HTMLImageElement, LogoProps> = (
-  { width = 130, height = 30 },
-  ref
-) => {
+const Logo: ForwardRefRenderFunction<HTMLImageElement, LogoProps> = ({ width = 130, height = 30 }, ref) => {
   const { layoutValue } = useLayout();
 
   const { layoutTheme: theme } = layoutValue;
@@ -35,4 +30,4 @@ const Logo: React.ForwardRefRenderFunction<HTMLImageElement, LogoProps> = (
   );
 };
 
-export default React.forwardRef(Logo);
+export default forwardRef(Logo);

@@ -1,4 +1,12 @@
-import React from "react";
+import {
+  CSSProperties,
+  ReactNode,
+  ForwardRefRenderFunction,
+  useContext,
+  useState,
+  useEffect,
+  forwardRef,
+} from "react";
 import {
   HiOutlineChevronDoubleLeft as ArrowDoubleLeft,
   HiOutlineChevronDoubleRight as ArrowDoubleRight,
@@ -15,7 +23,7 @@ export type PageType = "first" | "prev" | "page" | "next" | "last";
 
 export interface PaginationProps {
   rootClassName?: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   total?: number;
   limit?: number;
   simple?: boolean;
@@ -23,14 +31,14 @@ export interface PaginationProps {
   ghost?: boolean;
   shape?: Exclude<ComponentShape, "circle">;
   color?: Exclude<ComponentColor, "white" | "gray">;
-  firstIcon?: React.ReactNode | React.ReactNode[];
-  lastIcon?: React.ReactNode | React.ReactNode[];
-  prevIcon?: React.ReactNode | React.ReactNode[];
-  nextIcon?: React.ReactNode | React.ReactNode[];
+  firstIcon?: ReactNode | ReactNode[];
+  lastIcon?: ReactNode | ReactNode[];
+  prevIcon?: ReactNode | ReactNode[];
+  nextIcon?: ReactNode | ReactNode[];
   onChangePage?: (page: number) => void;
 }
 
-const Pagination: React.ForwardRefRenderFunction<HTMLDivElement, PaginationProps> = (
+const Pagination: ForwardRefRenderFunction<HTMLDivElement, PaginationProps> = (
   {
     rootClassName = "",
     style,
@@ -49,13 +57,13 @@ const Pagination: React.ForwardRefRenderFunction<HTMLDivElement, PaginationProps
   },
   ref
 ) => {
-  const { isPhone } = React.useContext(GridAppContext);
+  const { isPhone } = useContext(GridAppContext);
 
   const { layoutValue } = useLayout();
 
   const { layoutTheme: theme } = layoutValue;
 
-  const [currentPage, setCurrentPage] = React.useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   const { paginationRange: range, totalPages } = usePagination({
     total,
@@ -95,7 +103,7 @@ const Pagination: React.ForwardRefRenderFunction<HTMLDivElement, PaginationProps
 
   const rightActionsClassName = utils.formatClassName("actions-button", rightArrowDisabledClassName);
 
-  React.useEffect(() => onChangePage?.(currentPage), [currentPage]);
+  useEffect(() => onChangePage?.(currentPage), [currentPage]);
 
   const renderPageButtons = () => {
     if (simple || isPhone)
@@ -161,7 +169,7 @@ const Pagination: React.ForwardRefRenderFunction<HTMLDivElement, PaginationProps
     }
   };
 
-  if(totalPages === 1) return null
+  if (totalPages === 1) return null;
 
   return (
     <div ref={ref} style={style} className={mainClassName}>
@@ -206,4 +214,4 @@ const Pagination: React.ForwardRefRenderFunction<HTMLDivElement, PaginationProps
   );
 };
 
-export default React.forwardRef(Pagination);
+export default forwardRef(Pagination);

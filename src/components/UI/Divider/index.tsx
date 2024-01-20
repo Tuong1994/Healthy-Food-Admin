@@ -1,4 +1,4 @@
-import React from "react";
+import { HTMLAttributes, ReactNode, ForwardRefRenderFunction, forwardRef } from "react";
 import utils from "@/utils";
 import useLayout from "../Layout/useLayout";
 
@@ -6,16 +6,16 @@ type DividerType = "horizontal" | "vertical";
 
 type ContentPlacement = "left" | "center" | "right";
 
-export interface DividerProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface DividerProps extends HTMLAttributes<HTMLDivElement> {
   rootClassName?: string;
-  children?: React.ReactNode | React.ReactNode[];
+  children?: ReactNode | ReactNode[];
   plain?: boolean;
   verticalSize?: number;
   placement?: ContentPlacement;
   type?: DividerType;
 }
 
-const Divider: React.ForwardRefRenderFunction<HTMLDivElement, DividerProps> = (
+const Divider: ForwardRefRenderFunction<HTMLDivElement, DividerProps> = (
   {
     rootClassName = "",
     type = "horizontal",
@@ -64,4 +64,4 @@ const Divider: React.ForwardRefRenderFunction<HTMLDivElement, DividerProps> = (
   );
 };
 
-export default React.forwardRef(Divider);
+export default forwardRef(Divider);

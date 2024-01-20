@@ -1,26 +1,24 @@
-import React from "react";
-import { UI } from "@/components";
-import { useLang } from "@/hooks";
+import { FC, Fragment } from "react";
+import { Space, Button } from "@/components/UI";
 import { Link } from "react-router-dom";
+import { useLang } from "@/hooks";
 import ContentHeader from "@/components/Page/ContentHeader";
-import url from "@/common/constant/url";
 import OrdersTable from "./OrdersTable";
+import url from "@/common/constant/url";
 
 const { ORDER_FORM } = url;
 
-const { Space, Button } = UI;
-
 interface OrdersProps {}
 
-const Orders: React.FC<OrdersProps> = () => {
+const Orders: FC<OrdersProps> = () => {
   const { lang } = useLang();
 
   return (
-    <React.Fragment>
+    <Fragment>
       <ContentHeader
         headTitle={lang.order.list.title}
         right={() => (
-          <React.Fragment>
+          <Fragment>
             <Space>
               <Button color="blue" ghost>
                 {lang.common.actions.export}
@@ -29,11 +27,11 @@ const Orders: React.FC<OrdersProps> = () => {
                 <Button color="green">{lang.common.actions.create}</Button>
               </Link>
             </Space>
-          </React.Fragment>
+          </Fragment>
         )}
       />
       <OrdersTable lang={lang} />
-    </React.Fragment>
+    </Fragment>
   );
 };
 

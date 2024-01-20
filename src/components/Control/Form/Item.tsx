@@ -1,4 +1,4 @@
-import React from "react";
+import { ReactNode, FC, useContext, Fragment } from "react";
 import { Controller, useController } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { NoteMessage } from "@/components/UI";
@@ -11,17 +11,11 @@ export interface FormItemProps {
   type?: FormItemType;
   rules?: FormRule[];
   disabled?: boolean;
-  children?: React.ReactNode | React.ReactNode[];
+  children?: ReactNode | ReactNode[];
 }
 
-const FormItem: React.FC<FormItemProps> = ({
-  name,
-  type = "default",
-  disabled = false,
-  rules = [],
-  children,
-}) => {
-  const { sizes } = React.useContext(FormContext);
+const FormItem: FC<FormItemProps> = ({ name, type = "default", disabled = false, rules = [], children }) => {
+  const { sizes } = useContext(FormContext);
 
   const {
     field: { name: rhfName, value: rhfValue, onChange: rhfOnChange, onBlur: rhfOnBlur },
@@ -61,11 +55,7 @@ const FormItem: React.FC<FormItemProps> = ({
   return (
     <FormItemContext.Provider value={initialState}>
       <div className={`form-item-${sizes}`}>
-        <Controller
-          name={name}
-          rules={{ ...getRules() }}
-          render={() => <React.Fragment>{children}</React.Fragment>}
-        />
+        <Controller name={name} rules={{ ...getRules() }} render={() => <Fragment>{children}</Fragment>} />
         {errors[rhfName] && (
           <ErrorMessage
             name={name}

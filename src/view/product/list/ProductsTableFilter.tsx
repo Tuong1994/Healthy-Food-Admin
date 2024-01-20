@@ -1,16 +1,13 @@
-import React from "react";
-import { UI, Control } from "@/components";
+import { FC, Fragment } from "react";
+import { Grid } from "@/components/UI";
+import { Input, Select } from "@/components/Control";
 import type { GridColProps } from "@/components/UI/Grid/Col";
-
-const { Grid } = UI;
 
 const { Col } = Grid;
 
-const { Input, Select } = Control;
-
 interface ProductsTableFilterProps {}
 
-const ProductsTableFilter: React.FC<ProductsTableFilterProps> = () => {
+const ProductsTableFilter: FC<ProductsTableFilterProps> = () => {
   const commonProps: GridColProps = {
     xs: 24,
     md: 12,
@@ -19,7 +16,7 @@ const ProductsTableFilter: React.FC<ProductsTableFilterProps> = () => {
   };
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Col {...commonProps}>
         <Input sizes="sm" />
       </Col>
@@ -35,7 +32,7 @@ const ProductsTableFilter: React.FC<ProductsTableFilterProps> = () => {
       <Col {...commonProps}>
         <Select sizes="sm" />
       </Col>
-    </React.Fragment>
+    </Fragment>
   );
 };
 

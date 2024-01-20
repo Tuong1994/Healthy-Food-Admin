@@ -1,16 +1,13 @@
-import React from "react";
-import { UI, Control } from "@/components";
+import { FC } from "react";
+import { Modal, Grid } from "@/components/UI";
+import { Form, FormItem, Input, InputNumber, Select, Upload } from "@/components/Control";
 import type { Lang } from "@/common/type";
 import type { ModalProps } from "@/components/UI/Modal";
-import { Product } from "@/services/product/type";
+import type { Product } from "@/services/product/type";
 import { EInventoryStatus, EProductOrigin, EProductStatus, EProductUnit } from "@/services/product/enum";
 import { useSelectOption } from "@/hooks";
 
-const { Modal, Grid } = UI;
-
 const { Row, Col } = Grid;
-
-const { Form, FormItem, Input, InputNumber, Select, Upload } = Control;
 
 const { ImageUpload } = Upload;
 
@@ -20,7 +17,7 @@ interface CreateProductModalProps extends ModalProps {
   lang: Lang;
 }
 
-const CreateProductModal: React.FC<CreateProductModalProps> = ({ lang, ...restProps }) => {
+const CreateProductModal: FC<CreateProductModalProps> = ({ lang, ...restProps }) => {
   const options = useSelectOption();
 
   const modalDefaultProps: ModalProps = {
@@ -56,10 +53,10 @@ const CreateProductModal: React.FC<CreateProductModalProps> = ({ lang, ...restPr
           </Col>
           <Col xs={24} md={18} span={16}>
             <FormItem name="nameEn">
-              <Input label={lang.common.form.label.nameEn} />
+              <Input label={lang.common.form.label.productNameEn} />
             </FormItem>
             <FormItem name="nameVn">
-              <Input label={lang.common.form.label.nameEn} />
+              <Input label={lang.common.form.label.productNameVn} />
             </FormItem>
           </Col>
         </Row>

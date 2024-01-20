@@ -1,16 +1,13 @@
-import React from "react";
-import { UI, Control } from "@/components";
+import { FC, Fragment } from "react";
+import { Grid } from "@/components/UI";
+import { Input, Select } from "@/components/Control";
 import type { GridColProps } from "@/components/UI/Grid/Col";
-
-const { Grid } = UI;
 
 const { Col } = Grid;
 
-const { Input, Select } = Control;
-
 interface SubCategoriesTableFilterProps {}
 
-const SubCategoriesTableFilter: React.FC<SubCategoriesTableFilterProps> = () => {
+const SubCategoriesTableFilter: FC<SubCategoriesTableFilterProps> = () => {
   const commonProps: GridColProps = {
     xs: 24,
     md: 12,
@@ -18,14 +15,14 @@ const SubCategoriesTableFilter: React.FC<SubCategoriesTableFilterProps> = () => 
   };
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Col {...commonProps}>
         <Input sizes="sm" />
       </Col>
       <Col {...commonProps}>
         <Select sizes="sm" />
       </Col>
-    </React.Fragment>
+    </Fragment>
   );
 };
 

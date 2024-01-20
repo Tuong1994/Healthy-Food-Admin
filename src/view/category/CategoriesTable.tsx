@@ -1,5 +1,5 @@
-import React from "react";
-import { UI } from "@/components";
+import { FC, Fragment } from "react";
+import { Image, Table, Button } from "@/components/UI";
 import type { Lang } from "@/common/type";
 import type { Columns } from "@/components/UI/Table/type";
 import type { Category } from "@/services/category/type";
@@ -8,15 +8,13 @@ import ContentHeader from "@/components/Page/ContentHeader";
 import CategoriesTableFilter from "./CategoriesTableFilter";
 import moment from "moment";
 
-const { Image, Table, Button } = UI;
-
 interface CategoriesTableProps {
   type: ELang;
   lang: Lang;
   handleOpenModal: (activeId: string | null) => void;
 }
 
-const CategoriesTable: React.FC<CategoriesTableProps> = ({ type, lang, handleOpenModal }) => {
+const CategoriesTable: FC<CategoriesTableProps> = ({ type, lang, handleOpenModal }) => {
   const dataSource: Category[] = [
     {
       id: "1",
@@ -80,7 +78,7 @@ const CategoriesTable: React.FC<CategoriesTableProps> = ({ type, lang, handleOpe
   ];
 
   return (
-    <React.Fragment>
+    <Fragment>
       <ContentHeader
         headTitle={lang.category.categoryTitle}
         right={() => (
@@ -98,7 +96,7 @@ const CategoriesTable: React.FC<CategoriesTableProps> = ({ type, lang, handleOpe
         columns={columns}
         filter={<CategoriesTableFilter />}
       />
-    </React.Fragment>
+    </Fragment>
   );
 };
 

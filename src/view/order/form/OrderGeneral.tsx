@@ -1,22 +1,19 @@
-import React from "react";
-import { UI, Control } from "@/components";
+import { FC } from "react";
+import { Card, InfoRow, Divider } from "@/components/UI";
+import { FormItem, TextArea } from "@/components/Control";
 import type { Lang } from "@/common/type";
 import type { InfoRowProps } from "@/components/UI/InfoRow";
-import { EPaymentMethod } from "@/services/order/enum";
 import { useLang } from "@/hooks";
+import { EPaymentMethod } from "@/services/order/enum";
 import useDisplayPaymentMethod from "../hooks/useDisplayPaymentMethod";
 import utils from "@/utils";
-
-const { Card, InfoRow, Divider } = UI;
-
-const { FormItem, TextArea } = Control;
 
 interface OrderGeneralProps {
   lang: Lang;
 }
 
-const OrderGeneral: React.FC<OrderGeneralProps> = ({ lang }) => {
-  const { type } = useLang();
+const OrderGeneral: FC<OrderGeneralProps> = ({ lang }) => {
+  const { locale } = useLang();
 
   const infoRowProps: InfoRowProps = {
     hasColon: true,
@@ -44,7 +41,7 @@ const OrderGeneral: React.FC<OrderGeneralProps> = ({ lang }) => {
         labelProps={{ size: 16 }}
         textProps={{ variant: "success", size: 16 }}
         label={lang.order.form.totalPayment}
-        text={utils.formatPrice(type, 250000)}
+        text={utils.formatPrice(locale, 250000)}
       />
     </Card>
   );

@@ -1,5 +1,5 @@
-import React from "react";
-import { UI } from "@/components";
+import { FC, Fragment } from "react";
+import { Image, Table, Button } from "@/components/UI";
 import type { Lang } from "@/common/type";
 import type { Customer, CustomerAddress } from "@/services/customer/type";
 import type { Columns } from "@/components/UI/Table/type";
@@ -7,22 +7,20 @@ import { ELang } from "@/common/enum";
 import { EGender, ERole } from "@/services/customer/enum";
 import { useLang } from "@/hooks";
 import { Link } from "react-router-dom";
+import CustomersTableFilter from "./CustomersTableFilter";
 import useDisplayGender from "../hooks/useDisplayGender";
 import useDisplayRole from "../hooks/useDisplayRole";
-import CustomersTableFilter from "./CustomersTableFilter";
 import url from "@/common/constant/url";
 import moment from "moment";
 
 const { CUSTOMER_FORM } = url;
 
-const { Image, Table, Button } = UI;
-
 interface CustomersTableProps {
   lang: Lang;
 }
 
-const CustomersTable: React.FC<CustomersTableProps> = ({ lang }) => {
-  const { type } = useLang();
+const CustomersTable: FC<CustomersTableProps> = ({ lang }) => {
+  const { locale } = useLang();
 
   const dataSource: Customer[] = [
     {
@@ -110,7 +108,7 @@ const CustomersTable: React.FC<CustomersTableProps> = ({ lang }) => {
       title: lang.common.table.head.address,
       dataIndex: "address",
       render: (address: CustomerAddress) => (
-        <>{type === ELang.EN ? address.fullAddressEn : address.fullAddressVn} </>
+        <>{locale === ELang.EN ? address.fullAddressEn : address.fullAddressVn} </>
       ),
     },
     {
@@ -134,7 +132,7 @@ const CustomersTable: React.FC<CustomersTableProps> = ({ lang }) => {
   ];
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Table<Customer>
         color="green"
         hasFilter
@@ -144,7 +142,7 @@ const CustomersTable: React.FC<CustomersTableProps> = ({ lang }) => {
         columns={columns}
         filter={<CustomersTableFilter />}
       />
-    </React.Fragment>
+    </Fragment>
   );
 };
 

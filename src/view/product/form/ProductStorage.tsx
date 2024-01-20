@@ -1,19 +1,16 @@
-import React from "react";
-import { UI, Control } from "@/components";
-import type { Lang } from "@/common/type";
+import { FC } from "react";
+import { Card, Typography } from "@/components/UI";
+import { FormItem, Input, Select } from "@/components/Control";
 import { useSelectOption } from "@/hooks";
-
-const { Card, Typography } = UI;
+import type { Lang } from "@/common/type";
 
 const { Paragraph } = Typography;
-
-const { FormItem, Input, Select } = Control;
 
 interface ProductStorageProps {
   lang: Lang;
 }
 
-const ProductStorage: React.FC<ProductStorageProps> = ({ lang }) => {
+const ProductStorage: FC<ProductStorageProps> = ({ lang }) => {
   const options = useSelectOption();
 
   return (

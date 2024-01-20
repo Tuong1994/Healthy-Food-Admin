@@ -1,20 +1,17 @@
-import React from "react";
-import { UI, Control } from "@/components";
+import { FC } from "react";
+import { Card, Typography, Grid } from "@/components/UI";
+import { FormItem, Select } from "@/components/Control";
 import type { Lang } from "@/common/type";
-
-const { Card, Typography, Grid } = UI;
 
 const { Paragraph } = Typography;
 
 const { Row, Col } = Grid;
 
-const { FormItem, Select } = Control;
-
 interface ProductCategoryProps {
   lang: Lang;
 }
 
-const ProductCategory: React.FC<ProductCategoryProps> = ({ lang }) => {
+const ProductCategory: FC<ProductCategoryProps> = ({ lang }) => {
   return (
     <Card
       head={

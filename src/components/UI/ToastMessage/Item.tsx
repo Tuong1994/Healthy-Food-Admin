@@ -1,4 +1,4 @@
-import React from "react";
+import { CSSProperties, FC, useState, useRef, useEffect } from "react";
 import { ToastMessage } from "./type";
 import { HiXMark } from "react-icons/hi2";
 import useToastStore from "./ToastStore";
@@ -7,13 +7,13 @@ import utils from "@/utils";
 interface ToastMessageItemProps {
   toast: ToastMessage;
   itemClassName?: string;
-  itemStyle?: React.CSSProperties;
+  itemStyle?: CSSProperties;
   showProgress?: boolean;
 }
 
 const ANIMATION_TIME = 4000;
 
-const ToastMessageItem: React.FC<ToastMessageItemProps> = ({
+const ToastMessageItem: FC<ToastMessageItemProps> = ({
   toast,
   itemClassName = "",
   itemStyle,
@@ -21,13 +21,13 @@ const ToastMessageItem: React.FC<ToastMessageItemProps> = ({
 }) => {
   const [options, removeToast] = useToastStore((state) => [state.options, state.removeToast]);
 
-  const [removed, setRemoved] = React.useState<boolean>(false);
+  const [removed, setRemoved] = useState<boolean>(false);
 
   const { successIcon, errorIcon, warningIcon, infoIcon } = options;
 
-  const barRef = React.useRef<HTMLDivElement>(null);
+  const barRef = useRef<HTMLDivElement>(null);
 
-  const timeRef = React.useRef<any>(null);
+  const timeRef = useRef<any>(null);
 
   const { id, type, message } = toast;
 
@@ -37,7 +37,7 @@ const ToastMessageItem: React.FC<ToastMessageItemProps> = ({
 
   const className = utils.formatClassName("message-item", typeClassName, removeClassName, itemClassName);
 
-  React.useEffect(() => {
+  useEffect(() => {
     timeRef.current = setTimeout(() => handleRemove(), ANIMATION_TIME);
     return () => clearTimeout(timeRef.current);
   }, []);

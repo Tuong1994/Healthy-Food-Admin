@@ -1,5 +1,5 @@
-import React from "react";
-import { UI } from "@/components";
+import { FC, Fragment } from "react";
+import { Image, Table, Button } from "@/components/UI";
 import type { Lang } from "@/common/type";
 import type { Columns } from "@/components/UI/Table/type";
 import type { Product } from "@/services/product/type";
@@ -7,25 +7,23 @@ import { ELang } from "@/common/enum";
 import { EInventoryStatus, EProductOrigin, EProductStatus, EProductUnit } from "@/services/product/enum";
 import { useLang } from "@/hooks";
 import { Link } from "react-router-dom";
+import ProductsTableFilter from "./ProductsTableFilter";
 import useDisplayInventoryStatus from "../hooks/useDisplayInventoryStatus";
 import useDisplayProductStatus from "../hooks/useDisplayProductStatus";
 import useDisplayProductOrigin from "../hooks/useDisplayProductOrigin";
 import useDisplayProductUnit from "../hooks/useDisplayProductUnit";
-import ProductsTableFilter from "./ProductsTableFilter";
 import url from "@/common/constant/url";
 import moment from "moment";
 import utils from "@/utils";
 
 const { PRODUCT_FORM } = url;
 
-const { Image, Table, Button } = UI;
-
 interface ProductsTableProps {
   lang: Lang;
 }
 
-const ProductsTable: React.FC<ProductsTableProps> = ({ lang }) => {
-  const { type } = useLang();
+const ProductsTable: FC<ProductsTableProps> = ({ lang }) => {
+  const { locale } = useLang();
 
   const dataSource: Product[] = [
     {
@@ -97,7 +95,7 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ lang }) => {
     {
       id: "name",
       title: lang.common.table.head.productName,
-      dataIndex: type === ELang.EN ? "nameEn" : "nameVn",
+      dataIndex: locale === ELang.EN ? "nameEn" : "nameVn",
       render: (name: string, data: Product) => (
         <Link to={PRODUCT_FORM} state={{ id: data.id }}>
           <Button text>{name}</Button>
@@ -108,7 +106,7 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ lang }) => {
       id: "price",
       title: lang.common.table.head.price,
       dataIndex: "totalPrice",
-      render: (price: number) => <>{utils.formatPrice(type, price)}</>,
+      render: (price: number) => <>{utils.formatPrice(locale, price)}</>,
     },
     {
       id: "inventory",
@@ -160,7 +158,7 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ lang }) => {
   ];
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Table<Product>
         color="green"
         hasFilter
@@ -170,7 +168,7 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ lang }) => {
         columns={columns}
         filter={<ProductsTableFilter />}
       />
-    </React.Fragment>
+    </Fragment>
   );
 };
 

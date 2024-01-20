@@ -1,22 +1,20 @@
-import React from "react";
-import { UI } from "@/components";
+import { FC, Fragment } from "react";
+import { Grid } from "@/components/UI";
 import { useLang } from "@/hooks";
 import ContentHeader from "@/components/Page/ContentHeader";
 import DashboardGeneral from "./DashboardGeneral";
 import DashboardChart from "./DashboardChart";
 import DashboardBestSaled from "./DashboadBestSaled";
 
-const { Grid } = UI;
-
 const { Row, Col } = Grid;
 
 interface DashboardProps {}
 
-const Dashboard: React.FC<DashboardProps> = () => {
+const Dashboard: FC<DashboardProps> = () => {
   const { lang } = useLang();
 
   return (
-    <React.Fragment>
+    <Fragment>
       <ContentHeader hasTotal={false} headTitle={lang.common.menu.dashboard} />
       <DashboardGeneral lang={lang} />
       <Row justify="between">
@@ -27,7 +25,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
           <DashboardBestSaled lang={lang} />
         </Col>
       </Row>
-    </React.Fragment>
+    </Fragment>
   );
 };
 

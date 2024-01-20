@@ -1,13 +1,10 @@
-import React from "react";
-import { UI, Control } from "@/components";
+import { FC, Fragment, useState } from "react";
+import { Button, Card, Grid } from "@/components/UI";
+import { FormItem, Input, InputPassword, Upload } from "@/components/Control";
 import type { Lang } from "@/common/type";
 import PasswordModal from "./PasswordModal";
 
-const { Button, Card, Grid } = UI;
-
 const { Row, Col } = Grid;
-
-const { FormItem, Input, InputPassword, Upload } = Control;
 
 const { ImageUpload } = Upload;
 
@@ -18,15 +15,15 @@ interface CustomerAuthProps {
   isUpdate: boolean;
 }
 
-const CustomerAuth: React.FC<CustomerAuthProps> = ({ lang, isUpdate }) => {
-  const [open, setOpen] = React.useState<boolean>(false);
+const CustomerAuth: FC<CustomerAuthProps> = ({ lang, isUpdate }) => {
+  const [open, setOpen] = useState<boolean>(false);
 
   const handleOpen = () => setOpen(true);
 
   const handleClose = () => setOpen(false);
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Card rootClassName="card-section">
         <Row justify="between">
           <Col xs={24} md={6} lg={6} span={6}>
@@ -49,7 +46,7 @@ const CustomerAuth: React.FC<CustomerAuthProps> = ({ lang, isUpdate }) => {
         </Row>
       </Card>
       <PasswordModal lang={lang} open={open} onCancel={handleClose} />
-    </React.Fragment>
+    </Fragment>
   );
 };
 

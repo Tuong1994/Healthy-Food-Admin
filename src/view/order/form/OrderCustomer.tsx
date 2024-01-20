@@ -1,18 +1,15 @@
-import React from "react";
-import { UI, Control } from "@/components";
+import { FC } from "react";
+import { Card, Typography } from "@/components/UI";
+import { FormItem, Select } from "@/components/Control";
 import type { Lang } from "@/common/type";
 
-const { Card, Typography } = UI;
-
 const { Paragraph } = Typography;
-
-const { FormItem, Select } = Control;
 
 interface OrderCustomerProps {
   lang: Lang;
 }
 
-const OrderCustomer: React.FC<OrderCustomerProps> = ({ lang }) => {
+const OrderCustomer: FC<OrderCustomerProps> = ({ lang }) => {
   return (
     <Card
       rootClassName="card-section"

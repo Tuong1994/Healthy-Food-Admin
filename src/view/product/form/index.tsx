@@ -1,11 +1,11 @@
-import React from "react";
-import { UI } from "@/components";
-import { useLang, useHasLocationState } from "@/hooks";
-import { Link } from "react-router-dom";
+import { FC, Fragment } from "react";
+import { Breadcrumb, Button } from "@/components/UI";
 import type { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
 import type { ContentHeaderProps } from "@/components/Page/ContentHeader";
 import type { Product } from "@/services/product/type";
 import { EInventoryStatus, EProductOrigin, EProductStatus, EProductUnit } from "@/services/product/enum";
+import { useLang, useHasLocationState } from "@/hooks";
+import { Link } from "react-router-dom";
 import FormLayout from "@/components/Page/FormLayout";
 import ProductInfo from "./ProductInfo";
 import ProductPrice from "./ProductPrice";
@@ -16,11 +16,9 @@ import url from "@/common/constant/url";
 
 const { PRODUCT_LIST } = url;
 
-const { Breadcrumb, Button } = UI;
-
 interface ProductProps {}
 
-const Product: React.FC<ProductProps> = () => {
+const Product: FC<ProductProps> = () => {
   const { lang } = useLang();
 
   const { isUpdate } = useHasLocationState();
@@ -55,22 +53,22 @@ const Product: React.FC<ProductProps> = () => {
   };
 
   const leftItems = (
-    <React.Fragment>
+    <Fragment>
       <ProductInfo lang={lang} />
       <ProductPrice lang={lang} />
       <ProductCategory lang={lang} />
-    </React.Fragment>
+    </Fragment>
   );
 
   const rightItems = (
-    <React.Fragment>
+    <Fragment>
       <ProductStorage lang={lang} />
       <ProductOthers lang={lang} />
-    </React.Fragment>
+    </Fragment>
   );
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Breadcrumb items={items} />
       <FormLayout<Product>
         headerProps={headerProps}
@@ -78,7 +76,7 @@ const Product: React.FC<ProductProps> = () => {
         leftItems={leftItems}
         rightItems={rightItems}
       />
-    </React.Fragment>
+    </Fragment>
   );
 };
 

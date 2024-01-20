@@ -1,4 +1,4 @@
-import React from "react";
+import { CSSProperties, ForwardRefRenderFunction, useContext, useEffect, forwardRef } from "react";
 import { MenuItems } from "../type";
 import LayoutContext, { LayoutColor } from "../../Context";
 import MenuVerticalItem from "./Item";
@@ -8,13 +8,13 @@ import utils from "@/utils";
 export interface MenuVerticalProps {
   rootClassName?: string;
   itemClassName?: string;
-  itemStyle?: React.CSSProperties;
+  itemStyle?: CSSProperties;
   items?: MenuItems;
   color?: LayoutColor;
   defaultActiveId?: string[];
 }
 
-const MenuVertical: React.ForwardRefRenderFunction<HTMLDivElement, MenuVerticalProps> = (
+const MenuVertical: ForwardRefRenderFunction<HTMLDivElement, MenuVerticalProps> = (
   {
     rootClassName = "",
     itemClassName,
@@ -26,7 +26,7 @@ const MenuVertical: React.ForwardRefRenderFunction<HTMLDivElement, MenuVerticalP
   },
   ref
 ) => {
-  const { theme, layouted, color: layoutColor } = React.useContext(LayoutContext);
+  const { theme, layouted, color: layoutColor } = useContext(LayoutContext);
 
   const [activeId, setActiveId] = useMenuStore((state) => [state.activeId, state.setActiveId]);
 
@@ -36,7 +36,7 @@ const MenuVertical: React.ForwardRefRenderFunction<HTMLDivElement, MenuVerticalP
 
   const className = utils.formatClassName("menu-vertical", themeClassName, colorClassName, rootClassName);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!sessionStorage.getItem(STORAGE_KEY))
       return setActiveId(defaultActiveId.length ? defaultActiveId : []);
     const id: string[] = JSON.parse(sessionStorage.getItem(STORAGE_KEY) ?? "");
@@ -66,4 +66,4 @@ const MenuVertical: React.ForwardRefRenderFunction<HTMLDivElement, MenuVerticalP
   );
 };
 
-export default React.forwardRef(MenuVertical);
+export default forwardRef(MenuVertical);

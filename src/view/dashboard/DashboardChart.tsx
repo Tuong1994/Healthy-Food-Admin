@@ -1,9 +1,9 @@
-import React from "react";
+import { FC } from "react";
 import { LineChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Line } from "recharts";
 
 interface DashboardChartProps {}
 
-const DashboardChart: React.FC<DashboardChartProps> = () => {
+const DashboardChart: FC<DashboardChartProps> = () => {
   const data = [
     {
       name: "Page A",

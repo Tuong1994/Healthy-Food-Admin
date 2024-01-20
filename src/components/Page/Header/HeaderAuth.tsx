@@ -1,7 +1,7 @@
-import React from "react";
-import { UI } from "@/components";
-import type { Lang } from "@/common/type";
+import { FC } from "react";
+import { Space, Avatar, Dropdown, Grid } from "@/components/UI";
 import type { DropdownItems } from "@/components/UI/Dropdown/type";
+import type { Lang } from "@/common/type";
 import { HiUser } from "react-icons/hi2";
 import { HiLogout } from "react-icons/hi";
 import { Link } from "react-router-dom";
@@ -9,22 +9,22 @@ import url from "@/common/constant/url";
 
 const { CUSTOMER_FORM } = url;
 
-const { Space, Avatar, Dropdown, Grid } = UI;
-
 const { Row, Col } = Grid;
 
 interface HeaderAuthProps {
   lang: Lang;
 }
 
-const HeaderAuth: React.FC<HeaderAuthProps> = ({ lang }) => {
+const HeaderAuth: FC<HeaderAuthProps> = ({ lang }) => {
   const items: DropdownItems = [
     {
       id: "1",
       label: (
         <Space align="middle">
           <HiUser />
-          <Link to={CUSTOMER_FORM} state={{id: '', isUser: true}}>{lang.pageComponent.header.profile.user}</Link>
+          <Link to={CUSTOMER_FORM} state={{ id: "", isUser: true }}>
+            {lang.pageComponent.header.profile.user}
+          </Link>
         </Space>
       ),
     },

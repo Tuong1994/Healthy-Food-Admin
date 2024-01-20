@@ -1,8 +1,8 @@
 import useLangStore from "@/store/LangStore";
 
 const useLang = () => {
-  const [lang, type] = useLangStore((state) => [state.lang, state.type]);
-  return { lang, type };
+  const [lang, locale] = useLangStore((state) => [state.lang, state.locale]);
+  return { lang, locale };
 };
 
 export default useLang;

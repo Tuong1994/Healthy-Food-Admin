@@ -1,16 +1,13 @@
-import React from "react";
+import { RefObject, Dispatch, SetStateAction, useEffect } from "react";
 
-const useClickOutside = (
-  ref: React.RefObject<any>,
-  setTrigger: React.Dispatch<React.SetStateAction<boolean>>
-) => {
+const useClickOutside = (ref: RefObject<any>, setTrigger: Dispatch<SetStateAction<boolean>>) => {
   const handleClickOutside = (e: Event) => {
     if (ref.current && !ref.current.contains(e.target)) {
       setTrigger(false);
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.addEventListener("mousedown", handleClickOutside);
     return () => window.removeEventListener("mousedown", handleClickOutside);
   }, []);

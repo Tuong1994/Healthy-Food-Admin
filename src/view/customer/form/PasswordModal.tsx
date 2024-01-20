@@ -1,19 +1,16 @@
-import React from "react";
-import { UI, Control } from "@/components";
+import { FC } from "react";
+import { Modal } from "@/components/UI";
+import { Form, FormItem, InputPassword } from "@/components/Control";
 import type { Lang } from "@/common/type";
 import type { ModalProps } from "@/components/UI/Modal";
 import type { CustomerPassword } from "@/services/customer/type";
 import useForm from "@/components/Control/Form/useForm";
 
-const { Modal } = UI;
-
-const { Form, FormItem, InputPassword } = Control;
-
 interface AddressModalProps extends ModalProps {
   lang: Lang;
 }
 
-const AddressModal: React.FC<AddressModalProps> = ({ lang, ...restProps }) => {
+const AddressModal: FC<AddressModalProps> = ({ lang, ...restProps }) => {
   const form = useForm();
 
   const modalDefaultProps: ModalProps = {

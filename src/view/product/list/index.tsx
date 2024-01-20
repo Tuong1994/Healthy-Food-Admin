@@ -1,5 +1,5 @@
-import React from "react";
-import { UI } from "@/components";
+import { FC, Fragment } from "react";
+import { Space, Button } from "@/components/UI";
 import { useLang } from "@/hooks";
 import { Link } from "react-router-dom";
 import ContentHeader from "@/components/Page/ContentHeader";
@@ -8,19 +8,17 @@ import url from "@/common/constant/url";
 
 const { PRODUCT_FORM } = url;
 
-const { Space, Button } = UI;
-
 interface ProductsProps {}
 
-const Products: React.FC<ProductsProps> = () => {
+const Products: FC<ProductsProps> = () => {
   const { lang } = useLang();
 
   return (
-    <React.Fragment>
+    <Fragment>
       <ContentHeader
         headTitle={lang.product.list.title}
         right={() => (
-          <React.Fragment>
+          <Fragment>
             <Space>
               <Button color="blue" ghost>
                 {lang.common.actions.export}
@@ -29,11 +27,11 @@ const Products: React.FC<ProductsProps> = () => {
                 <Button color="green">{lang.common.actions.create}</Button>
               </Link>
             </Space>
-          </React.Fragment>
+          </Fragment>
         )}
       />
       <ProductsTable lang={lang} />
-    </React.Fragment>
+    </Fragment>
   );
 };
 

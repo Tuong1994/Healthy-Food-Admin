@@ -1,5 +1,5 @@
-import React from "react";
-import { UI } from "@/components";
+import { FC, Fragment } from "react";
+import { Space, Button } from "@/components/UI";
 import { useLang } from "@/hooks";
 import { Link } from "react-router-dom";
 import ContentHeader from "@/components/Page/ContentHeader";
@@ -8,19 +8,17 @@ import url from "@/common/constant/url";
 
 const { CUSTOMER_FORM } = url;
 
-const { Space, Button } = UI;
-
 interface CustomersProps {}
 
-const Customers: React.FC<CustomersProps> = () => {
+const Customers: FC<CustomersProps> = () => {
   const { lang } = useLang();
-  
+
   return (
-    <React.Fragment>
+    <Fragment>
       <ContentHeader
         headTitle={lang.customer.list.title}
         right={() => (
-          <React.Fragment>
+          <Fragment>
             <Space>
               <Button color="blue" ghost>
                 {lang.common.actions.export}
@@ -29,11 +27,11 @@ const Customers: React.FC<CustomersProps> = () => {
                 <Button color="green">{lang.common.actions.create}</Button>
               </Link>
             </Space>
-          </React.Fragment>
+          </Fragment>
         )}
       />
       <CustomersTable lang={lang} />
-    </React.Fragment>
+    </Fragment>
   );
 };
 

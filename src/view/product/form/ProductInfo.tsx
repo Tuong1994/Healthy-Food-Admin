@@ -1,12 +1,9 @@
-import React from "react";
-import { UI, Control } from "@/components";
+import { FC } from "react";
+import { Card, Grid } from "@/components/UI";
+import { FormItem, Upload, Input } from "@/components/Control";
 import type { Lang } from "@/common/type";
 
-const { Card, Grid } = UI;
-
 const { Row, Col } = Grid;
-
-const { FormItem, Upload, Input } = Control;
 
 const { ImageUpload } = Upload;
 
@@ -16,7 +13,7 @@ interface ProductInfoProps {
   lang: Lang;
 }
 
-const ProductInfo: React.FC<ProductInfoProps> = ({ lang }) => {
+const ProductInfo: FC<ProductInfoProps> = ({ lang }) => {
   return (
     <Card rootClassName="card-section">
       <Row justify="between">

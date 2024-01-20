@@ -1,9 +1,7 @@
-import React from "react";
-import { UI } from "@/components";
-import type { Lang } from "@/common/type";
+import { FC } from "react";
+import { Card, Space, Divider, Button, Typography } from "@/components/UI";
 import { HiPlus } from "react-icons/hi2";
-
-const { Card, Space, Divider, Button, Typography } = UI;
+import type { Lang } from "@/common/type";
 
 const { Paragraph } = Typography;
 
@@ -12,7 +10,7 @@ interface OrderShipmentProps {
   handleOpenShipment: () => void;
 }
 
-const OrderShipment: React.FC<OrderShipmentProps> = ({ lang, handleOpenShipment }) => {
+const OrderShipment: FC<OrderShipmentProps> = ({ lang, handleOpenShipment }) => {
   return (
     <Card
       rootClassName="card-section"

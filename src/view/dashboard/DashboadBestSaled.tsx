@@ -1,12 +1,10 @@
-import React from "react";
-import { UI } from "@/components";
+import { FC } from "react";
 import type { Lang } from "@/common/type";
+import { Card, Space, Image, Typography } from "@/components/UI";
 import { Link } from "react-router-dom";
 import url from "@/common/constant/url";
 
 const { PRODUCT_FORM } = url;
-
-const { Card, Space, Image, Typography } = UI;
 
 const { Paragraph } = Typography;
 
@@ -14,7 +12,7 @@ interface DashboardBestSaledProps {
   lang: Lang;
 }
 
-const DashboardBestSaled: React.FC<DashboardBestSaledProps> = ({ lang }) => {
+const DashboardBestSaled: FC<DashboardBestSaledProps> = ({ lang }) => {
   const renderProducts = () => {
     return [...Array(10)].map((_, idx) => (
       <Link to={PRODUCT_FORM} key={idx} className="body-item">

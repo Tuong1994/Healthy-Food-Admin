@@ -1,5 +1,5 @@
-import React from "react";
-import { UI } from "@/components";
+import { FC, Fragment } from "react";
+import { Image, Table, Button } from "@/components/UI";
 import type { Lang } from "@/common/type";
 import type { Columns } from "@/components/UI/Table/type";
 import type { Order, OrderItem } from "@/services/order/type";
@@ -8,23 +8,21 @@ import { useLang } from "@/hooks";
 import { Link } from "react-router-dom";
 import OrdersTableFilter from "./OrdersTableFilter";
 import useMenu from "@/components/UI/Layout/Menu/useMenu";
-import url from "@/common/constant/url";
-import moment from "moment";
-import utils from "@/utils";
 import useDisplayOrderStatus from "../hooks/useDisplayOrderStatus";
 import useDisplayPaymentStatus from "../hooks/useDisplayPaymentStatus";
 import useDisplayPaymentMethod from "../hooks/useDisplayPaymentMethod";
+import url from "@/common/constant/url";
+import moment from "moment";
+import utils from "@/utils";
 
 const { ORDER_FORM, PRODUCT_FORM } = url;
-
-const { Image, Table, Button } = UI;
 
 interface OrdersTableProps {
   lang: Lang;
 }
 
-const OrdersTable: React.FC<OrdersTableProps> = ({ lang }) => {
-  const { type } = useLang();
+const OrdersTable: FC<OrdersTableProps> = ({ lang }) => {
+  const { locale } = useLang();
 
   const { setActiveId } = useMenu();
 
@@ -173,7 +171,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({ lang }) => {
         id: "productPrice",
         title: lang.common.table.head.price,
         dataIndex: "productPrice",
-        render: (data: number) => <>{utils.formatPrice(type, data)}</>,
+        render: (data: number) => <>{utils.formatPrice(locale, data)}</>,
       },
     ];
 
@@ -181,7 +179,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({ lang }) => {
   };
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Table<Order>
         color="green"
         hasFilter
@@ -193,7 +191,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({ lang }) => {
         filter={<OrdersTableFilter />}
         expandRowTable={expandRowTable}
       />
-    </React.Fragment>
+    </Fragment>
   );
 };
 

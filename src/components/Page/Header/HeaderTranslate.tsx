@@ -1,15 +1,13 @@
-import React from "react";
-import { UI } from "@/components";
-import { DropdownItems } from "@/components/UI/Dropdown/type";
+import { FC } from "react";
+import { Dropdown, Image, Space } from "@/components/UI";
+import type { DropdownItems } from "@/components/UI/Dropdown/type";
 import { ELang } from "@/common/enum";
-import useLangStore from "@/store/LangStore";
 import { HiChevronDown } from "react-icons/hi2";
-
-const { Dropdown, Image, Space } = UI;
+import useLangStore from "@/store/LangStore";
 
 interface HeaderTranslateProps {}
 
-const HeaderTranslate: React.FC<HeaderTranslateProps> = () => {
+const HeaderTranslate: FC<HeaderTranslateProps> = () => {
   const [type, lang, switchLang] = useLangStore((state) => [state.type, state.lang, state.switchLang]);
 
   const items: DropdownItems = [

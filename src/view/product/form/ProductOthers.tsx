@@ -1,19 +1,16 @@
-import React from "react";
-import { UI, Control } from "@/components";
-import type { Lang } from "@/common/type";
+import { FC } from "react";
+import { Card, Typography } from "@/components/UI";
+import { FormItem, Select } from "@/components/Control";
 import { useSelectOption } from "@/hooks";
-
-const { Card, Typography } = UI;
+import type { Lang } from "@/common/type";
 
 const { Paragraph } = Typography;
-
-const { FormItem, Select } = Control;
 
 interface ProductOthersProps {
   lang: Lang;
 }
 
-const ProductOthers: React.FC<ProductOthersProps> = ({ lang }) => {
+const ProductOthers: FC<ProductOthersProps> = ({ lang }) => {
   const options = useSelectOption();
 
   return (

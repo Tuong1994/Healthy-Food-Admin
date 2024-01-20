@@ -1,19 +1,16 @@
-import React from "react";
-import { UI, Control } from "@/components";
+import { FC } from "react";
+import { Card, Typography } from "@/components/UI";
+import { FormItem, Select } from "@/components/Control";
 import type { Lang } from "@/common/type";
 import { useSelectOption } from "@/hooks";
 
-const { Card, Typography } = UI;
-
 const { Paragraph } = Typography;
-
-const { FormItem, Select } = Control;
 
 interface CustomerAuthProps {
   lang: Lang;
 }
 
-const CustomerAuth: React.FC<CustomerAuthProps> = ({ lang }) => {
+const CustomerAuth: FC<CustomerAuthProps> = ({ lang }) => {
   const options = useSelectOption();
 
   return (

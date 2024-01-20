@@ -1,18 +1,15 @@
-import React from "react";
-import { UI, Control } from "@/components";
+import { FC } from "react";
+import { Modal } from "@/components/UI";
+import { Form, FormItem, Input } from "@/components/Control";
 import type { Lang } from "@/common/type";
 import type { ModalProps } from "@/components/UI/Modal";
 import type { Shipment } from "@/services/shipment/type";
-
-const { Modal } = UI;
-
-const { Form, FormItem, Input } = Control;
 
 interface ShipmentModalProps extends ModalProps {
   lang: Lang;
 }
 
-const ShipmentModal: React.FC<ShipmentModalProps> = ({ lang, ...restProps }) => {
+const ShipmentModal: FC<ShipmentModalProps> = ({ lang, ...restProps }) => {
   const modalDefaultProps: ModalProps = {
     color: "green",
     sizes: "sm",
@@ -26,7 +23,7 @@ const ShipmentModal: React.FC<ShipmentModalProps> = ({ lang, ...restProps }) => 
     phone: "",
     email: "",
     address: "",
-    orderId: '',
+    orderId: "",
   };
 
   return (

@@ -1,8 +1,6 @@
-import React from "react";
-import { UI } from "@/components";
+import { FC } from "react";
+import { Space, Card, Button, Divider, Typography } from "@/components/UI";
 import type { Lang } from "@/common/type";
-
-const { Space, Card, Button, Divider, Typography } = UI;
 
 const { Paragraph } = Typography;
 
@@ -12,7 +10,7 @@ interface OrderProductProps {
   handleOpenCreate: () => void;
 }
 
-const OrderProduct: React.FC<OrderProductProps> = ({ lang, handleOpenSelect, handleOpenCreate }) => {
+const OrderProduct: FC<OrderProductProps> = ({ lang, handleOpenSelect, handleOpenCreate }) => {
   return (
     <Card rootClassName="card-section">
       <Space justify="center">
