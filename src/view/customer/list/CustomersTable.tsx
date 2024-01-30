@@ -7,13 +7,13 @@ import { ELang } from "@/common/enum";
 import { EGender, ERole } from "@/services/customer/enum";
 import { useLang } from "@/hooks";
 import { Link } from "react-router-dom";
+import { linkPaths } from "@/common/constant/url";
 import CustomersTableFilter from "./CustomersTableFilter";
 import useDisplayGender from "../hooks/useDisplayGender";
 import useDisplayRole from "../hooks/useDisplayRole";
-import url from "@/common/constant/url";
 import moment from "moment";
 
-const { CUSTOMER_FORM } = url;
+const { CUSTOMER } = linkPaths;
 
 interface CustomersTableProps {
   lang: Lang;
@@ -76,7 +76,7 @@ const CustomersTable: FC<CustomersTableProps> = ({ lang }) => {
       title: lang.common.table.head.email,
       dataIndex: "email",
       render: (email: string, data: Customer) => (
-        <Link to={CUSTOMER_FORM} state={{ id: data.id }}>
+        <Link to={CUSTOMER} state={{ id: data.id }}>
           <Button text>{email}</Button>
         </Link>
       ),

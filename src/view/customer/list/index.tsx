@@ -2,11 +2,11 @@ import { FC, Fragment } from "react";
 import { Space, Button } from "@/components/UI";
 import { useLang } from "@/hooks";
 import { Link } from "react-router-dom";
+import { linkPaths } from "@/common/constant/url";
 import ContentHeader from "@/components/Page/ContentHeader";
 import CustomersTable from "./CustomersTable";
-import url from "@/common/constant/url";
 
-const { CUSTOMER_FORM } = url;
+const { CUSTOMER } = linkPaths;
 
 interface CustomersProps {}
 
@@ -23,7 +23,7 @@ const Customers: FC<CustomersProps> = () => {
               <Button color="blue" ghost>
                 {lang.common.actions.export}
               </Button>
-              <Link to={CUSTOMER_FORM}>
+              <Link to={CUSTOMER}>
                 <Button color="green">{lang.common.actions.create}</Button>
               </Link>
             </Space>

@@ -1,5 +1,5 @@
 import { RouteProps } from "react-router";
-import url from "@/common/constant/url";
+import { routerPaths } from "@/common/constant/url";
 import Dashboard from "@/view/dashboard";
 import Customers from "@/view/customer/list";
 import Customer from "@/view/customer/form";
@@ -22,7 +22,7 @@ const {
   SHIPMENT_LIST,
   SHIPMENT_FORM,
   CATEGORY,
-} = url;
+} = routerPaths;
 
 const routes: RouteProps[] = [
   {

@@ -3,14 +3,14 @@ import { Space, Grid } from "@/components/UI";
 import { Link } from "react-router-dom";
 import { HiBars3 } from "react-icons/hi2";
 import { useLang } from "@/hooks";
+import { linkPaths } from "@/common/constant/url";
 import Logo from "@/components/Page/Logo";
 import HeaderAuth from "./HeaderAuth";
 import HeaderTranslate from "./HeaderTranslate";
 import HeaderTheme from "./HeaderTheme";
 import useLayout from "@/components/UI/Layout/useLayout";
-import url from "@/common/constant/url";
 
-const { DASHBOARD } = url;
+const { DASHBOARD } = linkPaths;
 
 const { Row, Col } = Grid;
 

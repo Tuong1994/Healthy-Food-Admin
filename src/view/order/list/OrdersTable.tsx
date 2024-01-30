@@ -6,16 +6,16 @@ import type { Order, OrderItem } from "@/services/order/type";
 import { EOrderStatus, EPaymentMethod, EPaymentStatus } from "@/services/order/enum";
 import { useLang } from "@/hooks";
 import { Link } from "react-router-dom";
+import { linkPaths } from "@/common/constant/url";
 import OrdersTableFilter from "./OrdersTableFilter";
 import useMenu from "@/components/UI/Layout/Menu/useMenu";
 import useDisplayOrderStatus from "../hooks/useDisplayOrderStatus";
 import useDisplayPaymentStatus from "../hooks/useDisplayPaymentStatus";
 import useDisplayPaymentMethod from "../hooks/useDisplayPaymentMethod";
-import url from "@/common/constant/url";
 import moment from "moment";
 import utils from "@/utils";
 
-const { ORDER_FORM, PRODUCT_FORM } = url;
+const { ORDER, PRODUCT } = linkPaths;
 
 interface OrdersTableProps {
   lang: Lang;
@@ -113,7 +113,7 @@ const OrdersTable: FC<OrdersTableProps> = ({ lang }) => {
       title: lang.common.table.head.orderNumber,
       dataIndex: "orderNumber",
       render: (orderNumber: string, data: Order) => (
-        <Link to={ORDER_FORM} state={{ id: data.id }}>
+        <Link to={ORDER} state={{ id: data.id }}>
           <Button text>{orderNumber}</Button>
         </Link>
       ),
@@ -157,7 +157,7 @@ const OrdersTable: FC<OrdersTableProps> = ({ lang }) => {
         title: lang.common.table.head.productName,
         dataIndex: "productName",
         render: (productName: string, data: OrderItem) => (
-          <Link to={PRODUCT_FORM} state={{ id: data.id }} onClick={() => setActiveId(["product"])}>
+          <Link to={PRODUCT} state={{ id: data.id }} onClick={() => setActiveId(["product"])}>
             <Button text>{productName}</Button>
           </Link>
         ),

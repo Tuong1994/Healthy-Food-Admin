@@ -7,16 +7,16 @@ import { ELang } from "@/common/enum";
 import { EInventoryStatus, EProductOrigin, EProductStatus, EProductUnit } from "@/services/product/enum";
 import { useLang } from "@/hooks";
 import { Link } from "react-router-dom";
+import { linkPaths } from "@/common/constant/url";
 import ProductsTableFilter from "./ProductsTableFilter";
 import useDisplayInventoryStatus from "../hooks/useDisplayInventoryStatus";
 import useDisplayProductStatus from "../hooks/useDisplayProductStatus";
 import useDisplayProductOrigin from "../hooks/useDisplayProductOrigin";
 import useDisplayProductUnit from "../hooks/useDisplayProductUnit";
-import url from "@/common/constant/url";
 import moment from "moment";
 import utils from "@/utils";
 
-const { PRODUCT_FORM } = url;
+const { PRODUCT } = linkPaths;
 
 interface ProductsTableProps {
   lang: Lang;
@@ -97,7 +97,7 @@ const ProductsTable: FC<ProductsTableProps> = ({ lang }) => {
       title: lang.common.table.head.productName,
       dataIndex: locale === ELang.EN ? "nameEn" : "nameVn",
       render: (name: string, data: Product) => (
-        <Link to={PRODUCT_FORM} state={{ id: data.id }}>
+        <Link to={PRODUCT} state={{ id: data.id }}>
           <Button text>{name}</Button>
         </Link>
       ),

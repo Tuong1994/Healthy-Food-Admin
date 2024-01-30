@@ -5,9 +5,9 @@ import type { Lang } from "@/common/type";
 import { HiUser } from "react-icons/hi2";
 import { HiLogout } from "react-icons/hi";
 import { Link } from "react-router-dom";
-import url from "@/common/constant/url";
+import { linkPaths } from "@/common/constant/url";
 
-const { CUSTOMER_FORM } = url;
+const { CUSTOMER } = linkPaths;
 
 const { Row, Col } = Grid;
 
@@ -22,7 +22,7 @@ const HeaderAuth: FC<HeaderAuthProps> = ({ lang }) => {
       label: (
         <Space align="middle">
           <HiUser />
-          <Link to={CUSTOMER_FORM} state={{ id: "", isUser: true }}>
+          <Link to={CUSTOMER} state={{ id: "", isUser: true }}>
             {lang.pageComponent.header.profile.user}
           </Link>
         </Space>

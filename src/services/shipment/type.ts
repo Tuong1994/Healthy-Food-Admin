@@ -5,9 +5,11 @@ export type Shipment = {
   phone: string;
   email: string;
   address: string;
-  orderId: string;
   shipmentNumber?: string;
+  orderId?: string;
 
   createdAt?: Date | string;
   updatedAt?: Date | string;
 };
+
+export type ShipmentFormData = Omit<Shipment, "id" | "createdAt" | "updatedAt">;

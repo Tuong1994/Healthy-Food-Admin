@@ -6,10 +6,10 @@ import { Link } from "react-router-dom";
 import type { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
 import type { ContentHeaderProps } from "@/components/Page/ContentHeader";
 import type { Shipment } from "@/services/shipment/type";
+import { linkPaths } from "@/common/constant/url";
 import FormLayout from "@/components/Page/FormLayout";
-import url from "@/common/constant/url";
 
-const { SHIPMENT_LIST } = url;
+const { SHIPMENTS } = linkPaths;
 
 interface ShipmentProps {}
 
@@ -21,7 +21,7 @@ const Shipment: FC<ShipmentProps> = () => {
   const pageTitle = isUpdate ? lang.shipment.form.editTitle : lang.shipment.form.addTitle;
 
   const items: BreadcrumbItems = [
-    { id: "1", label: <Link to={SHIPMENT_LIST}>{lang.shipment.list.title}</Link> },
+    { id: "1", label: <Link to={SHIPMENTS}>{lang.shipment.list.title}</Link> },
     { id: "2", label: pageTitle, actived: true },
   ];
 

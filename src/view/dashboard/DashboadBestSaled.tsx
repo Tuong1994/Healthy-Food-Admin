@@ -1,10 +1,10 @@
 import { FC } from "react";
-import type { Lang } from "@/common/type";
 import { Card, Space, Image, Typography } from "@/components/UI";
 import { Link } from "react-router-dom";
-import url from "@/common/constant/url";
+import { linkPaths } from "@/common/constant/url";
+import type { Lang } from "@/common/type";
 
-const { PRODUCT_FORM } = url;
+const { PRODUCT } = linkPaths;
 
 const { Paragraph } = Typography;
 
@@ -15,7 +15,7 @@ interface DashboardBestSaledProps {
 const DashboardBestSaled: FC<DashboardBestSaledProps> = ({ lang }) => {
   const renderProducts = () => {
     return [...Array(10)].map((_, idx) => (
-      <Link to={PRODUCT_FORM} key={idx} className="body-item">
+      <Link to={PRODUCT} key={idx} className="body-item">
         <Card bodyClassName="item-content" hoverable>
           <Space size={15}>
             <Image imgWidth={60} imgHeight={60} />

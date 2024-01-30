@@ -15,7 +15,7 @@ export type ActiveModal = {
 interface CategoryProps {}
 
 const Category: FC<CategoryProps> = () => {
-  const { type, lang } = useLang();
+  const { locale, lang } = useLang();
 
   const [openCategoryModal, setOpenCategoryModal] = useState<ActiveModal>({
     open: false,
@@ -47,12 +47,12 @@ const Category: FC<CategoryProps> = () => {
     {
       id: "category",
       title: lang.category.categoryTitle,
-      content: <CategoriesTable type={type} lang={lang} handleOpenModal={handleOpenCategoryModal} />,
+      content: <CategoriesTable locale={locale} lang={lang} handleOpenModal={handleOpenCategoryModal} />,
     },
     {
       id: "subcategory",
       title: lang.category.subCategoryTitle,
-      content: <SubCategoriesTable type={type} lang={lang} handleOpenModal={handleOpenSubCategoryModal} />,
+      content: <SubCategoriesTable locale={locale} lang={lang} handleOpenModal={handleOpenSubCategoryModal} />,
     },
   ];
 
@@ -61,8 +61,8 @@ const Category: FC<CategoryProps> = () => {
       <Tabs color="green" items={items} />
       <CategoryFormModal openModal={openCategoryModal} lang={lang} onCancel={handleCloseCategoryModal} />
       <SubCategoryFormModal
-        openModal={openSubCategoryModal}
         lang={lang}
+        openModal={openSubCategoryModal}
         onCancel={handleCloseSubCategoryModal}
       />
     </Fragment>

@@ -1,14 +1,12 @@
-import type { ImageUpload } from "../image/type";
+import { Product } from "../product/type";
 
 export type CartItem = {
   id?: string;
 
-  productId: string;
-  productName: string;
-  productPrice: string;
-  productImage: ImageUpload;
   quantity: number;
+  productId: string;
   cartId: string;
+  product?: Pick<Product, "id" | "name" | "totalPrice" | "image">;
 
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -22,4 +20,14 @@ export type Cart = {
 
   createdAt?: Date | string;
   updatedAt?: Date | string;
+};
+
+export type CartWithItemsPaging = {
+  totalItems: number;
+  detail: Cart;
+};
+
+export type CartFormData = {
+  customerId: string;
+  items: Pick<CartItem, "productId" | "cartId" | "quantity">[];
 };

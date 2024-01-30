@@ -2,11 +2,11 @@ import { FC, Fragment } from "react";
 import { Space, Button } from "@/components/UI";
 import { Link } from "react-router-dom";
 import { useLang } from "@/hooks";
+import { linkPaths } from "@/common/constant/url";
 import ContentHeader from "@/components/Page/ContentHeader";
 import OrdersTable from "./OrdersTable";
-import url from "@/common/constant/url";
 
-const { ORDER_FORM } = url;
+const { ORDER } = linkPaths;
 
 interface OrdersProps {}
 
@@ -23,7 +23,7 @@ const Orders: FC<OrdersProps> = () => {
               <Button color="blue" ghost>
                 {lang.common.actions.export}
               </Button>
-              <Link to={ORDER_FORM}>
+              <Link to={ORDER}>
                 <Button color="green">{lang.common.actions.create}</Button>
               </Link>
             </Space>

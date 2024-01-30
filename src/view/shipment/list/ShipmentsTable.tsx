@@ -4,11 +4,11 @@ import type { Lang } from "@/common/type";
 import type { Columns } from "@/components/UI/Table/type";
 import type { Shipment } from "@/services/shipment/type";
 import { Link } from "react-router-dom";
+import { linkPaths } from "@/common/constant/url";
 import ShipmentsTableFilter from "./ShipmentsTableFilter";
-import url from "@/common/constant/url";
 import moment from "moment";
 
-const { SHIPMENT_FORM } = url;
+const { SHIPMENT } = linkPaths;
 
 interface ShipmentsTableProps {
   lang: Lang;
@@ -44,7 +44,7 @@ const ShipmentsTable: FC<ShipmentsTableProps> = ({ lang }) => {
       title: lang.common.table.head.customerName,
       dataIndex: "fullName",
       render: (name: string, data: Shipment) => (
-        <Link to={SHIPMENT_FORM} state={{ id: data.id }}>
+        <Link to={SHIPMENT} state={{ id: data.id }}>
           <Button text>{name}</Button>
         </Link>
       ),

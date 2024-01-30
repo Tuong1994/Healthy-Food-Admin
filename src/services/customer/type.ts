@@ -7,15 +7,13 @@ import { EGender, ERole } from "./enum";
 
 export type CustomerAddress = {
   id?: string;
+  address?: string;
   addressEn?: string;
   addressVn?: string;
-  fullAddressEn?: string;
-  fullAddressVn?: string;
+  fullAddress?: string;
   cityCode?: number;
   districtCode?: number;
   wardCode?: number;
-
-  isDelete?: boolean;
   createdAt?: Date | string;
   updatedAt?: Date | string;
 };
@@ -26,16 +24,16 @@ export type Customer = {
   email: string;
   password?: string;
   phone: string;
-  role: ERole;
+  role: ERole | null;
 
   firstName?: string;
   lastName?: string;
   fullName?: string;
-  gender?: EGender;
+  gender?: EGender | null;
   birthday?: Date | string;
+
   address?: CustomerAddress;
   image?: ImageUpload;
-
   cart?: Cart;
   orders?: Order[];
   comments?: Comment[];
@@ -45,8 +43,7 @@ export type Customer = {
   updatedAt?: Date | string;
 };
 
-export type CustomerPassword = {
-  oldPassword: string;
-  newPassword: string;
-  customerId: string;
-};
+export type CustomerFormData = Omit<
+  Customer,
+  "id" | "fullName" | "cart" | "orders" | "comments" | "rates" | "createdAt" | "updatedAt"
+>;

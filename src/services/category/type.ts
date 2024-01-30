@@ -1,16 +1,18 @@
 import { SubCategory } from "../subcategory/type";
 import { ImageUpload } from "../image/type";
-import { Product } from "../product/type";
 
 export type Category = {
   id?: string;
 
-  nameEn: string;
-  nameVn: string;
-  subCategories?: SubCategory[];
-  products?: Product[];
-  image?: ImageUpload;
+  name: string;
+  subCategories: SubCategory[];
 
   createdAt?: Date | string;
   updatedAt?: Date | string;
+};
+
+export type CategoryFormData = {
+  nameEn: string;
+  nameVn: string;
+  image?: ImageUpload;
 };

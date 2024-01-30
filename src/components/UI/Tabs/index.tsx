@@ -15,6 +15,7 @@ export interface TabsProps extends HTMLAttributes<HTMLDivElement> {
   items: TabsItems;
   defaultActiveId?: string;
   color?: Exclude<ComponentColor, "black" | "white" | "gray">;
+  onSelectTab?: (id: string) => void;
 }
 
 const Tabs: ForwardRefRenderFunction<HTMLDivElement, TabsProps> = (
@@ -28,6 +29,7 @@ const Tabs: ForwardRefRenderFunction<HTMLDivElement, TabsProps> = (
     color = "blue",
     items = [],
     defaultActiveId,
+    onSelectTab,
     ...restProps
   },
   ref
@@ -48,10 +50,15 @@ const Tabs: ForwardRefRenderFunction<HTMLDivElement, TabsProps> = (
 
   const tabsContentClassName = utils.formatClassName("tabs-content", contentClassName);
 
+  const handleSelectTab = (id: string) => {
+    setTabActive(id);
+    onSelectTab?.(id);
+  };
+
   const renderTitles = () => {
     return items.map((item) => {
       const tabActiveClassName = tabActive === item.id ? "head-item-active" : "";
-      const commonProps = { item, tabActiveClassName, setTabActive };
+      const commonProps = { item, tabActiveClassName, handleSelectTab };
       return <TabsHead key={item.id} {...commonProps} />;
     });
   };

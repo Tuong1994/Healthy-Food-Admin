@@ -6,15 +6,15 @@ import type { Product } from "@/services/product/type";
 import { EInventoryStatus, EProductOrigin, EProductStatus, EProductUnit } from "@/services/product/enum";
 import { useLang, useHasLocationState } from "@/hooks";
 import { Link } from "react-router-dom";
+import { linkPaths } from "@/common/constant/url";
 import FormLayout from "@/components/Page/FormLayout";
 import ProductInfo from "./ProductInfo";
 import ProductPrice from "./ProductPrice";
 import ProductCategory from "./ProductCategory";
 import ProductStorage from "./ProductStorage";
 import ProductOthers from "./ProductOthers";
-import url from "@/common/constant/url";
 
-const { PRODUCT_LIST } = url;
+const { PRODUCTS } = linkPaths;
 
 interface ProductProps {}
 
@@ -26,7 +26,7 @@ const Product: FC<ProductProps> = () => {
   const pageTitle = isUpdate ? lang.product.form.editTitle : lang.product.form.addTitle;
 
   const items: BreadcrumbItems = [
-    { id: "1", label: <Link to={PRODUCT_LIST}>{lang.product.list.title}</Link> },
+    { id: "1", label: <Link to={PRODUCTS}>{lang.product.list.title}</Link> },
     { id: "2", label: pageTitle, actived: true },
   ];
 

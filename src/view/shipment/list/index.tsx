@@ -2,11 +2,11 @@ import { FC, Fragment } from "react";
 import { Space, Button } from "@/components/UI";
 import { useLang } from "@/hooks";
 import { Link } from "react-router-dom";
+import { linkPaths } from "@/common/constant/url";
 import ContentHeader from "@/components/Page/ContentHeader";
 import ShipmentsTable from "./ShipmentsTable";
-import url from "@/common/constant/url";
 
-const { SHIPMENT_FORM } = url;
+const { SHIPMENT } = linkPaths;
 
 interface ShipmentsProps {}
 
@@ -23,7 +23,7 @@ const Shipments: FC<ShipmentsProps> = () => {
               <Button color="blue" ghost>
                 {lang.common.actions.export}
               </Button>
-              <Link to={SHIPMENT_FORM}>
+              <Link to={SHIPMENT}>
                 <Button color="green">{lang.common.actions.create}</Button>
               </Link>
             </Space>

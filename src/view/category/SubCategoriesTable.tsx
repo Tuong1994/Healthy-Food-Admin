@@ -9,62 +9,13 @@ import SubCategoriesTableFilter from "./SubCategoriesTableFilter";
 import moment from "moment";
 
 interface SubCategoriesTableProps {
-  type: ELang;
+  locale: ELang;
   lang: Lang;
   handleOpenModal: (activeId: string | null) => void;
 }
 
-const SubCategoriesTable: FC<SubCategoriesTableProps> = ({ type, lang, handleOpenModal }) => {
-  const dataSource: SubCategory[] = [
-    {
-      id: "1",
-      nameEn: "Sub category En",
-      nameVn: "Sub category Vn",
-      categoryId: "1",
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      id: "2",
-      nameEn: "Sub category En",
-      nameVn: "Sub category Vn",
-      categoryId: "1",
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      id: "3",
-      nameEn: "Sub category En",
-      nameVn: "Sub category Vn",
-      categoryId: "1",
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      id: "4",
-      nameEn: "Sub category En",
-      nameVn: "Sub category Vn",
-      categoryId: "1",
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      id: "5",
-      nameEn: "Sub category En",
-      nameVn: "Sub category Vn",
-      categoryId: "1",
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      id: "6",
-      nameEn: "Sub category En",
-      nameVn: "Sub category Vn",
-      categoryId: "1",
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-  ];
+const SubCategoriesTable: FC<SubCategoriesTableProps> = ({ locale, lang, handleOpenModal }) => {
+  const dataSource: SubCategory[] = [];
 
   const columns: Columns<SubCategory> = [
     {
@@ -76,7 +27,7 @@ const SubCategoriesTable: FC<SubCategoriesTableProps> = ({ type, lang, handleOpe
     {
       id: "name",
       title: lang.common.table.head.name,
-      dataIndex: type === ELang.EN ? "nameEn" : "nameVn",
+      dataIndex: "name",
       render: (name: string, data: SubCategory) => (
         <Button text onClick={() => handleOpenModal(data.id as string)}>
           {name}

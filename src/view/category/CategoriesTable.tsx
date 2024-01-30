@@ -9,42 +9,13 @@ import CategoriesTableFilter from "./CategoriesTableFilter";
 import moment from "moment";
 
 interface CategoriesTableProps {
-  type: ELang;
+  locale: ELang;
   lang: Lang;
   handleOpenModal: (activeId: string | null) => void;
 }
 
-const CategoriesTable: FC<CategoriesTableProps> = ({ type, lang, handleOpenModal }) => {
-  const dataSource: Category[] = [
-    {
-      id: "1",
-      nameEn: "Category En",
-      nameVn: "Category Vn",
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      id: "2",
-      nameEn: "Category En",
-      nameVn: "Category Vn",
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      id: "3",
-      nameEn: "Category En",
-      nameVn: "Category Vn",
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      id: "4",
-      nameEn: "Category En",
-      nameVn: "Category Vn",
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-  ];
+const CategoriesTable: FC<CategoriesTableProps> = ({ locale, lang, handleOpenModal }) => {
+  const dataSource: Category[] = [];
 
   const columns: Columns<Category> = [
     {
@@ -56,7 +27,7 @@ const CategoriesTable: FC<CategoriesTableProps> = ({ type, lang, handleOpenModal
     {
       id: "name",
       title: lang.common.table.head.name,
-      dataIndex: type === ELang.EN ? "nameEn" : "nameVn",
+      dataIndex: "name",
       render: (name: string, data: Category) => (
         <Button text onClick={() => handleOpenModal(data.id as string)}>
           {name}

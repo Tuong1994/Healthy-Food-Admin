@@ -6,14 +6,14 @@ import type { Customer } from "@/services/customer/type";
 import type { ContentHeaderProps } from "@/components/Page/ContentHeader";
 import type { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
 import { Link } from "react-router-dom";
+import { linkPaths } from "@/common/constant/url";
 import FormLayout from "@/components/Page/FormLayout";
 import CustomerAuth from "./CustomerAuth";
 import CustomerInfo from "./CustomerInfo";
 import CustomerPermission from "./CustomerPermission";
 import CustomerAddress from "./CustomerAddress";
-import url from "@/common/constant/url";
 
-const { CUSTOMER_LIST } = url;
+const { CUSTOMERS } = linkPaths;
 
 interface CustomerProps {}
 
@@ -30,7 +30,7 @@ const Customer: FC<CustomerProps> = () => {
   };
 
   const items: BreadcrumbItems = [
-    { id: "1", label: <Link to={CUSTOMER_LIST}>{lang.customer.list.title}</Link> },
+    { id: "1", label: <Link to={CUSTOMERS}>{lang.customer.list.title}</Link> },
     { id: "2", label: pageTitle(), actived: true },
   ];
 

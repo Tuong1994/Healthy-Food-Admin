@@ -6,6 +6,7 @@ import type { ContentHeaderProps } from "@/components/Page/ContentHeader";
 import type { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
 import { EOrderStatus, EPaymentMethod, EPaymentStatus } from "@/services/order/enum";
 import { Link } from "react-router-dom";
+import { linkPaths } from "@/common/constant/url";
 import FormLayout from "@/components/Page/FormLayout";
 import OrderProduct from "./OrderProduct";
 import SelectProductModal from "./Modals/SelectProductModal";
@@ -15,9 +16,8 @@ import OrderSetting from "./OrderSetting";
 import OrderCustomer from "./OrderCustomer";
 import OrderShipment from "./OrderShipment";
 import ShipmentModal from "./Modals/ShipmentModal";
-import url from "@/common/constant/url";
 
-const { ORDER_LIST } = url;
+const { ORDERS } = linkPaths;
 
 interface OrderProps {}
 
@@ -35,7 +35,7 @@ const Order: FC<OrderProps> = () => {
   const pageTitle = isUpdate ? lang.order.form.editTitle : lang.order.form.addTitle;
 
   const items: BreadcrumbItems = [
-    { id: "1", label: <Link to={ORDER_LIST}>{lang.order.list.title}</Link> },
+    { id: "1", label: <Link to={ORDERS}>{lang.order.list.title}</Link> },
     { id: "2", label: pageTitle, actived: true },
   ];
 

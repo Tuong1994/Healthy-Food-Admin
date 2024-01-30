@@ -156,6 +156,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    transition: all $transition-time-sm $transition-fn;
     * {
       color: $text-gray;
     }
@@ -207,6 +208,9 @@
         }
       }
     }
+  }
+  .table-empty {
+    background: $bg-deep-blue;
   }
   .table-filter {
     background: $bg-black;
