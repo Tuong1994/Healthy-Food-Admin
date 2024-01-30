@@ -1,15 +1,15 @@
 import { RouteProps } from "react-router";
 import { routerPaths } from "@/common/constant/url";
-import Dashboard from "@/view/dashboard";
-import Customers from "@/view/customer/list";
-import Customer from "@/view/customer/form";
-import Products from "@/view/product/list";
-import Product from "@/view/product/form";
-import Orders from "@/view/order/list";
-import Order from "@/view/order/form";
-import Shipments from "@/view/shipment/list";
-import Shipment from "@/view/shipment/form";
-import Category from "@/view/category";
+import Dashboard from "@/pages/dashboard";
+import Customers from "@/pages/customer/list";
+import Customer from "@/pages/customer/form";
+import Products from "@/pages/product/list";
+import Product from "@/pages/product/form";
+import Orders from "@/pages/order/list";
+import Order from "@/pages/order/form";
+import Shipments from "@/pages/shipment/list";
+import Shipment from "@/pages/shipment/form";
+import Category from "@/pages/category";
 
 const {
   DASHBOARD,
