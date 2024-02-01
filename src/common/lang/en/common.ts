@@ -45,7 +45,7 @@ const common_en = {
       supplier: "Supplier",
       paymentStatus: "Payment status",
       paymentMethod: "Payment method",
-      recievedType: 'Recieved type',
+      recievedType: "Recieved type",
       customer: "Customer",
       orderNumber: "Order number",
       categoryNameEn: "Category name (EN)",
@@ -55,9 +55,29 @@ const common_en = {
       optional: "Optional",
     },
     placeholder: {
-      type: "Type",
+      enter: "Enter infomation",
       select: "Select",
       search: "Search",
+      imagesUpload: "Select or drag image here",
+      filesUpload: "Choose file",
+      sortBy: "Sorting",
+    },
+    rule: {
+      required: "This field is required",
+      phone: "Phone invalid",
+      email: "Email invalid",
+      whiteSpace: "White space are not allowed",
+      min: "{{min}} is minimum",
+      max: "{{max}} is maximum",
+      minLength: "Must have at least {{min}} character",
+      maxLength: "Maximum length {{max}} characters",
+    },
+    others: {
+      emptyOptions: "No options",
+      optional: "Optional",
+      fileSize: "File size must not greater than {{num}}MB",
+      fileType: "Only accept file type {{type}}",
+      fileMax: "Can only upload {{num}} image per time",
     },
   },
   unit: {
@@ -99,7 +119,7 @@ const common_en = {
       status: "Status",
       paymentStatus: "Payment status",
       paymentMethod: "Payment method",
-      recievedType: 'Recieved method',
+      recievedType: "Recieved method",
       origin: "Origin",
       unit: "Unit",
       inventory: "Inventory",
@@ -111,9 +131,22 @@ const common_en = {
       updatedAt: "Updated date",
     },
   },
+  description: {
+    noData:
+      "Something went wrong. Look like there are trouble for getting data. Please try again or contact to our support team",
+    empty: "No data",
+  },
   message: {
-    success: {},
-    error: {},
+    success: {
+      create: "Created successfully",
+      update: "Updated successfully",
+      remove: "Removed successfully",
+    },
+    error: {
+      create: "Error! Cannot create",
+      update: "Error! Cannot update",
+      remove: "Error! Cannot remove",
+    },
   },
 };
 

@@ -55,9 +55,29 @@ const common_vn = {
       optional: "Không bắt buộc",
     },
     placeholder: {
-      type: "Nhập",
+      enter: "Nhập thông tin",
       select: "Chọn",
       search: "Tìm kiếm",
+      imagesUpload: "Chọn hoặc kéo thả hình ảnh vào khu vực này",
+      filesUpload: "Chọn tập tin",
+      sortBy: "Sắp Xếp",
+    },
+    rule: {
+      required: "Trường này là bắt buộc",
+      phone: "Điện thoại không hợp lệ",
+      email: "Email không hợp lệ",
+      whiteSpace: "Không được có khoảng trắng",
+      min: "{{min}} là tối thiểu",
+      max: "{{max}} là tối đa",
+      minLength: "Phải có ít nhất {{min}} ký tự",
+      maxLength: "Độ dài tối đa là {{max}} ký tự",
+    },
+    others: {
+      emptyOptions: "Không có lựa chọn",
+      optional: "Không bắt buộc",
+      fileSize: "Kích thước tệp không được lớn hơn {{num}}MB",
+      fileType: "Chỉ chấp nhận loại tệp {{type}}",
+      fileMax: "Mỗi lần chỉ có thể tải lên {{num}} hình ảnh",
     },
   },
   unit: {
@@ -111,9 +131,22 @@ const common_vn = {
       updatedAt: "Ngày cập nhật",
     },
   },
+  description: {
+    noData:
+      "Đã xảy ra lỗi. Có vẻ như đang gặp khó khăn khi lấy dữ liệu. Vui lòng thử lại hoặc liên hệ với nhóm hỗ trợ của chúng tôi",
+    empty: "Không có dữ liệu",
+  },
   message: {
-    success: {},
-    error: {},
+    success: {
+      create: "Tạo thành công",
+      update: "Cập nhật thành công",
+      remove: "Xóa thành công",
+    },
+    error: {
+      create: "Lỗi! Không thể tạo",
+      update: "Lỗi! Không thể cập nhật",
+      remove: "Lỗi! Không thể xóa",
+    },
   },
 };
 

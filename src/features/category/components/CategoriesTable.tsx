@@ -1,12 +1,18 @@
 import { FC, Fragment } from "react";
 import { Image, Table, Button } from "@/components/UI";
+import { useNavigate } from "react-router-dom";
 import type { Lang } from "@/common/type";
 import type { Columns } from "@/components/UI/Table/type";
 import type { Category } from "@/services/category/type";
 import { ELang } from "@/common/enum";
+import { routerPaths } from "@/common/constant/url";
 import ContentHeader from "@/components/Page/ContentHeader";
 import CategoriesTableFilter from "./CategoriesTableFilter";
+import Error from "@/components/Page/Error";
+import useGetCategories from "../hooks/useGetCategories";
 import moment from "moment";
+
+const { CATEGORY } = routerPaths;
 
 interface CategoriesTableProps {
   locale: ELang;
@@ -15,7 +21,15 @@ interface CategoriesTableProps {
 }
 
 const CategoriesTable: FC<CategoriesTableProps> = ({ locale, lang, handleOpenModal }) => {
-  const dataSource: Category[] = [];
+  const navigate = useNavigate();
+
+  const { data: categories, isLoading, isError } = useGetCategories();
+
+  const dataSource = (): Category[] => {
+    if (!categories) return [];
+    if (!categories.success) return [];
+    return categories.data?.items || [];
+  };
 
   const columns: Columns<Category> = [
     {
@@ -48,6 +62,27 @@ const CategoriesTable: FC<CategoriesTableProps> = ({ locale, lang, handleOpenMod
     },
   ];
 
+  const handleChangePage = (page: number) => {
+    navigate(CATEGORY + `?page=${page}&limit=10`);
+  };
+
+  const renderContent = () => {
+    if (isError) return <Error />;
+    return (
+      <Table<Category>
+        color="green"
+        hasFilter
+        hasPagination
+        hasRowSelection
+        loading={isLoading}
+        columns={columns}
+        dataSource={dataSource()}
+        filter={<CategoriesTableFilter />}
+        paginationProps={{ total: categories?.data?.totalItems ?? 0, onChangePage: handleChangePage }}
+      />
+    );
+  };
+
   return (
     <Fragment>
       <ContentHeader
@@ -58,15 +93,7 @@ const CategoriesTable: FC<CategoriesTableProps> = ({ locale, lang, handleOpenMod
           </Button>
         )}
       />
-      <Table<Category>
-        color="green"
-        hasFilter
-        hasPagination
-        hasRowSelection
-        dataSource={dataSource}
-        columns={columns}
-        filter={<CategoriesTableFilter />}
-      />
+      {renderContent()}
     </Fragment>
   );
 };

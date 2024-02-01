@@ -10,6 +10,7 @@ import Order from "@/pages/order/form";
 import Shipments from "@/pages/shipment/list";
 import Shipment from "@/pages/shipment/form";
 import Category from "@/pages/category";
+import NotFound from "@/pages/404";
 
 const {
   DASHBOARD,
@@ -74,6 +75,11 @@ const routes: RouteProps[] = [
     id: "category",
     path: CATEGORY,
     element: <Category />,
+  },
+  {
+    id: "notFound",
+    path: "*",
+    element: <NotFound />,
   },
 ];
 

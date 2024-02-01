@@ -11,6 +11,7 @@ export interface MenuHorizontalProps {
   items?: MenuItems;
   color?: LayoutColor;
   defaultActiveId?: string[];
+  onSelectMenu?: (id: string) => void;
 }
 
 const MenuHorizontal: ForwardRefRenderFunction<HTMLDivElement, MenuHorizontalProps> = (
@@ -21,6 +22,7 @@ const MenuHorizontal: ForwardRefRenderFunction<HTMLDivElement, MenuHorizontalPro
     items = [],
     defaultActiveId = [],
     color = "blue",
+    onSelectMenu,
     ...restProps
   },
   ref
@@ -39,6 +41,7 @@ const MenuHorizontal: ForwardRefRenderFunction<HTMLDivElement, MenuHorizontalPro
     const idx = activeIds.indexOf(id);
     if (idx === -1) setActiveIds((prev) => [...prev, id]);
     else setActiveIds((prev) => [...prev].filter((active) => active !== id));
+    onSelectMenu?.(id);
   };
 
   return (

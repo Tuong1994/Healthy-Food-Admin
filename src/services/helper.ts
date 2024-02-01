@@ -30,6 +30,7 @@ export const getApiQuery = (query: ApiQuery) => {
     role,
     gender,
     productStatus,
+    productUnit,
     inventoryStatus,
     origin,
     orderStatus,
@@ -71,6 +72,7 @@ export const getApiQuery = (query: ApiQuery) => {
   role && (rs += `&role=${role}`);
   gender && (rs += `&gender=${gender}`);
   productStatus && (rs += `&productStatus=${productStatus}`);
+  productUnit && (rs += `&productUnit=${productUnit}`);
   inventoryStatus && (rs += `&inventoryStatus=${inventoryStatus}`);
   origin && (rs += `&origin=${origin}`);
   orderStatus && (rs += `&orderStatus=${orderStatus}`);

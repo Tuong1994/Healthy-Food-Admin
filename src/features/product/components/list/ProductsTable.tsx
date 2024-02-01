@@ -1,101 +1,60 @@
-import { FC, Fragment } from "react";
+import { Dispatch, FC, Fragment, SetStateAction } from "react";
 import { Image, Table, Button } from "@/components/UI";
 import type { Lang } from "@/common/type";
 import type { Columns } from "@/components/UI/Table/type";
 import type { Product } from "@/services/product/type";
-import { ELang } from "@/common/enum";
-import { EInventoryStatus, EProductOrigin, EProductStatus, EProductUnit } from "@/services/product/enum";
-import { useLang } from "@/hooks";
+import type { ApiQuery, ApiResponse, Paging } from "@/services/type";
 import { Link } from "react-router-dom";
 import { linkPaths } from "@/common/constant/url";
+import { useLang } from "@/hooks";
+import { EInventoryStatus, EProductOrigin, EProductStatus, EProductUnit } from "@/services/product/enum";
 import ProductsTableFilter from "./ProductsTableFilter";
-import useDisplayInventoryStatus from "@/features/product/hooks/useDisplayInventoryStatus";
-import useDisplayProductStatus from "@/features/product/hooks/useDisplayProductStatus";
-import useDisplayProductOrigin from "@/features/product/hooks/useDisplayProductOrigin";
-import useDisplayProductUnit from "@/features/product/hooks/useDisplayProductUnit";
+import Error from "@/components/Page/Error";
+import getDisplayInventoryStatus from "@/features/product/data-display/getDisplayInventoryStatus";
+import getDisplayProductStatus from "@/features/product/data-display/getDisplayProductStatus";
+import getDisplayProductOrigin from "@/features/product/data-display/getDisplayProductOrigin";
+import getDisplayProductUnit from "@/features/product/data-display/getDisplayProductUnit";
 import moment from "moment";
 import utils from "@/utils";
 
 const { PRODUCT } = linkPaths;
 
 interface ProductsTableProps {
+  products: ApiResponse<Paging<Product>> | undefined;
+  isLoading: boolean;
+  isError: boolean;
   lang: Lang;
+  apiQuery: ApiQuery;
+  setApiQuery: Dispatch<SetStateAction<ApiQuery>>;
 }
 
-const ProductsTable: FC<ProductsTableProps> = ({ lang }) => {
+const ProductsTable: FC<ProductsTableProps> = ({
+  products,
+  isLoading,
+  isError,
+  lang,
+  apiQuery,
+  setApiQuery,
+}) => {
   const { locale } = useLang();
 
-  const dataSource: Product[] = [
-    {
-      id: "1",
-      nameEn: "Name En",
-      nameVn: "Name Vn",
-      costPrice: 50000,
-      profit: 25,
-      totalPrice: 75000,
-      inventory: 1000,
-      supplier: "Healthy Food",
-      unit: EProductUnit.KG,
-      status: EProductStatus.ACTIVE,
-      inventoryStatus: EInventoryStatus.IN_STOCK,
-      origin: EProductOrigin.VN,
-      categoryId: "CATE_1",
-      subCategoryId: "SUBCATE_1",
-      isNew: false,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      id: "2",
-      nameEn: "Name En",
-      nameVn: "Name Vn",
-      costPrice: 150000,
-      profit: 25,
-      totalPrice: 175000,
-      inventory: 1000,
-      supplier: "Healthy Food",
-      unit: EProductUnit.BIN,
-      status: EProductStatus.ACTIVE,
-      inventoryStatus: EInventoryStatus.IN_STOCK,
-      origin: EProductOrigin.VN,
-      categoryId: "CATE_1",
-      subCategoryId: "SUBCATE_1",
-      isNew: true,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      id: "3",
-      nameEn: "Name En",
-      nameVn: "Name Vn",
-      costPrice: 50000,
-      profit: 25,
-      totalPrice: 75000,
-      inventory: 1000,
-      supplier: "Healthy Food",
-      unit: EProductUnit.KG,
-      status: EProductStatus.DRAFT,
-      inventoryStatus: EInventoryStatus.OUT_OF_STOCK,
-      origin: EProductOrigin.VN,
-      categoryId: "CATE_1",
-      subCategoryId: "SUBCATE_1",
-      isNew: true,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-  ];
+  const dataSource = (): Product[] => {
+    if (!products) return [];
+    if (!products.success) return [];
+    return products.data?.items || [];
+  };
 
   const columns: Columns<Product> = [
     {
       id: "image",
       title: lang.common.table.head.image,
       dataIndex: "id",
-      render: () => <Image imgWidth={60} imgHeight={60} />,
+      render: () => <Image imgWidth={40} imgHeight={40} />,
     },
     {
       id: "name",
       title: lang.common.table.head.productName,
-      dataIndex: locale === ELang.EN ? "nameEn" : "nameVn",
+      dataIndex: "name",
       render: (name: string, data: Product) => (
         <Link to={PRODUCT} state={{ id: data.id }}>
           <Button text>{name}</Button>
@@ -118,19 +77,19 @@ const ProductsTable: FC<ProductsTableProps> = ({ lang }) => {
       id: "inventoryStatus",
       title: lang.common.table.head.inventoryStatus,
       dataIndex: "inventoryStatus",
-      render: (status: EInventoryStatus) => <>{useDisplayInventoryStatus(status)}</>,
+      render: (status: EInventoryStatus) => <>{getDisplayInventoryStatus(lang, status)}</>,
     },
     {
       id: "status",
       title: lang.common.table.head.status,
       dataIndex: "status",
-      render: (status: EProductStatus) => <>{useDisplayProductStatus(status)}</>,
+      render: (status: EProductStatus) => <>{getDisplayProductStatus(lang, status)}</>,
     },
     {
       id: "origin",
       title: lang.common.table.head.origin,
       dataIndex: "origin",
-      render: (origin: EProductOrigin) => <>{useDisplayProductOrigin(origin)}</>,
+      render: (origin: EProductOrigin) => <>{getDisplayProductOrigin(lang, origin)}</>,
     },
     {
       id: "supplier",
@@ -141,7 +100,7 @@ const ProductsTable: FC<ProductsTableProps> = ({ lang }) => {
       id: "unit",
       title: lang.common.table.head.unit,
       dataIndex: "unit",
-      render: (unit: EProductUnit) => <>{useDisplayProductUnit(unit)}</>,
+      render: (unit: EProductUnit) => <>{getDisplayProductUnit(lang, unit)}</>,
     },
     {
       id: "createdAt",
@@ -157,19 +116,28 @@ const ProductsTable: FC<ProductsTableProps> = ({ lang }) => {
     },
   ];
 
-  return (
-    <Fragment>
+  const handleChangePage = (page: number) => {
+    setApiQuery((prev) => ({ ...prev, page }));
+  };
+
+  const renderContent = () => {
+    if (isError) return <Error />;
+    return (
       <Table<Product>
         color="green"
         hasFilter
         hasPagination
         hasRowSelection
-        dataSource={dataSource}
+        loading={isLoading}
+        dataSource={dataSource()}
         columns={columns}
-        filter={<ProductsTableFilter />}
+        filter={<ProductsTableFilter lang={lang} apiQuery={apiQuery} setApiQuery={setApiQuery} />}
+        paginationProps={{ total: products?.data?.totalItems ?? 0, onChangePage: handleChangePage }}
       />
-    </Fragment>
-  );
+    );
+  };
+
+  return <Fragment>{renderContent()}</Fragment>;
 };
 
 export default ProductsTable;

@@ -1,5 +1,4 @@
 import { HiChartBar, HiInbox, HiListBullet, HiShoppingCart, HiTruck, HiUser } from "react-icons/hi2";
-import { Link } from "react-router-dom";
 import { useLang } from "@/hooks";
 import { linkPaths } from "@/common/constant/url";
 import type { MenuItems } from "@/components/UI/Layout/Menu/type";
@@ -19,62 +18,44 @@ const useMenu = () => {
   const items: MenuItems = [
     {
       id: "dashboard",
-      label: (
-        <Link to={DASHBOARD} onClick={handleHideSide}>
-          {lang.common.menu.dashboard}
-        </Link>
-      ),
+      label: <div onClick={handleHideSide}>{lang.common.menu.dashboard}</div>,
       icon: <HiChartBar size={ICON_SIZE} />,
+      path: DASHBOARD,
       isRoot: true,
     },
     {
       id: "customer",
-      label: (
-        <Link to={CUSTOMERS} onClick={handleHideSide}>
-          {lang.common.menu.customer}
-        </Link>
-      ),
+      label: <div onClick={handleHideSide}>{lang.common.menu.customer}</div>,
       icon: <HiUser size={ICON_SIZE} />,
+      path: CUSTOMERS,
       isRoot: true,
     },
     {
       id: "category",
-      label: (
-        <Link to={CATEGORY} onClick={handleHideSide}>
-          {lang.common.menu.category}
-        </Link>
-      ),
+      label: <div onClick={handleHideSide}>{lang.common.menu.category}</div>,
       icon: <HiListBullet size={ICON_SIZE} />,
+      path: CATEGORY,
       isRoot: true,
     },
     {
       id: "product",
-      label: (
-        <Link to={PRODUCTS} onClick={handleHideSide}>
-          {lang.common.menu.product}
-        </Link>
-      ),
+      label: <div onClick={handleHideSide}>{lang.common.menu.product}</div>,
       icon: <HiInbox size={ICON_SIZE} />,
+      path: PRODUCTS,
       isRoot: true,
     },
     {
       id: "order",
-      label: (
-        <Link to={ORDERS} onClick={handleHideSide}>
-          {lang.common.menu.order}
-        </Link>
-      ),
+      label: <div onClick={handleHideSide}>{lang.common.menu.order}</div>,
       icon: <HiShoppingCart size={ICON_SIZE} />,
+      path: ORDERS,
       isRoot: true,
     },
     {
       id: "shipment",
-      label: (
-        <Link to={SHIPMENTS} onClick={handleHideSide}>
-          {lang.common.menu.shipment}
-        </Link>
-      ),
+      label: <div onClick={handleHideSide}>{lang.common.menu.shipment}</div>,
       icon: <HiTruck size={ICON_SIZE} />,
+      path: SHIPMENTS,
       isRoot: true,
     },
   ];

@@ -1,6 +1,14 @@
 const product_vn = {
   list: {
     title: "Sản phẩm",
+    filter: {
+      placeholder: {
+        search: "Tìm kiếm tên theo ngôn ngữ",
+        unit: "Đơn vị",
+        status: "Trạng thái",
+        inventory: "Trạng thái tồn kho",
+      },
+    },
   },
   form: {
     addTitle: "Tạo sản phẩm",

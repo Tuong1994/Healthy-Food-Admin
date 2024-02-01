@@ -1,6 +1,7 @@
 import { RefObject } from "react";
 import { ELang } from "@/common/enum";
 import { SelectOptions } from "@/components/Control/type";
+import { ApiQuery } from "@/services/type";
 
 const utils = {
   uuid: () => {
@@ -46,6 +47,14 @@ const utils = {
 
     if (phone.length === telNumberLength) return telFormat;
     return mobileFormat;
+  },
+
+  formatQuery: (query: ApiQuery) => {
+    let apiQuery = {};
+    for (let [key, value] of Object.entries(query)) {
+      if (Boolean(value)) apiQuery = { ...apiQuery, [key]: value };
+    }
+    return apiQuery;
   },
 
   mapDataToOptions: <M extends object>(list: M[], label: keyof M, value: keyof M) => {

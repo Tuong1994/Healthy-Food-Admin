@@ -1,15 +1,23 @@
 const product_en = {
   list: {
     title: "Products",
+    filter: {
+      placeholder: {
+        search: "Search name by language",
+        unit: "Unit",
+        status: "Status",
+        inventory: "Inventory status",
+      },
+    },
   },
   form: {
     addTitle: "Create product",
     editTitle: "Update product",
     price: "Price",
-    storage: 'Storage',
+    storage: "Storage",
     category: "Category",
-    others: 'Others',
+    others: "Others",
   },
 };
 
-export default product_en
+export default product_en;

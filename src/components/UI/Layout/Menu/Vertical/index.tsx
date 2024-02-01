@@ -12,6 +12,7 @@ export interface MenuVerticalProps {
   items?: MenuItems;
   color?: LayoutColor;
   defaultActiveId?: string[];
+  onSelectMenu?: (id: string) => void;
 }
 
 const MenuVertical: ForwardRefRenderFunction<HTMLDivElement, MenuVerticalProps> = (
@@ -22,6 +23,7 @@ const MenuVertical: ForwardRefRenderFunction<HTMLDivElement, MenuVerticalProps> 
     items = [],
     defaultActiveId = [],
     color = "blue",
+    onSelectMenu,
     ...restProps
   },
   ref
@@ -47,6 +49,7 @@ const MenuVertical: ForwardRefRenderFunction<HTMLDivElement, MenuVerticalProps> 
     if (activeId.length) setActiveId([]);
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify([id]));
     setActiveId([id]);
+    onSelectMenu?.(id);
   };
 
   return (

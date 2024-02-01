@@ -1,4 +1,8 @@
 const options_vn = {
+  sortBy: {
+    newest: "Mới nhất",
+    oldest: "Cũ nhất",
+  },
   gender: {
     male: "Nam",
     female: "Nữ",

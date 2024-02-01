@@ -18,6 +18,7 @@ import FormContext from "../Form/FormContext";
 import FormItemContext from "../Form/FormItemContext";
 import useLayout from "@/components/UI/Layout/useLayout";
 import utils from "@/utils";
+import { useLang } from "@/hooks";
 
 export interface InputPasswordProps extends InputHTMLAttributes<HTMLInputElement> {
   rootClassName?: string;
@@ -51,7 +52,7 @@ const InputPassword: ForwardRefRenderFunction<HTMLInputElement, InputPasswordPro
     sizes = "md",
     color = "blue",
     shape = "square",
-    placeholder = "Enter information...",
+    placeholder,
     disabled,
     required,
     optional,
@@ -63,6 +64,8 @@ const InputPassword: ForwardRefRenderFunction<HTMLInputElement, InputPasswordPro
   ref
 ) => {
   const rhfMethods = useFormContext();
+
+  const { lang } = useLang();
 
   const { layoutValue } = useLayout();
 
@@ -86,6 +89,8 @@ const InputPassword: ForwardRefRenderFunction<HTMLInputElement, InputPasswordPro
   const controlSize = isRhf ? rhfSizes : sizes;
 
   const controlShape = isRhf ? rhfShape : shape;
+
+  const controlPlaceHolder = placeholder ?? lang.common.form.placeholder.enter;
 
   const showClearIcon = hasClear && inputValue && !controlDisabled;
 
@@ -160,7 +165,7 @@ const InputPassword: ForwardRefRenderFunction<HTMLInputElement, InputPasswordPro
           <div style={labelStyle} className={controlLabelClassName}>
             {required && <span className="label-required">*</span>}
             <span>{label}</span>
-            {showOptional && <span className="label-optional">(Optional)</span>}
+            {showOptional && <span className="label-optional">({lang.common.form.others.optional})</span>}
           </div>
         )}
 
@@ -171,10 +176,10 @@ const InputPassword: ForwardRefRenderFunction<HTMLInputElement, InputPasswordPro
             <input
               ref={ref}
               {...restProps}
+              type={isPassword ? "password" : "text"}
               value={inputValue}
               disabled={controlDisabled}
-              placeholder={placeholder}
-              type={isPassword ? "password" : "text"}
+              placeholder={controlPlaceHolder}
               className={controlInputClassName}
               onChange={onChangeFn}
               onBlur={onBlurFn}

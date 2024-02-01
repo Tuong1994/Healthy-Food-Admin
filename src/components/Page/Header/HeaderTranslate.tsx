@@ -8,11 +8,11 @@ import useLangStore from "@/store/LangStore";
 interface HeaderTranslateProps {}
 
 const HeaderTranslate: FC<HeaderTranslateProps> = () => {
-  const [type, lang, switchLang] = useLangStore((state) => [state.type, state.lang, state.switchLang]);
+  const [locale, lang, switchLang] = useLangStore((state) => [state.locale, state.lang, state.switchLang]);
 
   const items: DropdownItems = [
     {
-      id: "1",
+      id: "en",
       label: (
         <Space onClick={() => switchLang(ELang.EN)}>
           <Image width={20} height={20} src="/image/flag/en_flag.svg" alt="flag" />
@@ -21,7 +21,7 @@ const HeaderTranslate: FC<HeaderTranslateProps> = () => {
       ),
     },
     {
-      id: "2",
+      id: "vn",
       label: (
         <Space onClick={() => switchLang(ELang.VN)}>
           <Image width={20} height={20} src="/image/flag/vn_flag.svg" alt="flag" />
@@ -32,12 +32,12 @@ const HeaderTranslate: FC<HeaderTranslateProps> = () => {
   ];
 
   const renderLabel = () => {
-    if (type === ELang.EN) return "EN";
+    if (locale === ELang.EN) return "EN";
     return "VN";
   };
 
   return (
-    <Dropdown items={items} placement="right" rootClassName="header-translate">
+    <Dropdown items={items} defaultSelectedId="en" placement="right" rootClassName="header-translate">
       <div className="translate-label">
         <span>{renderLabel()}</span>
         <HiChevronDown />

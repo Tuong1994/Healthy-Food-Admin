@@ -1,10 +1,8 @@
+import type { Lang } from "@/common/type";
 import { EInventoryStatus } from "@/services/product/enum";
 import { Badge } from "@/components/UI";
-import { useLang } from "@/hooks";
 
-const useDisplayInventoryStatus = (status: EInventoryStatus) => {
-  const { lang } = useLang();
-
+const getDisplayInventoryStatus = (lang: Lang, status: EInventoryStatus) => {
   const inventoryStatuses: Record<number, string> = {
     [EInventoryStatus.IN_STOCK]: lang.options.inventoryStatus.inStock,
     [EInventoryStatus.OUT_OF_STOCK]: lang.options.inventoryStatus.outOfStock,
@@ -22,4 +20,4 @@ const useDisplayInventoryStatus = (status: EInventoryStatus) => {
   );
 };
 
-export default useDisplayInventoryStatus;
+export default getDisplayInventoryStatus;

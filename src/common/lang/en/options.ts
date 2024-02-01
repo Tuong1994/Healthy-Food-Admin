@@ -1,4 +1,8 @@
 const options_en = {
+  sortBy: {
+    newest: "Newest",
+    oldest: "Oldest",
+  },
   gender: {
     male: "Male",
     female: "Female",

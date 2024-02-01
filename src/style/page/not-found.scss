@@ -1,0 +1,10 @@
+.not-found {
+  width: $w-full;
+  height: $h-full;
+  .not-found-content {
+    margin-top: $m-5 + 5;
+    .content-icon {
+      margin-bottom: $m-3;
+    }
+  }
+}

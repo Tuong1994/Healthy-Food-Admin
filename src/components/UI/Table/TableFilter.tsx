@@ -15,17 +15,17 @@ interface TableFilterProps {
   onCancelFilter?: () => void;
 }
 
-const TableFilter: FC<TableFilterProps> = ({ color, filter, onFilter, onCancelFilter }) => {
+const TableFilter: FC<TableFilterProps> = ({ lang, color, filter, onFilter, onCancelFilter }) => {
   return (
     <Row rootClassName="table-filter">
       {filter}
       <Col>
         <Space align="middle">
           <Button sizes="sm" color={color} onClick={onFilter}>
-            Save
+            {lang.common.actions.filter}
           </Button>
           <Button sizes="sm" ghost onClick={onCancelFilter}>
-            Cancel
+            {lang.common.actions.cancel}
           </Button>
         </Space>
       </Col>

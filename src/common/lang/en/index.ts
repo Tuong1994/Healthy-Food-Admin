@@ -2,6 +2,7 @@ import category_en from "./category";
 import common_en from "./common";
 import customer_en from "./customer";
 import dashboard_en from "./dashboard";
+import not_found_en from "./not-found";
 import options_en from "./options";
 import order_en from "./order";
 import page_components_en from "./page-components";
@@ -18,6 +19,7 @@ const en = {
   order: order_en,
   shipment: shipment_en,
   category: category_en,
+  notFound: not_found_en,
 };
 
 export type EN = typeof en;

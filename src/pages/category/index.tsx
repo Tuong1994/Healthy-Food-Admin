@@ -1,11 +1,15 @@
 import { FC, Fragment, useState } from "react";
 import { Tabs } from "@/components/UI";
 import { useLang } from "@/hooks";
+import { useNavigate } from "react-router";
+import { linkPaths } from "@/common/constant/url";
 import type { TabsItems } from "@/components/UI/Tabs/type";
 import CategoriesTable from "@/features/category/components/CategoriesTable";
 import SubCategoriesTable from "@/features/category/components/SubCategoriesTable";
 import CategoryFormModal from "@/features/category/components/CategoryFormModal";
 import SubCategoryFormModal from "@/features/category/components/SubCategoryFormModal";
+
+const { CATEGORY } = linkPaths;
 
 export type ActiveModal = {
   open: boolean;
@@ -17,6 +21,8 @@ interface CategoryProps {}
 const Category: FC<CategoryProps> = () => {
   const { locale, lang } = useLang();
 
+  const navigate = useNavigate();
+
   const [openCategoryModal, setOpenCategoryModal] = useState<ActiveModal>({
     open: false,
     activeId: null,
@@ -26,6 +32,8 @@ const Category: FC<CategoryProps> = () => {
     open: false,
     activeId: null,
   });
+
+  const handleSelectTab = () => navigate(CATEGORY);
 
   const handleOpenCategoryModal = (activeId: string | null) => {
     setOpenCategoryModal({ activeId, open: true });
@@ -52,13 +60,15 @@ const Category: FC<CategoryProps> = () => {
     {
       id: "subcategory",
       title: lang.category.subCategoryTitle,
-      content: <SubCategoriesTable locale={locale} lang={lang} handleOpenModal={handleOpenSubCategoryModal} />,
+      content: (
+        <SubCategoriesTable locale={locale} lang={lang} handleOpenModal={handleOpenSubCategoryModal} />
+      ),
     },
   ];
 
   return (
     <Fragment>
-      <Tabs color="green" items={items} />
+      <Tabs color="green" items={items} onSelectTab={handleSelectTab} />
       <CategoryFormModal openModal={openCategoryModal} lang={lang} onCancel={handleCloseCategoryModal} />
       <SubCategoryFormModal
         lang={lang}

@@ -1,6 +1,6 @@
 import { ReactNode, FC, useContext, Fragment } from "react";
 import { Section, Space, Divider, Layout } from "@/components/UI";
-import { Routes } from "react-router-dom";
+import { Routes, useNavigate } from "react-router-dom";
 import { GridAppContext } from "@/components/UI/Grid/Context";
 import { useLang } from "@/hooks";
 import Header from "../Header";
@@ -21,6 +21,13 @@ const AppWrapper: FC<AppWrapperProps> = ({ children }) => {
 
   const items = useMenu();
 
+  const navigate = useNavigate();
+
+  const handleNavigate = (id: string) => {
+    const currentMenu = items.find((item) => item.id === id);
+    navigate(currentMenu?.path ?? "");
+  };
+
   return (
     <Container theme="light" color="green">
       <Head>
@@ -39,7 +46,7 @@ const AppWrapper: FC<AppWrapperProps> = ({ children }) => {
             </Fragment>
           )}
 
-          <Menu defaultActiveId={["dashboard"]} type="vertical" items={items} />
+          <Menu defaultActiveId={["dashboard"]} type="vertical" items={items} onSelectMenu={handleNavigate} />
         </Side>
         <Content>
           <Section>

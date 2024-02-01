@@ -3,9 +3,15 @@ import type { SelectOptions } from "@/components/Control/type";
 import { EGender, ERole } from "@/services/customer/enum";
 import { EInventoryStatus, EProductOrigin, EProductStatus, EProductUnit } from "@/services/product/enum";
 import { EOrderStatus, EPaymentMethod, EPaymentStatus } from "@/services/order/enum";
+import { ESort } from "@/common/enum";
 
 const useSelectOption = () => {
   const { lang } = useLang();
+
+  const sortBy: SelectOptions = [
+    { label: lang.options.sortBy.newest, value: ESort.NEWEST },
+    { label: lang.options.sortBy.oldest, value: ESort.OLDEST },
+  ];
 
   const gender: SelectOptions = [
     { label: lang.options.gender.male, value: EGender.MALE },
@@ -55,7 +61,6 @@ const useSelectOption = () => {
   ];
 
   const paymentStatus: SelectOptions = [
-    { label: lang.options.paymentStatus.waitting, value: EPaymentStatus.WAITTING },
     { label: lang.options.paymentStatus.unPaid, value: EPaymentStatus.UNPAID },
     { label: lang.options.paymentStatus.paid, value: EPaymentStatus.PAID },
   ];
@@ -67,6 +72,7 @@ const useSelectOption = () => {
   ];
 
   return {
+    sortBy,
     gender,
     role,
     unit,

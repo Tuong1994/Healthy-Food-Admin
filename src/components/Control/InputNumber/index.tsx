@@ -21,6 +21,7 @@ import FormContext from "../Form/FormContext";
 import formatNumber from "./formatNumber";
 import useLayout from "@/components/UI/Layout/useLayout";
 import utils from "@/utils";
+import { useLang } from "@/hooks";
 
 export interface InputNumberProps extends InputHTMLAttributes<HTMLInputElement> {
   rootClassName?: string;
@@ -54,7 +55,7 @@ const InputNumber: ForwardRefRenderFunction<HTMLInputElement, InputNumberProps> 
     sizes = "md",
     color = "blue",
     shape = "square",
-    placeholder = "Enter information...",
+    placeholder,
     disabled,
     required,
     optional,
@@ -66,6 +67,8 @@ const InputNumber: ForwardRefRenderFunction<HTMLInputElement, InputNumberProps> 
   ref
 ) => {
   const rhfMethods = useFormContext();
+
+  const { lang } = useLang();
 
   const { layoutValue } = useLayout();
 
@@ -88,6 +91,8 @@ const InputNumber: ForwardRefRenderFunction<HTMLInputElement, InputNumberProps> 
   const controlSize = isRhf ? rhfSizes : sizes;
 
   const controlShape = isRhf ? rhfShape : shape;
+
+  const controlPlaceHolder = placeholder ?? lang.common.form.placeholder.enter;
 
   const showClearIcon = hasClear && inputValue && !controlDisabled;
 
@@ -178,7 +183,7 @@ const InputNumber: ForwardRefRenderFunction<HTMLInputElement, InputNumberProps> 
           <div style={labelStyle} className={controlLabelClassName}>
             {required && <span className="label-required">*</span>}
             <span>{label}</span>
-            {showOptional && <span className="label-optional">(Optional)</span>}
+            {showOptional && <span className="label-optional">({lang.common.form.others.optional})</span>}
           </div>
         )}
 
@@ -192,7 +197,7 @@ const InputNumber: ForwardRefRenderFunction<HTMLInputElement, InputNumberProps> 
               type="text"
               value={inputValue}
               disabled={controlDisabled}
-              placeholder={placeholder}
+              placeholder={controlPlaceHolder}
               className={controlInputClassName}
               onChange={handleChange}
               onBlur={handleBlur}

@@ -7,6 +7,7 @@ import product_vn from "./product";
 import order_vn from "./order";
 import shipment_vn from "./shipment";
 import category_vn from "./category";
+import not_found_vn from "./not-found";
 
 const vn = {
   common: common_vn,
@@ -18,6 +19,7 @@ const vn = {
   order: order_vn,
   shipment: shipment_vn,
   category: category_vn,
+  notFound: not_found_vn,
 };
 
 export type VN = typeof vn;

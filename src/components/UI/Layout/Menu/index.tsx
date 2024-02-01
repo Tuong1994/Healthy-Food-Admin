@@ -15,6 +15,7 @@ export interface LayoutMenuProps {
   type?: MenuType;
   color?: LayoutColor;
   defaultActiveId?: string[];
+  onSelectMenu?: (id: string) => void;
 }
 
 const LayoutMenu: ForwardRefRenderFunction<HTMLDivElement, LayoutMenuProps> = (

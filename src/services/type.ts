@@ -1,6 +1,6 @@
 import { ELang, ESort } from "@/common/enum";
 import { EGender, ERole } from "./customer/enum";
-import { EInventoryStatus, EProductOrigin, EProductStatus } from "./product/enum";
+import { EInventoryStatus, EProductOrigin, EProductStatus, EProductUnit } from "./product/enum";
 import { EOrderStatus, EPaymentMethod, EPaymentStatus } from "./order/enum";
 import { AxiosRequestConfig } from "axios";
 
@@ -46,6 +46,7 @@ export type ApiQuery = {
   role?: ERole;
   gender?: EGender;
   productStatus?: EProductStatus;
+  productUnit?: EProductUnit;
   inventoryStatus?: EInventoryStatus;
   origin?: EProductOrigin;
   orderStatus?: EOrderStatus;

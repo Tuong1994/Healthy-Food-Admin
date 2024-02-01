@@ -11,6 +11,7 @@ const { Title, Paragraph } = Typography;
 
 export interface ContentHeaderProps extends GridRowProps {
   hasTotal?: boolean;
+  total?: number;
   headTitle?: ReactNode;
   headTitleProps?: TitleProps;
   leftSpanProps?: GridColProps;
@@ -20,6 +21,7 @@ export interface ContentHeaderProps extends GridRowProps {
 
 const ContentHeader: FC<ContentHeaderProps> = ({
   hasTotal = true,
+  total = 100,
   headTitle,
   headTitleProps,
   leftSpanProps,
@@ -46,7 +48,7 @@ const ContentHeader: FC<ContentHeaderProps> = ({
             <Paragraph size={13} variant="secondary">
               {lang.pageComponent.contentHeader.total}
             </Paragraph>
-            <Paragraph size={13}>(100)</Paragraph>
+            <Paragraph size={13}>({total})</Paragraph>
           </Space>
         )}
       </Col>
