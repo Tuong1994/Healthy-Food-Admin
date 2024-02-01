@@ -1,3 +1,4 @@
+import { Key } from "react";
 import { VN } from "./lang/vn";
 import { EN } from "./lang/en";
 
@@ -24,3 +25,8 @@ export type ComponentColor =
   | "black"
   | "white"
   | "gray";
+
+export type Confirmed = {
+  open: boolean;
+  ids: Key[];
+};

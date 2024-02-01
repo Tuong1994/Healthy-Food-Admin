@@ -1,6 +1,13 @@
 const customer_en = {
   list: {
     title: "Customers",
+    filter: {
+      placeholder: {
+        search: "Search name, email, phone",
+        gender: "Gender",
+        role: "Role",
+      },
+    },
   },
   form: {
     addTitle: "Create customer",

@@ -1,10 +1,8 @@
 import { Badge } from "@/components/UI";
 import { EPaymentStatus } from "@/services/order/enum";
-import { useLang } from "@/hooks";
+import { Lang } from "@/common/type";
 
-const useDisplayPaymentStatus = (status: EPaymentStatus) => {
-  const { lang } = useLang();
-
+const getDisplayPaymentStatus = (lang: Lang, status: EPaymentStatus) => {
   const paymentStatuses: Record<number, string> = {
     [EPaymentStatus.PAID]: lang.options.paymentStatus.paid,
     [EPaymentStatus.UNPAID]: lang.options.paymentStatus.unPaid,
@@ -22,4 +20,4 @@ const useDisplayPaymentStatus = (status: EPaymentStatus) => {
   );
 };
 
-export default useDisplayPaymentStatus;
+export default getDisplayPaymentStatus;

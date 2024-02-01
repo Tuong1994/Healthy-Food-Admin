@@ -1,6 +1,13 @@
 const customer_vn = {
   list: {
     title: "Khách hàng",
+    filter: {
+      placeholder: {
+        search: "Tìm kiếm tên, email, điện thoại",
+        gender: "Giới tính",
+        role: "Vai trò",
+      },
+    },
   },
   form: {
     addTitle: "Tạo khách hàng",

@@ -1,6 +1,14 @@
 const order_en = {
   list: {
     title: "Orders",
+    filter: {
+      placeholder: {
+        search: "Search order number",
+        status: "Order status",
+        paymentMethod: "Payment method",
+        paymentStatus: "Payment status",
+      },
+    },
   },
   form: {
     addTitle: "Create order",

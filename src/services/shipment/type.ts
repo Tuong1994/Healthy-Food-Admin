@@ -1,3 +1,5 @@
+import { Order } from "../order/type";
+
 export type Shipment = {
   id?: string;
 
@@ -7,6 +9,7 @@ export type Shipment = {
   address: string;
   shipmentNumber?: string;
   orderId?: string;
+  order?: Pick<Order, "id" | "orderNumber">;
 
   createdAt?: Date | string;
   updatedAt?: Date | string;

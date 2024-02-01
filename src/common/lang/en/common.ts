@@ -98,6 +98,7 @@ const common_en = {
     create: "Create",
     edit: "Edit",
     update: "Update",
+    remove: "Remove",
     cancel: "Cancel",
     export: "Export excel",
   },
@@ -127,11 +128,13 @@ const common_en = {
       supplier: "Supplier",
       comment: "Comment",
       rate: "Rate",
+      shipmentNumber: 'Shipment number',
       createdAt: "Created date",
       updatedAt: "Updated date",
     },
   },
   description: {
+    remove: 'Do you want to remove {{num}} selected rows?',
     noData:
       "Something went wrong. Look like there are trouble for getting data. Please try again or contact to our support team",
     empty: "No data",

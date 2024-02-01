@@ -33,6 +33,7 @@ const options_vn = {
     can: "Lon",
   },
   orderStatus: {
+    waitting: "Đang chờ",
     delivering: "Đang giao",
     delivered: "Đã giao",
   },
@@ -42,7 +43,6 @@ const options_vn = {
     cod: "COD",
   },
   paymentStatus: {
-    waitting: "Đang chờ",
     unPaid: "Chưa thanh toán",
     paid: "Đã thanh toán",
   },

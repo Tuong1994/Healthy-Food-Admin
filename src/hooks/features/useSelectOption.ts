@@ -56,6 +56,7 @@ const useSelectOption = () => {
   ];
 
   const orderStatus: SelectOptions = [
+    { label: lang.options.orderStatus.waitting, value: EOrderStatus.WAITTING },
     { label: lang.options.orderStatus.delivered, value: EOrderStatus.DELIVERED },
     { label: lang.options.orderStatus.delivering, value: EOrderStatus.DELIVERING },
   ];

@@ -1,13 +1,24 @@
-import { FC, Fragment } from "react";
+import { FC, Fragment, Dispatch, SetStateAction } from "react";
 import { Grid } from "@/components/UI";
 import { Input, Select } from "@/components/Control";
+import { useSelectOption } from "@/hooks";
 import type { GridColProps } from "@/components/UI/Grid/Col";
+import type { Lang } from "@/common/type";
+import type { ApiQuery } from "@/services/type";
 
 const { Col } = Grid;
 
-interface CustomersTableFilterProps {}
+interface CustomersTableFilterProps {
+  lang: Lang;
+  apiQuery: ApiQuery;
+  setApiQuery: Dispatch<SetStateAction<ApiQuery>>;
+}
 
-const CustomersTableFilter: FC<CustomersTableFilterProps> = () => {
+const CustomersTableFilter: FC<CustomersTableFilterProps> = ({ lang, apiQuery, setApiQuery }) => {
+  const options = useSelectOption();
+
+  const { keywords, sortBy, gender, role } = apiQuery;
+
   const commonProps: GridColProps = {
     xs: 24,
     md: 12,
@@ -16,17 +27,45 @@ const CustomersTableFilter: FC<CustomersTableFilterProps> = () => {
 
   return (
     <Fragment>
-      <Col {...commonProps}>
-        <Input sizes="sm" />
+      <Col {...commonProps} span={6}>
+        <Input
+          sizes="sm"
+          color="green"
+          value={keywords}
+          placeholder={lang.customer.list.filter.placeholder.search}
+          onChangeInput={(text) => setApiQuery((prev) => ({ ...prev, keywords: text }))}
+        />
       </Col>
-      <Col {...commonProps}>
-        <Select sizes="sm" />
+      <Col {...commonProps} span={4}>
+        <Select
+          sizes="sm"
+          color="green"
+          defaultValue={gender}
+          options={options.gender}
+          placeholder={lang.customer.list.filter.placeholder.gender}
+          onChangeSelect={(value: any) => setApiQuery((prev) => ({ ...prev, gender: value }))}
+        />
       </Col>
-      <Col {...commonProps}>
-        <Select sizes="sm" />
+      <Col {...commonProps} span={4}>
+        <Select
+          sizes="sm"
+          color="green"
+          defaultValue={role}
+          options={options.role}
+          placeholder={lang.customer.list.filter.placeholder.role}
+          onChangeSelect={(value: any) => setApiQuery((prev) => ({ ...prev, role: value }))}
+        />
       </Col>
-      <Col {...commonProps}>
-        <Select sizes="sm" />
+      <Col {...commonProps}  span={3}>
+        <Select
+          sizes="sm"
+          color="green"
+          hasClear={false}
+          defaultValue={sortBy}
+          options={options.sortBy}
+          placeholder={lang.common.form.placeholder.sortBy}
+          onChangeSelect={(value: any) => setApiQuery((prev) => ({ ...prev, sortBy: value }))}
+        />
       </Col>
     </Fragment>
   );

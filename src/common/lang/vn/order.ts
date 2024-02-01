@@ -1,6 +1,14 @@
 const order_vn = {
   list: {
     title: "Đơn hàng",
+    filter: {
+      placeholder: {
+        search: "Tìm kiếm mã đơn hàng",
+        status: "Tình trạng đơn hàng",
+        paymentMethod: "Hình thức thanh toán",
+        paymentStatus: "Trạng thái thanh toán",
+      },
+    },
   },
   form: {
     addTitle: "Tạo đơn hàng",

@@ -10,7 +10,7 @@ import {
 } from "react";
 import { HiXMark } from "react-icons/hi2";
 import { ComponentColor, ComponentSize } from "@/common/type";
-import { useOverflow, useRender } from "@/hooks";
+import { useLang, useOverflow, useRender } from "@/hooks";
 import Portal from "@/components/Portal";
 import Button, { ButtonProps } from "../Button";
 import utils from "@/utils";
@@ -61,8 +61,8 @@ const Modal: ForwardRefRenderFunction<HTMLDivElement, ModalProps> = (
     hasCloseIcon = true,
     backdropClose = true,
     open = false,
-    okButtonTitle = "OK",
-    cancelButtonTitle = "Cancel",
+    okButtonTitle,
+    cancelButtonTitle,
     okButtonProps,
     cancelButtonProps,
     onOk,
@@ -73,6 +73,8 @@ const Modal: ForwardRefRenderFunction<HTMLDivElement, ModalProps> = (
   useOverflow(open);
 
   const render = useRender(open);
+
+  const { lang } = useLang();
 
   const { layoutValue } = useLayout();
 
@@ -152,10 +154,10 @@ const Modal: ForwardRefRenderFunction<HTMLDivElement, ModalProps> = (
             {hasFoot && (
               <div style={footStyle} className={modalFootClassName}>
                 <Button {...cancelButtonProps} onClick={onCancel}>
-                  {cancelButtonTitle}
+                  {cancelButtonTitle ?? lang.common.actions.cancel}
                 </Button>
                 <Button {...okActionProps} onClick={onOk}>
-                  {okButtonTitle}
+                  {okButtonTitle ?? lang.common.actions.ok}
                 </Button>
               </div>
             )}

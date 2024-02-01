@@ -3,7 +3,6 @@ import { Grid } from "@/components/UI";
 import { Input, Select } from "@/components/Control";
 import { useSelectOption } from "@/hooks";
 import type { GridColProps } from "@/components/UI/Grid/Col";
-import type { SelectProps } from "@/components/Control/Select";
 import type { Lang } from "@/common/type";
 import type { ApiQuery } from "@/services/type";
 
@@ -27,8 +26,6 @@ const ProductsTableFilter: FC<ProductsTableFilterProps> = ({ lang, apiQuery, set
     span: 6,
   };
 
-  const selectProps: SelectProps = { color: "green", sizes: "sm" };
-
   return (
     <Fragment>
       <Col {...colProps}>
@@ -40,36 +37,40 @@ const ProductsTableFilter: FC<ProductsTableFilterProps> = ({ lang, apiQuery, set
           onChangeInput={(text) => setApiQuery((prev) => ({ ...prev, keywords: text }))}
         />
       </Col>
-      <Col {...colProps}>
+      <Col {...colProps} span={4}>
         <Select
-          {...selectProps}
+          sizes="sm"
+          color="green"
           placeholder={lang.product.list.filter.placeholder.unit}
           defaultValue={productUnit}
           options={options.unit}
           onChangeSelect={(value: any) => setApiQuery((prev) => ({ ...prev, productUnit: value }))}
         />
       </Col>
-      <Col {...colProps}>
+      <Col {...colProps} span={4}>
         <Select
-          {...selectProps}
+          sizes="sm"
+          color="green"
           placeholder={lang.product.list.filter.placeholder.inventory}
           defaultValue={inventoryStatus}
           options={options.inventoryStatus}
           onChangeSelect={(value: any) => setApiQuery((prev) => ({ ...prev, inventoryStatus: value }))}
         />
       </Col>
-      <Col {...colProps}>
+      <Col {...colProps} span={4}>
         <Select
-          {...selectProps}
+          sizes="sm"
+          color="green"
           placeholder={lang.product.list.filter.placeholder.status}
           defaultValue={productStatus}
           options={options.productStatus}
           onChangeSelect={(value: any) => setApiQuery((prev) => ({ ...prev, productStatus: value }))}
         />
       </Col>
-      <Col {...colProps}>
+      <Col {...colProps} span={3}>
         <Select
-          {...selectProps}
+          sizes="sm"
+          color="green"
           hasClear={false}
           placeholder={lang.common.form.placeholder.sortBy}
           defaultValue={sortBy}

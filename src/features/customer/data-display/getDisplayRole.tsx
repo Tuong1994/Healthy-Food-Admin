@@ -1,10 +1,8 @@
 import { Badge } from "@/components/UI";
 import { ERole } from "@/services/customer/enum";
-import { useLang } from "@/hooks";
+import { Lang } from "@/common/type";
 
-const useDisplayRole = (role: ERole) => {
-  const { lang } = useLang();
-
+const getDisplayRole = (lang: Lang, role: ERole) => {
   const roles: Record<number, string> = {
     [ERole.SUPER_ADMIN]: lang.options.role.superAdmin,
     [ERole.ADMIN]: lang.options.role.admin,
@@ -23,4 +21,4 @@ const useDisplayRole = (role: ERole) => {
   );
 };
 
-export default useDisplayRole;
+export default getDisplayRole;

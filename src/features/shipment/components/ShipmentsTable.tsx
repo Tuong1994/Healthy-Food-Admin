@@ -1,53 +1,66 @@
-import { FC, Fragment } from "react";
-import { Table, Button } from "@/components/UI";
-import type { Lang } from "@/common/type";
+import { FC, Fragment, Dispatch, SetStateAction, useState, Key } from "react";
+import { Table, Button, Space } from "@/components/UI";
+import type { Confirmed, Lang } from "@/common/type";
 import type { Columns } from "@/components/UI/Table/type";
 import type { Shipment } from "@/services/shipment/type";
+import type { ApiQuery, ApiResponse, Paging } from "@/services/type";
+import type { Order } from "@/services/order/type";
 import { Link } from "react-router-dom";
 import { linkPaths } from "@/common/constant/url";
+import { PiWarning } from "react-icons/pi";
+import { REPLACE_NUM_REGEX } from "@/common/constant/regex";
 import ShipmentsTableFilter from "./ShipmentsTableFilter";
+import ConfirmModal from "@/components/Page/ConfirmModal";
+import Error from "@/components/Page/Error";
+import useMenu from "@/components/UI/Layout/Menu/useMenu";
 import moment from "moment";
 
-const { SHIPMENT } = linkPaths;
+const { SHIPMENT, ORDER } = linkPaths;
 
 interface ShipmentsTableProps {
   lang: Lang;
+  shipments: ApiResponse<Paging<Shipment>> | undefined;
+  isLoading: boolean;
+  isError: boolean;
+  apiQuery: ApiQuery;
+  handleResetFilter: () => void;
+  setApiQuery: Dispatch<SetStateAction<ApiQuery>>;
 }
 
-const ShipmentsTable: FC<ShipmentsTableProps> = ({ lang }) => {
-  const dataSource: Shipment[] = [
-    {
-      id: "1",
-      fullName: "Kevin Beacon",
-      phone: "0793229945",
-      email: "kevin@gmail.com",
-      address: "79/24/13 Au Co Str, Ward 14, District 11, HCMC",
-      orderId: "1",
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      id: "2",
-      fullName: "Claire Williams",
-      phone: "0793229478",
-      email: "claire@gmail.com",
-      address: "79/19 Lanh Binh Thang Str, Ward 14, District 11, HCMC",
-      orderId: "2",
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-  ];
+const ShipmentsTable: FC<ShipmentsTableProps> = ({
+  lang,
+  shipments,
+  isLoading,
+  isError,
+  apiQuery,
+  setApiQuery,
+  handleResetFilter,
+}) => {
+  const { setActiveId } = useMenu();
+
+  const [confirmed, setConfirmed] = useState<Confirmed>({ open: false, ids: [] });
+
+  const dataSource = (): Shipment[] => {
+    if (!shipments) return [];
+    if (!shipments.success) return [];
+    return shipments.data?.items || [];
+  };
 
   const columns: Columns<Shipment> = [
+    {
+      id: "shipmentNumber",
+      title: lang.common.table.head.customerName,
+      dataIndex: "shipmentNumber",
+      render: (number: string, shipment: Shipment) => (
+        <Link to={SHIPMENT} state={{ id: shipment.id }}>
+          <Button text>{number}</Button>
+        </Link>
+      ),
+    },
     {
       id: "fullName",
       title: lang.common.table.head.customerName,
       dataIndex: "fullName",
-      render: (name: string, data: Shipment) => (
-        <Link to={SHIPMENT} state={{ id: data.id }}>
-          <Button text>{name}</Button>
-        </Link>
-      ),
     },
     {
       id: "phone",
@@ -65,6 +78,16 @@ const ShipmentsTable: FC<ShipmentsTableProps> = ({ lang }) => {
       dataIndex: "address",
     },
     {
+      id: "orderNumber",
+      title: lang.common.table.head.orderNumber,
+      dataIndex: "order",
+      render: (order: Order) => (
+        <Link to={ORDER} state={{ id: order?.id }} onClick={() => setActiveId(["order"])}>
+          <Button text>{order?.orderNumber}</Button>
+        </Link>
+      ),
+    },
+    {
       id: "createdAt",
       title: lang.common.table.head.createdAt,
       dataIndex: "createdAt",
@@ -78,16 +101,46 @@ const ShipmentsTable: FC<ShipmentsTableProps> = ({ lang }) => {
     },
   ];
 
-  return (
-    <Fragment>
+  const handleChangePage = (page: number) => setApiQuery((prev) => ({ ...prev, page }));
+
+  const handleOpenModal = (ids: Key[]) => setConfirmed((prev) => ({ ...prev, open: true, ids }));
+
+  const handleCloseModal = () => setConfirmed((prev) => ({ ...prev, open: false, ids: [] }));
+
+  const renderContent = () => {
+    if (isError) return <Error />;
+    return (
       <Table<Shipment>
         color="green"
         hasFilter
         hasPagination
         hasRowSelection
-        dataSource={dataSource}
+        loading={isLoading}
+        showRemove={confirmed.open}
         columns={columns}
-        filter={<ShipmentsTableFilter />}
+        dataSource={dataSource()}
+        onSelectRows={handleOpenModal}
+        filter={<ShipmentsTableFilter lang={lang} apiQuery={apiQuery} setApiQuery={setApiQuery} />}
+        filterProps={{ hasFilterButton: false, onCancelFilter: handleResetFilter }}
+        paginationProps={{ total: shipments?.data?.totalItems ?? 0, onChangePage: handleChangePage }}
+      />
+    );
+  };
+
+  return (
+    <Fragment>
+      {renderContent()}
+      <ConfirmModal
+        open={confirmed.open}
+        onCancel={handleCloseModal}
+        desciption={
+          <Space align="middle" justify="center">
+            <PiWarning size={20} className="remove-modal-icon" />
+            <span>
+              {lang.common.description.remove.replace(REPLACE_NUM_REGEX, String(confirmed.ids.length))}
+            </span>
+          </Space>
+        }
       />
     </Fragment>
   );

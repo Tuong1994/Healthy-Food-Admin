@@ -5,7 +5,7 @@ import type { Lang } from "@/common/type";
 import type { InfoRowProps } from "@/components/UI/InfoRow";
 import { useLang } from "@/hooks";
 import { EPaymentMethod } from "@/services/order/enum";
-import useDisplayPaymentMethod from "@/features/order/hooks/useDisplayPaymentMethod";
+import getDisplayPaymentMethod from "@/features/order/data-display/getDisplayPaymentMethod";
 import utils from "@/utils";
 
 interface OrderGeneralProps {
@@ -30,7 +30,7 @@ const OrderGeneral: FC<OrderGeneralProps> = ({ lang }) => {
       <InfoRow
         {...infoRowProps}
         label={lang.order.form.paymentMethods}
-        textElement={useDisplayPaymentMethod(EPaymentMethod.TRANSFER)}
+        textElement={getDisplayPaymentMethod(lang, EPaymentMethod.TRANSFER)}
       />
       <InfoRow {...infoRowProps} label={lang.order.form.quantity} text="0" />
       <InfoRow {...infoRowProps} label={lang.order.form.shipmentFee} text="0" />

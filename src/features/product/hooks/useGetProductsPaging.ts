@@ -5,7 +5,7 @@ import { getApiQuery } from "@/services/helper";
 import type { ApiQuery } from "@/services/type";
 import useUrlQuery from "@/hooks/features/useUrlQuery";
 
-const useGetProducts = (apiQuery: ApiQuery) => {
+const useGetProductsPaging = (apiQuery: ApiQuery) => {
   const { query } = useUrlQuery(apiQuery);
 
   const queryKey = "getProductsPaging" + getApiQuery(query);
@@ -24,4 +24,4 @@ const useGetProducts = (apiQuery: ApiQuery) => {
   return { refetch, ...rest };
 };
 
-export default useGetProducts;
+export default useGetProductsPaging;

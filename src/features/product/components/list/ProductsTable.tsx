@@ -1,13 +1,15 @@
-import { Dispatch, FC, Fragment, SetStateAction } from "react";
-import { Image, Table, Button } from "@/components/UI";
-import type { Lang } from "@/common/type";
+import { Dispatch, FC, Fragment, Key, SetStateAction, useState } from "react";
+import { Image, Table, Button, Space } from "@/components/UI";
 import type { Columns } from "@/components/UI/Table/type";
 import type { Product } from "@/services/product/type";
 import type { ApiQuery, ApiResponse, Paging } from "@/services/type";
+import type { Confirmed } from "@/common/type";
 import { Link } from "react-router-dom";
 import { linkPaths } from "@/common/constant/url";
 import { useLang } from "@/hooks";
 import { EInventoryStatus, EProductOrigin, EProductStatus, EProductUnit } from "@/services/product/enum";
+import { PiWarning } from "react-icons/pi";
+import { REPLACE_NUM_REGEX } from "@/common/constant/regex";
 import ProductsTableFilter from "./ProductsTableFilter";
 import Error from "@/components/Page/Error";
 import getDisplayInventoryStatus from "@/features/product/data-display/getDisplayInventoryStatus";
@@ -16,6 +18,7 @@ import getDisplayProductOrigin from "@/features/product/data-display/getDisplayP
 import getDisplayProductUnit from "@/features/product/data-display/getDisplayProductUnit";
 import moment from "moment";
 import utils from "@/utils";
+import ConfirmModal from "@/components/Page/ConfirmModal";
 
 const { PRODUCT } = linkPaths;
 
@@ -23,8 +26,8 @@ interface ProductsTableProps {
   products: ApiResponse<Paging<Product>> | undefined;
   isLoading: boolean;
   isError: boolean;
-  lang: Lang;
   apiQuery: ApiQuery;
+  handleResetFilter: () => void;
   setApiQuery: Dispatch<SetStateAction<ApiQuery>>;
 }
 
@@ -32,11 +35,13 @@ const ProductsTable: FC<ProductsTableProps> = ({
   products,
   isLoading,
   isError,
-  lang,
   apiQuery,
   setApiQuery,
+  handleResetFilter,
 }) => {
-  const { locale } = useLang();
+  const { locale, lang } = useLang();
+
+  const [confirmed, setConfirmed] = useState<Confirmed>({ open: false, ids: [] });
 
   const dataSource = (): Product[] => {
     if (!products) return [];
@@ -120,6 +125,10 @@ const ProductsTable: FC<ProductsTableProps> = ({
     setApiQuery((prev) => ({ ...prev, page }));
   };
 
+  const handleOpenModal = (ids: Key[]) => setConfirmed((prev) => ({ ...prev, open: true, ids }));
+
+  const handleCloseModal = () => setConfirmed((prev) => ({ ...prev, open: false, ids: [] }));
+
   const renderContent = () => {
     if (isError) return <Error />;
     return (
@@ -129,15 +138,34 @@ const ProductsTable: FC<ProductsTableProps> = ({
         hasPagination
         hasRowSelection
         loading={isLoading}
-        dataSource={dataSource()}
         columns={columns}
+        showRemove={confirmed.open}
+        dataSource={dataSource()}
+        onSelectRows={handleOpenModal}
         filter={<ProductsTableFilter lang={lang} apiQuery={apiQuery} setApiQuery={setApiQuery} />}
+        filterProps={{ hasFilterButton: false, onCancelFilter: handleResetFilter }}
         paginationProps={{ total: products?.data?.totalItems ?? 0, onChangePage: handleChangePage }}
       />
     );
   };
 
-  return <Fragment>{renderContent()}</Fragment>;
+  return (
+    <Fragment>
+      {renderContent()}
+      <ConfirmModal
+        open={confirmed.open}
+        onCancel={handleCloseModal}
+        desciption={
+          <Space align="middle" justify="center">
+            <PiWarning size={20} className="remove-modal-icon" />
+            <span>
+              {lang.common.description.remove.replace(REPLACE_NUM_REGEX, String(confirmed.ids.length))}
+            </span>
+          </Space>
+        }
+      />
+    </Fragment>
+  );
 };
 
 export default ProductsTable;

@@ -7,7 +7,7 @@ import { ESort } from "@/common/enum";
 import type { ApiQuery } from "@/services/type";
 import ContentHeader from "@/components/Page/ContentHeader";
 import ProductsTable from "@/features/product/components/list/ProductsTable";
-import useGetProducts from "@/features/product/hooks/useGetProducts";
+import useGetProductsPaging from "@/features/product/hooks/useGetProductsPaging";
 import useDebounce from "@/hooks/features/useDebounce";
 
 const { PRODUCT } = linkPaths;
@@ -17,7 +17,7 @@ interface ProductsProps {}
 const Products: FC<ProductsProps> = () => {
   const { lang } = useLang();
 
-  const [apiQuery, setApiQuery] = useState<ApiQuery>({
+  const initialApiQuery: ApiQuery = {
     page: 1,
     limit: 10,
     keywords: "",
@@ -25,11 +25,15 @@ const Products: FC<ProductsProps> = () => {
     productUnit: undefined,
     inventoryStatus: undefined,
     sortBy: ESort.NEWEST,
-  });
+  };
+
+  const [apiQuery, setApiQuery] = useState<ApiQuery>(initialApiQuery);
 
   const debounce = useDebounce(apiQuery.keywords as string);
 
-  const { data: products, isFetching, isError } = useGetProducts({ ...apiQuery, keywords: debounce });
+  const { data: products, isFetching, isError } = useGetProductsPaging({ ...apiQuery, keywords: debounce });
+
+  const handleResetFilter = () => setApiQuery(initialApiQuery);
 
   return (
     <Fragment>
@@ -50,12 +54,12 @@ const Products: FC<ProductsProps> = () => {
         )}
       />
       <ProductsTable
-        lang={lang}
         products={products}
         isLoading={isFetching}
         isError={isError}
         apiQuery={apiQuery}
         setApiQuery={setApiQuery}
+        handleResetFilter={handleResetFilter}
       />
     </Fragment>
   );
