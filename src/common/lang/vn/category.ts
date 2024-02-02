@@ -5,6 +5,11 @@ const category_vn = {
   editCategoryTitle: "Cập nhật danh mục",
   addSubCategoryTitle: "Thêm danh mục phụ",
   editSubCategoryTitle: "Cập nhật danh mục phụ",
+  filter: {
+    placeholder: {
+      search: "Tìm kiếm tên theo ngôn ngữ",
+    },
+  },
 };
 
 export default category_vn;

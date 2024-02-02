@@ -55,14 +55,12 @@ const Category: FC<CategoryProps> = () => {
     {
       id: "category",
       title: lang.category.categoryTitle,
-      content: <CategoriesTable locale={locale} lang={lang} handleOpenModal={handleOpenCategoryModal} />,
+      content: <CategoriesTable lang={lang} handleOpenModal={handleOpenCategoryModal} />,
     },
     {
       id: "subcategory",
       title: lang.category.subCategoryTitle,
-      content: (
-        <SubCategoriesTable locale={locale} lang={lang} handleOpenModal={handleOpenSubCategoryModal} />
-      ),
+      content: <SubCategoriesTable lang={lang} handleOpenModal={handleOpenSubCategoryModal} />,
     },
   ];
 

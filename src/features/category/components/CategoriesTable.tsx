@@ -1,29 +1,44 @@
-import { FC, Fragment } from "react";
-import { Image, Table, Button } from "@/components/UI";
-import { useNavigate } from "react-router-dom";
-import type { Lang } from "@/common/type";
+import { FC, Fragment, Key, useState } from "react";
+import { Image, Table, Button, Space } from "@/components/UI";
+import type { Confirmed, Lang } from "@/common/type";
 import type { Columns } from "@/components/UI/Table/type";
 import type { Category } from "@/services/category/type";
-import { ELang } from "@/common/enum";
-import { routerPaths } from "@/common/constant/url";
+import type { ApiQuery } from "@/services/type";
+import { ESort } from "@/common/enum";
+import { PiWarning } from "react-icons/pi";
+import { REPLACE_NUM_REGEX } from "@/common/constant/regex";
 import ContentHeader from "@/components/Page/ContentHeader";
 import CategoriesTableFilter from "./CategoriesTableFilter";
+import ConfirmModal from "@/components/Page/ConfirmModal";
 import Error from "@/components/Page/Error";
-import useGetCategories from "../hooks/useGetCategories";
+import useGetCategoriesPaging from "../hooks/useGetCategoriesPaging";
+import useDebounce from "@/hooks/features/useDebounce";
 import moment from "moment";
 
-const { CATEGORY } = routerPaths;
-
 interface CategoriesTableProps {
-  locale: ELang;
   lang: Lang;
   handleOpenModal: (activeId: string | null) => void;
 }
 
-const CategoriesTable: FC<CategoriesTableProps> = ({ locale, lang, handleOpenModal }) => {
-  const navigate = useNavigate();
+const CategoriesTable: FC<CategoriesTableProps> = ({ lang, handleOpenModal }) => {
+  const initialApiQuery: ApiQuery = {
+    page: 1,
+    limit: 10,
+    keywords: "",
+    sortBy: ESort.NEWEST,
+  };
 
-  const { data: categories, isLoading, isError } = useGetCategories();
+  const [apiQuery, setApiQuery] = useState<ApiQuery>(initialApiQuery);
+
+  const [confirmed, setConfirmed] = useState<Confirmed>({ open: false, ids: [] });
+
+  const debounce = useDebounce(apiQuery.keywords as string);
+
+  const {
+    data: categories,
+    isFetching,
+    isError,
+  } = useGetCategoriesPaging({ ...apiQuery, keywords: debounce });
 
   const dataSource = (): Category[] => {
     if (!categories) return [];
@@ -36,7 +51,7 @@ const CategoriesTable: FC<CategoriesTableProps> = ({ locale, lang, handleOpenMod
       id: "id",
       title: lang.common.table.head.image,
       dataIndex: "id",
-      render: () => <Image imgWidth={60} imgHeight={60} />,
+      render: () => <Image imgWidth={40} imgHeight={40} />,
     },
     {
       id: "name",
@@ -62,9 +77,13 @@ const CategoriesTable: FC<CategoriesTableProps> = ({ locale, lang, handleOpenMod
     },
   ];
 
-  const handleChangePage = (page: number) => {
-    navigate(CATEGORY + `?page=${page}&limit=10`);
-  };
+  const handleChangePage = (page: number) => setApiQuery((prev) => ({ ...prev, page }));
+
+  const handleResetFilter = () => setApiQuery(initialApiQuery);
+
+  const handleOpenConfirmModal = (ids: Key[]) => setConfirmed((prev) => ({ ...prev, open: true, ids }));
+
+  const handleCloseConfirmModal = () => setConfirmed((prev) => ({ ...prev, open: false, ids: [] }));
 
   const renderContent = () => {
     if (isError) return <Error />;
@@ -74,10 +93,13 @@ const CategoriesTable: FC<CategoriesTableProps> = ({ locale, lang, handleOpenMod
         hasFilter
         hasPagination
         hasRowSelection
-        loading={isLoading}
+        loading={isFetching}
         columns={columns}
+        showRemove={confirmed.open}
         dataSource={dataSource()}
-        filter={<CategoriesTableFilter />}
+        onSelectRows={handleOpenConfirmModal}
+        filter={<CategoriesTableFilter lang={lang} apiQuery={apiQuery} setApiQuery={setApiQuery} />}
+        filterProps={{ hasFilterButton: false, onCancelFilter: handleResetFilter }}
         paginationProps={{ total: categories?.data?.totalItems ?? 0, onChangePage: handleChangePage }}
       />
     );
@@ -87,6 +109,7 @@ const CategoriesTable: FC<CategoriesTableProps> = ({ locale, lang, handleOpenMod
     <Fragment>
       <ContentHeader
         headTitle={lang.category.categoryTitle}
+        total={categories?.data?.totalItems}
         right={() => (
           <Button color="green" onClick={() => handleOpenModal(null)}>
             {lang.common.actions.create}
@@ -94,6 +117,18 @@ const CategoriesTable: FC<CategoriesTableProps> = ({ locale, lang, handleOpenMod
         )}
       />
       {renderContent()}
+      <ConfirmModal
+        open={confirmed.open}
+        onCancel={handleCloseConfirmModal}
+        desciption={
+          <Space align="middle" justify="center">
+            <PiWarning size={20} className="remove-modal-icon" />
+            <span>
+              {lang.common.description.remove.replace(REPLACE_NUM_REGEX, String(confirmed.ids.length))}
+            </span>
+          </Space>
+        }
+      />
     </Fragment>
   );
 };

@@ -5,6 +5,11 @@ const category_en = {
   editCategoryTitle: "Update category",
   addSubCategoryTitle: "Add sub category",
   editSubCategoryTitle: "Update sub category",
+  filter: {
+    placeholder: {
+      search: "Search name by langauge",
+    },
+  },
 };
 
 export default category_en;

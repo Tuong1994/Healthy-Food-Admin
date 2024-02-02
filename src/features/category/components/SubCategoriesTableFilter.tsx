@@ -1,13 +1,24 @@
-import { FC, Fragment } from "react";
+import { FC, Fragment, Dispatch, SetStateAction } from "react";
 import { Grid } from "@/components/UI";
 import { Input, Select } from "@/components/Control";
+import type { Lang } from "@/common/type";
+import type { ApiQuery } from "@/services/type";
 import type { GridColProps } from "@/components/UI/Grid/Col";
+import { useSelectOption } from "@/hooks";
 
 const { Col } = Grid;
 
-interface SubCategoriesTableFilterProps {}
+interface SubCategoriesTableFilterProps {
+  lang: Lang;
+  apiQuery: ApiQuery;
+  setApiQuery: Dispatch<SetStateAction<ApiQuery>>;
+}
 
-const SubCategoriesTableFilter: FC<SubCategoriesTableFilterProps> = () => {
+const SubCategoriesTableFilter: FC<SubCategoriesTableFilterProps> = ({ lang, apiQuery, setApiQuery }) => {
+  const options = useSelectOption();
+
+  const { keywords, sortBy } = apiQuery;
+
   const commonProps: GridColProps = {
     xs: 24,
     md: 12,
@@ -16,11 +27,25 @@ const SubCategoriesTableFilter: FC<SubCategoriesTableFilterProps> = () => {
 
   return (
     <Fragment>
-      <Col {...commonProps}>
-        <Input sizes="sm" />
+      <Col {...commonProps} span={5}>
+        <Input
+          sizes="sm"
+          color="green"
+          value={keywords}
+          placeholder={lang.category.filter.placeholder.search}
+          onChangeInput={(text) => setApiQuery((prev) => ({ ...prev, keywords: text }))}
+        />
       </Col>
-      <Col {...commonProps}>
-        <Select sizes="sm" />
+      <Col {...commonProps} span={3}>
+        <Select
+          sizes="sm"
+          color="green"
+          hasClear={false}
+          defaultValue={sortBy}
+          options={options.sortBy}
+          placeholder={lang.common.form.placeholder.sortBy}
+          onChangeSelect={(value: any) => setApiQuery((prev) => ({ ...prev, sortBy: value }))}
+        />
       </Col>
     </Fragment>
   );
