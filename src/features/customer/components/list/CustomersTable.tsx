@@ -4,6 +4,7 @@ import type { Customer, CustomerAddress } from "@/services/customer/type";
 import type { Columns } from "@/components/UI/Table/type";
 import type { ApiQuery, ApiResponse, Paging } from "@/services/type";
 import type { Confirmed } from "@/common/type";
+import type { ImageUpload } from "@/services/image/type";
 import { EGender, ERole } from "@/services/customer/enum";
 import { Link } from "react-router-dom";
 import { linkPaths } from "@/common/constant/url";
@@ -52,14 +53,14 @@ const CustomersTable: FC<CustomersTableProps> = ({
       id: "image",
       title: lang.common.table.head.image,
       dataIndex: "image",
-      render: () => <Image imgWidth={40} imgHeight={40} />,
+      render: (image: ImageUpload) => <Image src={image?.path} imgWidth={40} imgHeight={40} />,
     },
     {
       id: "email",
       title: lang.common.table.head.email,
       dataIndex: "email",
-      render: (email: string, data: Customer) => (
-        <Link to={CUSTOMER} state={{ id: data.id }}>
+      render: (email: string, customer: Customer) => (
+        <Link to={CUSTOMER} state={{ id: customer.id }}>
           <Button text>{email}</Button>
         </Link>
       ),
@@ -129,13 +130,17 @@ const CustomersTable: FC<CustomersTableProps> = ({
         hasPagination
         hasRowSelection
         loading={isLoading}
+        columns={columns}
         showRemove={confirmed.open}
         dataSource={dataSource()}
-        columns={columns}
+        onSelectRows={handleOpenModal}
         filter={<CustomersTableFilter lang={lang} apiQuery={apiQuery} setApiQuery={setApiQuery} />}
         filterProps={{ hasFilterButton: false, onCancelFilter: handleResetFilter }}
-        paginationProps={{ total: customers?.data?.totalItems ?? 0, onChangePage: handleChangePage }}
-        onSelectRows={handleOpenModal}
+        paginationProps={{
+          showContent: true,
+          total: customers?.data?.totalItems ?? 0,
+          onChangePage: handleChangePage,
+        }}
       />
     );
   };

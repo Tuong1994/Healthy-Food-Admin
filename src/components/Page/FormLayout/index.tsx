@@ -5,10 +5,13 @@ import { Form } from "@/components/Control";
 import type { FormProps } from "@/components/Control/Form";
 import type { GridRowProps } from "@/components/UI/Grid/Row";
 import type { GridColProps } from "@/components/UI/Grid/Col";
+import FormLayoutLoading from "./Loading";
 
 const { Row, Col } = Grid;
 
 interface FormLayoutProps<M> extends FormProps<M> {
+  loading?: boolean;
+  submitting?: boolean;
   headerProps?: ContentHeaderProps;
   rowProps?: GridRowProps;
   leftSpanProps?: GridColProps;
@@ -18,6 +21,8 @@ interface FormLayoutProps<M> extends FormProps<M> {
 }
 
 const FormLayout = <M extends object>({
+  loading,
+  submitting,
   headerProps,
   rowProps,
   leftSpanProps,
@@ -28,7 +33,7 @@ const FormLayout = <M extends object>({
 }: FormLayoutProps<M>) => {
   const headerDefaultProps: ContentHeaderProps = { hasTotal: false, ...headerProps };
 
-  const formDefaultProps: FormProps<M> = { color: "green", ...restProps };
+  const formDefaultProps: FormProps<M> = { color: "green", disabled: submitting, ...restProps };
 
   const rowDefaultProps: GridRowProps = { ...rowProps };
 
@@ -36,13 +41,20 @@ const FormLayout = <M extends object>({
 
   const rightSpanDefaultProps: GridColProps = { xs: 24, md: 24, lg: 24, span: 10, ...rightSpanProps };
 
-  return (
-    <Form<M> {...formDefaultProps}>
-      <ContentHeader {...headerDefaultProps} />
+  const renderContent = () => {
+    if (loading) return <FormLayoutLoading />;
+    return (
       <Row {...rowDefaultProps}>
         <Col {...leftSpanDefaultProps}>{leftItems}</Col>
         <Col {...rightSpanDefaultProps}>{rightItems}</Col>
       </Row>
+    );
+  };
+
+  return (
+    <Form<M> {...formDefaultProps}>
+      <ContentHeader {...headerDefaultProps} />
+      {renderContent()}
     </Form>
   );
 };

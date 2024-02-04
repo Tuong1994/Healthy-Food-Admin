@@ -1,0 +1,40 @@
+.auth {
+  width: $w-full;
+  height: $h-screen;
+  padding: $p-5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: url("/image/background/food-bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top;
+  background-attachment: fixed;
+  .auth-translate {
+    width: $w-8;
+    position: absolute;
+    top: 5rem;
+    right: 5rem;
+    z-index: 20;
+    @include respond(smTablet) {
+      right: 3rem;
+    }
+    @include respond(mdPhone) {
+      right: 1rem;
+    }
+  }
+  .auth-content {
+    width: $w-full;
+    .content-logo {
+      background: transparent;
+    }
+    .content-list {
+      * {
+        color: $text-white;
+      }
+    }
+    .content-btn {
+      width: $w-full;
+    }
+  }
+}

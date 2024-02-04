@@ -3,7 +3,7 @@ import { Card, Typography, Grid } from "@/components/UI";
 import { FormItem, Input, InputPhone, Select, DatePicker } from "@/components/Control";
 import type { Lang } from "@/common/type";
 import type { GridColProps } from "@/components/UI/Grid/Col";
-import { useSelectOption } from "@/hooks";
+import { useRule, useSelectOption } from "@/hooks";
 
 const { Row, Col } = Grid;
 
@@ -15,6 +15,8 @@ interface CustomerAuthProps {
 
 const CustomerAuth: FC<CustomerAuthProps> = ({ lang }) => {
   const options = useSelectOption();
+
+  const { phone } = useRule();
 
   const colProps: GridColProps = {
     xs: 24,
@@ -43,8 +45,8 @@ const CustomerAuth: FC<CustomerAuthProps> = ({ lang }) => {
           </FormItem>
         </Col>
         <Col {...colProps}>
-          <FormItem name="phone">
-            <InputPhone label={lang.common.form.label.phone} />
+          <FormItem name="phone" rules={phone()}>
+            <InputPhone required label={lang.common.form.label.phone} />
           </FormItem>
         </Col>
         <Col {...colProps}>
@@ -54,7 +56,7 @@ const CustomerAuth: FC<CustomerAuthProps> = ({ lang }) => {
         </Col>
         <Col {...colProps}>
           <FormItem name="birthday">
-            <DatePicker label={lang.common.form.label.birthday} />
+            <DatePicker max="today" label={lang.common.form.label.birthday} />
           </FormItem>
         </Col>
       </Row>

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { ApiQuery } from "@/services/type";
 import { getApiQuery } from "@/services/helper";
@@ -10,10 +10,16 @@ const useUrlQuery = (apiQuery: ApiQuery) => {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  useEffect(() => {
+  const queryString = getApiQuery(apiQuery);
+
+  const setQuery = useCallback(() => {
     const query = utils.formatQuery(apiQuery);
     setSearchParams({ langCode: locale, ...query });
-  }, [getApiQuery(apiQuery), locale]);
+  }, [queryString, locale]);
+
+  useEffect(() => {
+    setQuery();
+  }, [queryString, locale]);
 
   const query = Object.fromEntries(searchParams) as ApiQuery;
 

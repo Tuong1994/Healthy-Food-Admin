@@ -1,42 +1,46 @@
-import { FC, Fragment, useState } from "react";
+import { FC } from "react";
 import { Card, Button, Space, Typography } from "@/components/UI";
-import type { Lang } from "@/common/type";
 import { HiPlus } from "react-icons/hi2";
-import AddressModal from "./AddressModal";
+import type { Lang } from "@/common/type";
+import type { CustomerAddress as AddressType } from "@/services/customer/type";
+import AddressForm from "./AddressForm";
 
 const { Paragraph } = Typography;
 
 interface CustomerAddressProps {
   lang: Lang;
+  address: AddressType | undefined;
+  showAddress: boolean;
+  handleShowAddress: () => void;
 }
 
-const CustomerAddress: FC<CustomerAddressProps> = ({ lang }) => {
-  const [open, setOpen] = useState<boolean>(false);
-
-  const handleOpen = () => setOpen(true);
-
-  const handleClose = () => setOpen(false);
-
-  return (
-    <Fragment>
-      <Card
-        rootClassName="card-section"
-        head={
-          <Paragraph size={16} weight={600}>
-            {lang.customer.form.address.title}
-          </Paragraph>
-        }
-      >
-        <Button text onClick={handleOpen}>
+const CustomerAddress: FC<CustomerAddressProps> = ({ lang, address, showAddress, handleShowAddress }) => {
+  const renderContent = () => {
+    if (!showAddress) {
+      return (
+        <Button text onClick={handleShowAddress}>
           <Space align="middle">
             <span>{lang.customer.form.address.note}</span>
             <HiPlus />
           </Space>
         </Button>
-      </Card>
+      );
+    }
 
-      <AddressModal lang={lang} open={open} onCancel={handleClose} />
-    </Fragment>
+    return <AddressForm lang={lang} address={address} handleShowAddress={handleShowAddress} />;
+  };
+
+  return (
+    <Card
+      rootClassName="card-section"
+      head={
+        <Paragraph size={16} weight={600}>
+          {lang.customer.form.address.title}
+        </Paragraph>
+      }
+    >
+      {renderContent()}
+    </Card>
   );
 };
 

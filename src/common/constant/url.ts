@@ -9,6 +9,7 @@ export const routerPaths = {
   SHIPMENT_LIST: "/shipment/list",
   SHIPMENT_FORM: "/shipment/form",
   CATEGORY: "/category",
+  AUTH: "/auth",
 };
 
 export const linkPaths = {
@@ -22,4 +23,5 @@ export const linkPaths = {
   SHIPMENTS: "/shipment/list?page=1&limit=10",
   SHIPMENT: "/shipment/form",
   CATEGORY: "/category?page=1&limit=10",
+  AUTH: "/auth",
 };

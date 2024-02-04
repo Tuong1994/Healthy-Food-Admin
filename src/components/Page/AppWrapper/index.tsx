@@ -19,9 +19,9 @@ const AppWrapper: FC<AppWrapperProps> = ({ children }) => {
 
   const { isPhone } = useContext(GridAppContext);
 
-  const items = useMenu();
-
   const navigate = useNavigate();
+
+  const items = useMenu();
 
   const handleNavigate = (id: string) => {
     const currentMenu = items.find((item) => item.id === id);

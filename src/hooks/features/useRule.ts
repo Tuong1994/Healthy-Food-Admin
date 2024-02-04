@@ -40,6 +40,7 @@ const useRule = () => {
 
   const phone = (): FormRule[] => {
     return [
+      { required: true, message: lang.common.form.rule.required },
       { whiteSpace: true, pattern: WHITE_SPACE_REGEX, message: lang.common.form.rule.whiteSpace },
       { phone: true, pattern: PHONE_REGEX, message: lang.common.form.rule.phone },
     ];

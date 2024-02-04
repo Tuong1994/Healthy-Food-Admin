@@ -100,7 +100,11 @@ const SubCategoriesTable: FC<SubCategoriesTableProps> = ({ lang, handleOpenModal
         onSelectRows={handleOpenConfirmModal}
         filter={<SubCategoriesTableFilter lang={lang} apiQuery={apiQuery} setApiQuery={setApiQuery} />}
         filterProps={{ hasFilterButton: false, onCancelFilter: handleResetFilter }}
-        paginationProps={{ total: subCategories?.data?.totalItems ?? 0, onChangePage: handleChangePage }}
+        paginationProps={{
+          showContent: true,
+          total: subCategories?.data?.totalItems ?? 0,
+          onChangePage: handleChangePage,
+        }}
       />
     );
   };

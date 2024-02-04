@@ -4,6 +4,7 @@ import { ControlShape } from "../type";
 
 export type FormContextState = {
   isForm: boolean;
+  disabled?: boolean;
   sizes?: ComponentSize;
   shape?: ControlShape;
   color?: Exclude<ComponentColor, "black" | "white" | "gray">;

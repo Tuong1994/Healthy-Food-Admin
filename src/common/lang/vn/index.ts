@@ -8,11 +8,13 @@ import order_vn from "./order";
 import shipment_vn from "./shipment";
 import category_vn from "./category";
 import not_found_vn from "./not-found";
+import auth_vn from "./auth";
 
 const vn = {
   common: common_vn,
   options: options_vn,
   pageComponent: page_components_vn,
+  auth: auth_vn,
   dashboard: dashboard_vn,
   customer: customer_vn,
   product: product_vn,

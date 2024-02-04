@@ -146,7 +146,11 @@ const OrdersTable: FC<OrdersTableProps> = ({
         onSelectRows={handleOpenModal}
         filter={<OrdersTableFilter lang={lang} apiQuery={apiQuery} setApiQuery={setApiQuery} />}
         filterProps={{ hasFilterButton: false, onCancelFilter: handleResetFilter }}
-        paginationProps={{ total: orders?.data?.totalItems ?? 0, onChangePage: handleChangePage }}
+        paginationProps={{
+          showContent: true,
+          total: orders?.data?.totalItems ?? 0,
+          onChangePage: handleChangePage,
+        }}
       />
     );
   };

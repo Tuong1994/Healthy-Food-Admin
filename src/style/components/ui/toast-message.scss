@@ -4,6 +4,7 @@
   position: fixed;
   top: 0;
   right: 0;
+  z-index: 25;
   .message-item {
     min-width: max-content;
     width: $w-10 * 3;

@@ -74,6 +74,8 @@ const common_vn = {
     },
     others: {
       emptyOptions: "Không có lựa chọn",
+      districtsEmpty: "Vui lòng chọn thành phố",
+      wardsEmpty: "Vui lòng chọn quận",
       optional: "Không bắt buộc",
       fileSize: "Kích thước tệp không được lớn hơn {{num}}MB",
       fileType: "Chỉ chấp nhận loại tệp {{type}}",
@@ -144,8 +146,14 @@ const common_vn = {
       create: "Tạo thành công",
       update: "Cập nhật thành công",
       remove: "Xóa thành công",
+      signIn: "Đăng nhập thành công",
+      logout: "Đã đăng xuất",
     },
     error: {
+      authEmail: "Email không đúng. Vui lòng thử lại",
+      authPassword: "Mật khẩu không đúng. Vui lòng thử lại",
+      signIn: "Lỗi đăng nhập",
+      logout: "Lỗi đăng xuất",
       create: "Lỗi! Không thể tạo",
       update: "Lỗi! Không thể cập nhật",
       remove: "Lỗi! Không thể xóa",

@@ -144,7 +144,11 @@ const ProductsTable: FC<ProductsTableProps> = ({
         onSelectRows={handleOpenModal}
         filter={<ProductsTableFilter lang={lang} apiQuery={apiQuery} setApiQuery={setApiQuery} />}
         filterProps={{ hasFilterButton: false, onCancelFilter: handleResetFilter }}
-        paginationProps={{ total: products?.data?.totalItems ?? 0, onChangePage: handleChangePage }}
+        paginationProps={{
+          showContent: true,
+          total: products?.data?.totalItems ?? 0,
+          onChangePage: handleChangePage,
+        }}
       />
     );
   };

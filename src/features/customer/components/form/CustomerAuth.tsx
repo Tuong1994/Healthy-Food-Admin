@@ -1,6 +1,8 @@
 import { FC, Fragment, useState } from "react";
 import { Button, Card, Grid } from "@/components/UI";
 import { FormItem, Input, InputPassword, Upload } from "@/components/Control";
+import { useRule } from "@/hooks";
+import type { CustomerFormData } from "@/services/customer/type";
 import type { Lang } from "@/common/type";
 import PasswordModal from "./PasswordModal";
 
@@ -13,39 +15,41 @@ const { SingleImageUpload } = ImageUpload;
 interface CustomerAuthProps {
   lang: Lang;
   isUpdate: boolean;
+  customer: CustomerFormData | undefined;
+  handleUpload: (image: File | null) => void;
 }
 
-const CustomerAuth: FC<CustomerAuthProps> = ({ lang, isUpdate }) => {
+const CustomerAuth: FC<CustomerAuthProps> = ({ lang, customer, isUpdate, handleUpload }) => {
   const [open, setOpen] = useState<boolean>(false);
 
-  const handleOpen = () => setOpen(true);
+  const { email, password } = useRule();
 
-  const handleClose = () => setOpen(false);
+  const handleOpenModal = () => setOpen(!open);
 
   return (
     <Fragment>
       <Card rootClassName="card-section">
         <Row justify="between">
           <Col xs={24} md={6} lg={6} span={6}>
-            <SingleImageUpload />
+            <SingleImageUpload defaultImageUrl={customer?.image?.path} onUpload={handleUpload} />
           </Col>
           <Col xs={24} md={18} lg={18} span={18}>
-            <FormItem name="email" disabled={isUpdate}>
-              <Input label={lang.common.form.label.email} />
+            <FormItem name="email" disabled={isUpdate} rules={email()}>
+              <Input required label={lang.common.form.label.email} />
             </FormItem>
             {!isUpdate ? (
-              <FormItem name="password">
-                <InputPassword label={lang.common.form.label.password} />
+              <FormItem name="password" rules={password()}>
+                <InputPassword required label={lang.common.form.label.password} />
               </FormItem>
             ) : (
-              <Button color="red" ghost onClick={handleOpen}>
+              <Button color="red" ghost onClick={handleOpenModal}>
                 {lang.customer.form.changePass}
               </Button>
             )}
           </Col>
         </Row>
       </Card>
-      <PasswordModal lang={lang} open={open} onCancel={handleClose} />
+      <PasswordModal lang={lang} open={open} onCancel={handleOpenModal} />
     </Fragment>
   );
 };

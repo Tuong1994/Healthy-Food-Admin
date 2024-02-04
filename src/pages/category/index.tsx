@@ -19,7 +19,7 @@ export type ActiveModal = {
 interface CategoryProps {}
 
 const Category: FC<CategoryProps> = () => {
-  const { locale, lang } = useLang();
+  const { lang } = useLang();
 
   const navigate = useNavigate();
 

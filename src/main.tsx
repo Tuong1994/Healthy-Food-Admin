@@ -4,7 +4,13 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import GridProvider from "./components/UI/Grid/Provider";
 import App from "./App.tsx";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchInterval: 0,
+    },
+  },
+});
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

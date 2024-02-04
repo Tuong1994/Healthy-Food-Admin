@@ -1,3 +1,4 @@
+import auth_en from "./auth";
 import category_en from "./category";
 import common_en from "./common";
 import customer_en from "./customer";
@@ -13,6 +14,7 @@ const en = {
   common: common_en,
   options: options_en,
   pageComponent: page_components_en,
+  auth: auth_en,
   dashboard: dashboard_en,
   customer: customer_en,
   product: product_en,

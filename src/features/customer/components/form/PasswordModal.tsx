@@ -3,7 +3,7 @@ import { Modal } from "@/components/UI";
 import { Form, FormItem, InputPassword } from "@/components/Control";
 import type { Lang } from "@/common/type";
 import type { ModalProps } from "@/components/UI/Modal";
-import type { CustomerPassword } from "@/services/customer/type";
+import type { AuthPassword } from "@/services/auth/type";
 import useForm from "@/components/Control/Form/useForm";
 
 interface AddressModalProps extends ModalProps {
@@ -21,24 +21,23 @@ const AddressModal: FC<AddressModalProps> = ({ lang, ...restProps }) => {
     ...restProps,
   };
 
-  const initialData: CustomerPassword = {
+  const initialData: AuthPassword = {
     newPassword: "",
     oldPassword: "",
-    customerId: "",
   };
 
-  const handleSubmit = (data: CustomerPassword) => {
+  const handleSubmit = (data: AuthPassword) => {
     console.log(data);
   };
 
   return (
     <Modal {...modalDefaultProps} onOk={form?.handleSubmit}>
-      <Form<CustomerPassword> color="green" initialData={initialData} onFinish={handleSubmit}>
+      <Form<AuthPassword> color="green" initialData={initialData} onFinish={handleSubmit}>
         <FormItem name="oldPassword">
-          <InputPassword label={lang.common.form.label.oldPassword} />
+          <InputPassword required label={lang.common.form.label.oldPassword} />
         </FormItem>
         <FormItem name="newPassword">
-          <InputPassword label={lang.common.form.label.newPassword} />
+          <InputPassword required label={lang.common.form.label.newPassword} />
         </FormItem>
       </Form>
     </Modal>

@@ -30,6 +30,7 @@ export interface ModalProps {
   hasHead?: boolean;
   hasFoot?: boolean;
   hasCloseIcon?: boolean;
+  hasCancelButton?: boolean;
   backdropClose?: boolean;
   open?: boolean;
   sizes?: ComponentSize;
@@ -59,6 +60,7 @@ const Modal: ForwardRefRenderFunction<HTMLDivElement, ModalProps> = (
     hasHead = true,
     hasFoot = true,
     hasCloseIcon = true,
+    hasCancelButton = true,
     backdropClose = true,
     open = false,
     okButtonTitle,
@@ -153,9 +155,11 @@ const Modal: ForwardRefRenderFunction<HTMLDivElement, ModalProps> = (
 
             {hasFoot && (
               <div style={footStyle} className={modalFootClassName}>
-                <Button {...cancelButtonProps} onClick={onCancel}>
-                  {cancelButtonTitle ?? lang.common.actions.cancel}
-                </Button>
+                {hasCancelButton && (
+                  <Button {...cancelButtonProps} onClick={onCancel}>
+                    {cancelButtonTitle ?? lang.common.actions.cancel}
+                  </Button>
+                )}
                 <Button {...okActionProps} onClick={onOk}>
                   {okButtonTitle ?? lang.common.actions.ok}
                 </Button>

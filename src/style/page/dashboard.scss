@@ -19,16 +19,28 @@
     }
   }
   .general-item-1 {
-    background: $bg-blue;
+    .card-head,
+    .card-body {
+      background: $bg-blue;
+    }
   }
   .general-item-2 {
-    background: $bg-green;
+    .card-head,
+    .card-body {
+      background: $bg-green;
+    }
   }
   .general-item-3 {
-    background: $bg-orange;
+    .card-head,
+    .card-body {
+      background: $bg-orange;
+    }
   }
   .general-item-4 {
-    background: $bg-purple;
+    .card-head,
+    .card-body {
+      background: $bg-purple;
+    }
   }
 }
 .dashboard-chart {

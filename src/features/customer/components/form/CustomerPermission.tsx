@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { Card, Typography } from "@/components/UI";
 import { FormItem, Select } from "@/components/Control";
+import { useRule, useSelectOption } from "@/hooks";
 import type { Lang } from "@/common/type";
-import { useSelectOption } from "@/hooks";
 
 const { Paragraph } = Typography;
 
@@ -13,6 +13,8 @@ interface CustomerAuthProps {
 const CustomerAuth: FC<CustomerAuthProps> = ({ lang }) => {
   const options = useSelectOption();
 
+  const { common } = useRule();
+
   return (
     <Card
       rootClassName="card-section"
@@ -22,8 +24,8 @@ const CustomerAuth: FC<CustomerAuthProps> = ({ lang }) => {
         </Paragraph>
       }
     >
-      <FormItem name="role">
-        <Select label={lang.common.form.label.role} options={options.role} />
+      <FormItem name="role" rules={common()}>
+        <Select required label={lang.common.form.label.role} options={options.role} />
       </FormItem>
     </Card>
   );

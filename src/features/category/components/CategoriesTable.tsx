@@ -100,7 +100,11 @@ const CategoriesTable: FC<CategoriesTableProps> = ({ lang, handleOpenModal }) =>
         onSelectRows={handleOpenConfirmModal}
         filter={<CategoriesTableFilter lang={lang} apiQuery={apiQuery} setApiQuery={setApiQuery} />}
         filterProps={{ hasFilterButton: false, onCancelFilter: handleResetFilter }}
-        paginationProps={{ total: categories?.data?.totalItems ?? 0, onChangePage: handleChangePage }}
+        paginationProps={{
+          showContent: true,
+          total: categories?.data?.totalItems ?? 0,
+          onChangePage: handleChangePage,
+        }}
       />
     );
   };

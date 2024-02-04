@@ -15,7 +15,9 @@ export interface FormItemProps {
 }
 
 const FormItem: FC<FormItemProps> = ({ name, type = "default", disabled = false, rules = [], children }) => {
-  const { sizes } = useContext(FormContext);
+  const { sizes, disabled: formDisabled } = useContext(FormContext);
+
+  const itemDisabled = formDisabled ? formDisabled : disabled;
 
   const {
     field: { name: rhfName, value: rhfValue, onChange: rhfOnChange, onBlur: rhfOnBlur },
@@ -29,14 +31,14 @@ const FormItem: FC<FormItemProps> = ({ name, type = "default", disabled = false,
     rhfError,
     rhfName,
     rhfValue,
-    rhfDisabled: disabled,
+    rhfDisabled: itemDisabled,
     rhfOnChange,
     rhfOnBlur,
   };
 
   const getRules = () => {
     const fieldError: FieldError = {};
-    if (disabled) return fieldError;
+    if (itemDisabled) return fieldError;
     if (!rules.length) return fieldError;
     rules.forEach((rule) => {
       if (rule.required) fieldError.required = { value: rule.required, message: rule.message };
@@ -56,13 +58,11 @@ const FormItem: FC<FormItemProps> = ({ name, type = "default", disabled = false,
     <FormItemContext.Provider value={initialState}>
       <div className={`form-item-${sizes}`}>
         <Controller name={name} rules={{ ...getRules() }} render={() => <Fragment>{children}</Fragment>} />
-        {errors[rhfName] && (
-          <ErrorMessage
-            name={name}
-            errors={errors}
-            render={(error) => <NoteMessage type="error" message={error.message} />}
-          />
-        )}
+        <ErrorMessage
+          name={name}
+          errors={errors}
+          render={(error) => <NoteMessage type="error" message={error.message} />}
+        />
       </div>
     </FormItemContext.Provider>
   );

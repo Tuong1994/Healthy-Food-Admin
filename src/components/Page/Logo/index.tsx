@@ -6,16 +6,20 @@ import utils from "@/utils";
 interface LogoProps {
   width?: number;
   height?: number;
+  rootClassName?: string;
 }
 
-const Logo: ForwardRefRenderFunction<HTMLImageElement, LogoProps> = ({ width = 130, height = 30 }, ref) => {
+const Logo: ForwardRefRenderFunction<HTMLImageElement, LogoProps> = (
+  { rootClassName = "", width = 130, height = 30 },
+  ref
+) => {
   const { layoutValue } = useLayout();
 
   const { layoutTheme: theme } = layoutValue;
 
   const themeClassName = `logo-${theme}`;
 
-  const className = utils.formatClassName("logo", themeClassName);
+  const className = utils.formatClassName("logo", themeClassName, rootClassName);
 
   return (
     <div className={className}>

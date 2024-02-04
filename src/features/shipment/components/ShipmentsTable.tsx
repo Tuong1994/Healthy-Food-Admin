@@ -122,7 +122,11 @@ const ShipmentsTable: FC<ShipmentsTableProps> = ({
         onSelectRows={handleOpenModal}
         filter={<ShipmentsTableFilter lang={lang} apiQuery={apiQuery} setApiQuery={setApiQuery} />}
         filterProps={{ hasFilterButton: false, onCancelFilter: handleResetFilter }}
-        paginationProps={{ total: shipments?.data?.totalItems ?? 0, onChangePage: handleChangePage }}
+        paginationProps={{
+          showContent: true,
+          total: shipments?.data?.totalItems ?? 0,
+          onChangePage: handleChangePage,
+        }}
       />
     );
   };
