@@ -1,5 +1,5 @@
 import { FC, Fragment } from "react";
-import { Divider, Typography, UList } from "@/components/UI";
+import { Typography, UList } from "@/components/UI";
 import { useLang } from "@/hooks";
 import Logo from "@/components/Page/Logo";
 
@@ -14,7 +14,7 @@ const AuthLogo: FC<AuthLogoProps> = () => {
 
   return (
     <Fragment>
-      <Logo rootClassName="content-logo" width={400} height={150} />
+      <Logo rootClassName="content-logo" width={250} height={150} />
       <List rootClassName="content-list">
         <ListItem>
           <Paragraph size={16}>{lang.auth.content_1}</Paragraph>

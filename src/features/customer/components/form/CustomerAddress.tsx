@@ -9,12 +9,21 @@ const { Paragraph } = Typography;
 
 interface CustomerAddressProps {
   lang: Lang;
-  address: AddressType | undefined;
+  isUpdate: boolean;
   showAddress: boolean;
+  address: AddressType | undefined;
+  onReFetch: () => void;
   handleShowAddress: () => void;
 }
 
-const CustomerAddress: FC<CustomerAddressProps> = ({ lang, address, showAddress, handleShowAddress }) => {
+const CustomerAddress: FC<CustomerAddressProps> = ({
+  lang,
+  isUpdate,
+  address,
+  showAddress,
+  onReFetch,
+  handleShowAddress,
+}) => {
   const renderContent = () => {
     if (!showAddress) {
       return (
@@ -27,7 +36,15 @@ const CustomerAddress: FC<CustomerAddressProps> = ({ lang, address, showAddress,
       );
     }
 
-    return <AddressForm lang={lang} address={address} handleShowAddress={handleShowAddress} />;
+    return (
+      <AddressForm
+        lang={lang}
+        isUpdate={isUpdate}
+        address={address}
+        onReFetch={onReFetch}
+        handleShowAddress={handleShowAddress}
+      />
+    );
   };
 
   return (

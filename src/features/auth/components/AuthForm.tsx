@@ -24,7 +24,7 @@ const AuthForm: FC<AuthFormProps> = () => {
   const handleSubmit = (formData: AuthSignIn) => onLogin(formData);
 
   return (
-    <Card head={<Title level={3}>{lang.auth.title}</Title>}>
+    <Card head={<Title level={3}>{lang.auth.title}</Title>} rootClassName="content-form">
       <Form<AuthSignIn> color="green" disabled={isLoading} initialData={initialData} onFinish={handleSubmit}>
         <FormItem name="email" rules={email()}>
           <Input required label={lang.common.form.label.email} />
@@ -37,7 +37,7 @@ const AuthForm: FC<AuthFormProps> = () => {
         </Space>
         <Divider />
         <Space>
-          <Button loading={isLoading} type="submit" rootClassName="content-btn">
+          <Button loading={isLoading} type="submit" rootClassName="form-btn">
             {lang.auth.title}
           </Button>
         </Space>

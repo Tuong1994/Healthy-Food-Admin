@@ -10,12 +10,15 @@ import { Link } from "react-router-dom";
 import { linkPaths } from "@/common/constant/url";
 import { PiWarning } from "react-icons/pi";
 import { REPLACE_NUM_REGEX } from "@/common/constant/regex";
+import { HttpStatus } from "@/services/axios";
 import { useLang } from "@/hooks";
 import CustomersTableFilter from "./CustomersTableFilter";
 import ConfirmModal from "@/components/Page/ConfirmModal";
 import Error from "@/components/Page/Error";
 import getDisplayGender from "@/features/customer/data-display/getDisplayGender";
 import getDisplayRole from "@/features/customer/data-display/getDisplayRole";
+import useMessage from "@/components/UI/ToastMessage/useMessage";
+import useRemoveCustomers from "../../hooks/useRemoveCustomers";
 import utils from "@/utils";
 import moment from "moment";
 
@@ -27,6 +30,7 @@ interface CustomersTableProps {
   isError: boolean;
   apiQuery: ApiQuery;
   handleResetFilter: () => void;
+  handleReFetch: () => void;
   setApiQuery: Dispatch<SetStateAction<ApiQuery>>;
 }
 
@@ -36,8 +40,11 @@ const CustomersTable: FC<CustomersTableProps> = ({
   isError,
   apiQuery,
   setApiQuery,
+  handleReFetch,
   handleResetFilter,
 }) => {
+  const messageApi = useMessage();
+
   const { lang } = useLang();
 
   const [confirmed, setConfirmed] = useState<Confirmed>({ open: false, ids: [] });
@@ -114,11 +121,30 @@ const CustomersTable: FC<CustomersTableProps> = ({
     },
   ];
 
+  const { mutate: onRemoveCustomers, isLoading: removeLoading } = useRemoveCustomers();
+
   const handleChangePage = (page: number) => setApiQuery((prev) => ({ ...prev, page }));
 
   const handleOpenModal = (ids: Key[]) => setConfirmed((prev) => ({ ...prev, open: true, ids }));
 
   const handleCloseModal = () => setConfirmed((prev) => ({ ...prev, open: false, ids: [] }));
+
+  const handleRemove = () => {
+    const listIds = confirmed.ids.join(",");
+    const apiQuery: ApiQuery = { ids: listIds };
+    onRemoveCustomers(apiQuery, {
+      onSuccess: (response) => {
+        if (!response.success) {
+          let message = "";
+          if (response.error?.status === HttpStatus.NOT_FOUND) message = lang.common.message.error.remove;
+          return messageApi.error(message);
+        }
+        messageApi.success(lang.common.message.success.remove);
+        handleReFetch();
+        handleCloseModal();
+      },
+    });
+  };
 
   const renderContent = () => {
     if (isError) return <Error />;
@@ -150,6 +176,8 @@ const CustomersTable: FC<CustomersTableProps> = ({
       {renderContent()}
       <ConfirmModal
         open={confirmed.open}
+        okButtonProps={{ loading: removeLoading }}
+        onOk={handleRemove}
         onCancel={handleCloseModal}
         desciption={
           <Space align="middle" justify="center">

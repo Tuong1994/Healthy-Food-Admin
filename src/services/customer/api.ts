@@ -28,3 +28,8 @@ export const removeCustomers = async (query: ApiQuery) => {
   const response = await Fetch.Delete<any>(customerApiPaths.remove + getApiQuery(query));
   return response;
 };
+
+export const removeAddress = async (query: ApiQuery) => {
+  const response = await Fetch.Delete<any>(customerApiPaths.removeAddress + getApiQuery(query));
+  return response;
+};

@@ -11,10 +11,10 @@ const Auth: FC<{}> = () => {
     <div className="auth">
       <AuthTranslate />
       <Row rootClassName="auth-content">
-        <Col span={12}>
+        <Col xs={0} md={0} lg={10} span={12}>
           <AuthLogo />
         </Col>
-        <Col span={12}>
+        <Col xs={24} md={24} lg={14} span={12}>
           <AuthForm />
         </Col>
       </Row>

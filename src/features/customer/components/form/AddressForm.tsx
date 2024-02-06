@@ -1,24 +1,35 @@
 import { FC, Fragment, useState } from "react";
-import { Button, Space } from "@/components/UI";
+import { Button, Space, Typography } from "@/components/UI";
 import { FormItem, Input, Select } from "@/components/Control";
 import type { Lang } from "@/common/type";
 import type { City } from "@/services/city/type";
 import type { District } from "@/services/district/type";
 import type { Ward } from "@/services/ward/type";
 import type { CustomerAddress } from "@/services/customer/type";
+import type { ApiQuery } from "@/services/type";
 import { useRule } from "@/hooks";
+import ConfirmModal from "@/components/Page/ConfirmModal";
 import useLocationStore from "@/store/LocationStore";
 import useGetDistricts from "@/components/Page/AppWrapper/AppData/hooks/useGetDistricts";
 import useGetWards from "@/components/Page/AppWrapper/AppData/hooks/useGetWards";
+import useRemoveAddress from "../../hooks/useRemoveAddress";
+import useMessage from "@/components/UI/ToastMessage/useMessage";
 import utils from "@/utils";
+import { HttpStatus } from "@/services/axios";
+
+const { Paragraph } = Typography;
 
 interface AddressFormProps {
   lang: Lang;
+  isUpdate: boolean;
   address: CustomerAddress | undefined;
+  onReFetch: () => void;
   handleShowAddress: () => void;
 }
 
-const AddressForm: FC<AddressFormProps> = ({ lang, address, handleShowAddress }) => {
+const AddressForm: FC<AddressFormProps> = ({ lang, isUpdate, address, onReFetch, handleShowAddress }) => {
+  const messageApi = useMessage();
+
   const { common } = useRule();
 
   const [cities, districts, wards, setDistricts, setWards] = useLocationStore((state) => [
@@ -34,6 +45,10 @@ const AddressForm: FC<AddressFormProps> = ({ lang, address, handleShowAddress })
   const [districtCode, setDistrictCode] = useState<number | undefined>(
     address ? address.districtCode : undefined
   );
+
+  const [confirmed, setConfirmed] = useState<boolean>(false);
+
+  const { mutate: onRemoveAddress, isLoading } = useRemoveAddress();
 
   useGetDistricts(cityCode as number);
 
@@ -54,6 +69,38 @@ const AddressForm: FC<AddressFormProps> = ({ lang, address, handleShowAddress })
   const handleSelectDistrict = (code: any) => {
     setWards([]);
     setDistrictCode(code);
+  };
+
+  const handleOpenModal = () => setConfirmed(!confirmed);
+
+  const handleRemoveAddress = () => {
+    const apiQuery: ApiQuery = { customerId: address?.customerId };
+    onRemoveAddress(apiQuery, {
+      onSuccess: (response) => {
+        if (!response.success) {
+          let message = "";
+          if (response.error?.status === HttpStatus.NOT_FOUND) message = lang.common.message.error.remove;
+          return messageApi.error(message);
+        }
+        messageApi.success(lang.common.message.success.remove);
+        onReFetch();
+      },
+    });
+  };
+
+  const renderButton = () => {
+    if (!isUpdate || !address) {
+      return (
+        <Button ghost onClick={handleShowAddress}>
+          {lang.common.actions.cancel}
+        </Button>
+      );
+    }
+    return (
+      <Button ghost color="red" onClick={handleOpenModal}>
+        {lang.common.actions.remove}
+      </Button>
+    );
   };
 
   return (
@@ -89,11 +136,19 @@ const AddressForm: FC<AddressFormProps> = ({ lang, address, handleShowAddress })
           options={wardOptions}
         />
       </FormItem>
-      <Space justify="end">
-        <Button ghost onClick={handleShowAddress}>
-          {lang.common.actions.cancel}
-        </Button>
-      </Space>
+      <Space justify="end">{renderButton()}</Space>
+
+      <ConfirmModal
+        open={confirmed}
+        okButtonProps={{ loading: isLoading }}
+        onOk={handleRemoveAddress}
+        onCancel={handleOpenModal}
+        desciption={
+          <Paragraph align="center" variant="danger">
+            {lang.customer.form.address.confirm}
+          </Paragraph>
+        }
+      />
     </Fragment>
   );
 };

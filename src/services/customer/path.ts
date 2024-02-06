@@ -4,6 +4,7 @@ const customerApiPaths = {
   create: "api/customer/create",
   update: "api/customer/update",
   remove: "api/customer/remove",
+  removeAddress: "api/customer/removeAddress",
 };
 
-export default customerApiPaths
+export default customerApiPaths;

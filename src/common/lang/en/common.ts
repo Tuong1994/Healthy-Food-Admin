@@ -157,6 +157,7 @@ const common_en = {
       create: "Error! Cannot create",
       update: "Error! Cannot update",
       remove: "Error! Cannot remove",
+      api: 'Api network failed'
     },
   },
 };

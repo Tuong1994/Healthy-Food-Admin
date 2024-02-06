@@ -50,6 +50,7 @@ const Customer: FC<CustomerProps> = () => {
 
   useEffect(() => {
     if (response && response.data?.address) setShowAddress(true);
+    else setShowAddress(false);
   }, [response]);
 
   const isUserUpdate = state && state.isUser;
@@ -90,8 +91,14 @@ const Customer: FC<CustomerProps> = () => {
   const headerProps: ContentHeaderProps = {
     headTitle: pageTitle(),
     right: () =>
-      !isFetching && <Button type="submit">{lang.common.actions[!isUpdate ? "create" : "update"]}</Button>,
+      !isFetching && (
+        <Button type="submit" loading={isSubmitting}>
+          {lang.common.actions[!isUpdate ? "create" : "update"]}
+        </Button>
+      ),
   };
+
+  const onReFetch = () => refetch();
 
   const handleShowAddress = () => setShowAddress(!showAddress);
 
@@ -109,17 +116,24 @@ const Customer: FC<CustomerProps> = () => {
     if (image) formData.append("image", image);
 
     for (let [key, value] of Object.entries(preparedData)) {
-      formData.append(key, JSON.stringify(value));
+      if (showAddress && key === "address") formData.append(key, JSON.stringify(value));
+      else formData.append(key, value as string);
     }
 
     if (!isUpdate) return createCustomer(formData);
     const args = { query: { customerId: response?.data?.id }, formData };
-    return updateCustomer(args, { onSuccess: () => refetch() });
+    return updateCustomer(args, { onSuccess: () => onReFetch() });
   };
 
   const leftItems = (
     <Fragment>
-      <CustomerAuth lang={lang} isUpdate={isUpdate} customer={response?.data} handleUpload={handleUpload} />
+      <CustomerAuth
+        lang={lang}
+        isUpdate={isUpdate}
+        customer={response?.data}
+        onReFetch={onReFetch}
+        handleUpload={handleUpload}
+      />
       <CustomerInfo lang={lang} />
     </Fragment>
   );
@@ -129,8 +143,10 @@ const Customer: FC<CustomerProps> = () => {
       <CustomerPermission lang={lang} />
       <CustomerAddress
         lang={lang}
-        address={response?.data?.address}
+        isUpdate={isUpdate}
         showAddress={showAddress}
+        address={response?.data?.address}
+        onReFetch={onReFetch}
         handleShowAddress={handleShowAddress}
       />
     </Fragment>

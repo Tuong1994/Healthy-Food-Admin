@@ -157,6 +157,7 @@ const common_vn = {
       create: "Lỗi! Không thể tạo",
       update: "Lỗi! Không thể cập nhật",
       remove: "Lỗi! Không thể xóa",
+      api: 'Đã xảy ra lỗi'
     },
   },
 };

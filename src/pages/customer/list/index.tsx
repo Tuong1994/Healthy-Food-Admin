@@ -30,9 +30,16 @@ const Customers: FC<CustomersProps> = () => {
 
   const debounce = useDebounce(apiQuery.keywords as string);
 
-  const { data: customers, isFetching, isError } = useGetCustomersPaging({ ...apiQuery, keywords: debounce });
+  const {
+    data: customers,
+    isFetching,
+    isError,
+    refetch,
+  } = useGetCustomersPaging({ ...apiQuery, keywords: debounce });
 
   const handleResetFilter = () => setApiQuery(initialApiQuery);
+
+  const handleReFetch = () => refetch();
 
   return (
     <Fragment>
@@ -58,6 +65,7 @@ const Customers: FC<CustomersProps> = () => {
         isError={isError}
         apiQuery={apiQuery}
         setApiQuery={setApiQuery}
+        handleReFetch={handleReFetch}
         handleResetFilter={handleResetFilter}
       />
     </Fragment>

@@ -2,7 +2,7 @@ import { FC, Fragment, useState } from "react";
 import { Button, Card, Grid } from "@/components/UI";
 import { FormItem, Input, InputPassword, Upload } from "@/components/Control";
 import { useRule } from "@/hooks";
-import type { CustomerFormData } from "@/services/customer/type";
+import type { Customer } from "@/services/customer/type";
 import type { Lang } from "@/common/type";
 import PasswordModal from "./PasswordModal";
 
@@ -15,11 +15,12 @@ const { SingleImageUpload } = ImageUpload;
 interface CustomerAuthProps {
   lang: Lang;
   isUpdate: boolean;
-  customer: CustomerFormData | undefined;
+  customer: Customer | undefined;
+  onReFetch: () => void;
   handleUpload: (image: File | null) => void;
 }
 
-const CustomerAuth: FC<CustomerAuthProps> = ({ lang, customer, isUpdate, handleUpload }) => {
+const CustomerAuth: FC<CustomerAuthProps> = ({ lang, customer, isUpdate, onReFetch, handleUpload }) => {
   const [open, setOpen] = useState<boolean>(false);
 
   const { email, password } = useRule();
@@ -49,7 +50,13 @@ const CustomerAuth: FC<CustomerAuthProps> = ({ lang, customer, isUpdate, handleU
           </Col>
         </Row>
       </Card>
-      <PasswordModal lang={lang} open={open} onCancel={handleOpenModal} />
+      <PasswordModal
+        lang={lang}
+        open={open}
+        customer={customer}
+        onReFetch={onReFetch}
+        onCancel={handleOpenModal}
+      />
     </Fragment>
   );
 };

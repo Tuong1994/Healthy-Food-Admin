@@ -14,6 +14,7 @@ export type CustomerAddress = {
   cityCode?: number;
   districtCode?: number;
   wardCode?: number;
+  customerId?: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
 };
