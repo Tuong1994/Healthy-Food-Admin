@@ -1,9 +1,10 @@
 import { FC, Fragment, useState } from "react";
 import { Space, Button } from "@/components/UI";
-import { useLang } from "@/hooks";
 import { Link } from "react-router-dom";
 import { linkPaths } from "@/common/constant/url";
 import { ESort } from "@/common/enum";
+import { EProductStatus } from "@/services/product/enum";
+import { useLang } from "@/hooks";
 import type { ApiQuery } from "@/services/type";
 import ContentHeader from "@/components/Page/ContentHeader";
 import ProductsTable from "@/features/product/components/list/ProductsTable";
@@ -21,7 +22,7 @@ const Products: FC<ProductsProps> = () => {
     page: 1,
     limit: 10,
     keywords: "",
-    productStatus: undefined,
+    productStatus: EProductStatus.ALL,
     productUnit: undefined,
     inventoryStatus: undefined,
     sortBy: ESort.NEWEST,
@@ -31,9 +32,16 @@ const Products: FC<ProductsProps> = () => {
 
   const debounce = useDebounce(apiQuery.keywords as string);
 
-  const { data: products, isFetching, isError } = useGetProductsPaging({ ...apiQuery, keywords: debounce });
+  const {
+    data: products,
+    isFetching,
+    isError,
+    refetch,
+  } = useGetProductsPaging({ ...apiQuery, keywords: debounce });
 
   const handleResetFilter = () => setApiQuery(initialApiQuery);
+
+  const handleReFetch = () => refetch();
 
   return (
     <Fragment>
@@ -59,6 +67,7 @@ const Products: FC<ProductsProps> = () => {
         isError={isError}
         apiQuery={apiQuery}
         setApiQuery={setApiQuery}
+        handleReFetch={handleReFetch}
         handleResetFilter={handleResetFilter}
       />
     </Fragment>

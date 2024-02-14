@@ -19,13 +19,13 @@ export const getProduct = async (query: ApiQuery) => {
   return response;
 };
 
-export const createProduct = async (data: ProductFormData) => {
-  const response = await Fetch.Post<ProductFormData, Product>(productApiPaths.create, data);
+export const createProduct = async (data: FormData) => {
+  const response = await Fetch.Post<FormData, Product>(productApiPaths.create, data);
   return response;
 };
 
-export const updateProduct = async (query: ApiQuery, data: ProductFormData) => {
-  const response = await Fetch.Put<ProductFormData, any>(productApiPaths.update + getApiQuery(query), data);
+export const updateProduct = async (query: ApiQuery, data: FormData) => {
+  const response = await Fetch.Put<FormData, any>(productApiPaths.update + getApiQuery(query), data);
   return response;
 };
 

@@ -1,9 +1,88 @@
+.order-product {
+  .product-card {
+    margin-bottom: $m-1;
+    &:last-child {
+      margin: 0;
+    }
+    .card-inner {
+      padding: $p-1;
+      .inner-name {
+        width: $w-full - 30;
+      }
+      .inner-quantity {
+        width: $w-full;
+        display: flex;
+        align-items: center;
+        .quantity-btn {
+          width: $w-2 + 0.5;
+          height: $h-2 + 0.5;
+          background: $bg-green;
+          border: 1px solid $bg-green;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all $transition-time-sm $transition-fn;
+          path {
+            color: $text-white;
+          }
+          &:nth-child(1) {
+            border-top-left-radius: $rounded;
+            border-bottom-left-radius: $rounded;
+          }
+          &:nth-child(3) {
+            border-top-right-radius: $rounded;
+            border-bottom-right-radius: $rounded;
+          }
+          &:hover {
+            opacity: 0.6;
+          }
+        }
+        .quantity-btn-disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+        .quantity-input {
+          width: $w-4;
+          padding: $p-1 - 0.8;
+          border: unset;
+          background: $bg-slate;
+          border-bottom: 1px solid $bg-slate;
+          text-align: center;
+        }
+      }
+      .inner-remove {
+        width: $w-2;
+        height: $h-2;
+        border: unset;
+        background: transparent;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        path {
+          color: $text-red;
+          transition: all $transition-time-sm $transition-fn;
+        }
+        &:hover path {
+          opacity: 0.6;
+        }
+      }
+    }
+  }
+}
+
 .select-product-modal {
   .modal-list {
     height: $h-10 * 2.5;
     padding: $p-1 - 0.5 0;
     padding-right: $p-1;
     overflow-y: auto;
+    .list-product-loading {
+      width: $w-full;
+      height: $h-full;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
     .list-product {
       margin-bottom: $m-1;
       cursor: pointer;
@@ -12,8 +91,11 @@
       }
       .product-content {
         padding: $p-1;
+        .content-text {
+          width: $w-full - 40;
+        }
       }
-      .product-selected {
+      .product-content-selected {
         border-color: $bg-green;
       }
     }

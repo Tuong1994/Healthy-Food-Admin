@@ -1,21 +1,21 @@
 import { useLang } from "@/hooks";
 import { useMutation } from "react-query";
-import { updateCustomer } from "@/services/customer/api";
+import { updateProduct } from "@/services/product/api";
 import type { ApiQuery } from "@/services/type";
 import useMessage from "@/components/UI/ToastMessage/useMessage";
 
-const useUpdateCustomer = () => {
+const useUpdateProduct = () => {
   const messageApi = useMessage();
 
   const { lang } = useLang();
 
-  const editCustomer = async (args: { query: ApiQuery; formData: FormData }) => {
+  const onUpdateProduct = async (args: { query: ApiQuery; formData: FormData }) => {
     const { query, formData } = args;
-    const response = await updateCustomer(query, formData);
+    const response = await updateProduct(query, formData);
     return response;
   };
 
-  const mutation = useMutation(editCustomer, {
+  const mutation = useMutation(onUpdateProduct, {
     onSuccess: (response) => {
       if (!response.success) return messageApi.error(lang.common.message.error.update);
       messageApi.success(lang.common.message.success.update);
@@ -26,4 +26,4 @@ const useUpdateCustomer = () => {
   return mutation;
 };
 
-export default useUpdateCustomer;
+export default useUpdateProduct;

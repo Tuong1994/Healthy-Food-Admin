@@ -4,21 +4,25 @@ import type { Columns } from "@/components/UI/Table/type";
 import type { Product } from "@/services/product/type";
 import type { ApiQuery, ApiResponse, Paging } from "@/services/type";
 import type { Confirmed } from "@/common/type";
+import type { ImageUpload } from "@/services/image/type";
 import { Link } from "react-router-dom";
 import { linkPaths } from "@/common/constant/url";
-import { useLang } from "@/hooks";
 import { EInventoryStatus, EProductOrigin, EProductStatus, EProductUnit } from "@/services/product/enum";
 import { PiWarning } from "react-icons/pi";
+import { HttpStatus } from "@/services/axios";
 import { REPLACE_NUM_REGEX } from "@/common/constant/regex";
+import { useLang } from "@/hooks";
 import ProductsTableFilter from "./ProductsTableFilter";
+import ConfirmModal from "@/components/Page/ConfirmModal";
 import Error from "@/components/Page/Error";
 import getDisplayInventoryStatus from "@/features/product/data-display/getDisplayInventoryStatus";
 import getDisplayProductStatus from "@/features/product/data-display/getDisplayProductStatus";
 import getDisplayProductOrigin from "@/features/product/data-display/getDisplayProductOrigin";
 import getDisplayProductUnit from "@/features/product/data-display/getDisplayProductUnit";
+import useRemoveProducts from "../../hooks/useRemoveProducts";
+import useMessage from "@/components/UI/ToastMessage/useMessage";
 import moment from "moment";
 import utils from "@/utils";
-import ConfirmModal from "@/components/Page/ConfirmModal";
 
 const { PRODUCT } = linkPaths;
 
@@ -27,6 +31,7 @@ interface ProductsTableProps {
   isLoading: boolean;
   isError: boolean;
   apiQuery: ApiQuery;
+  handleReFetch: () => void;
   handleResetFilter: () => void;
   setApiQuery: Dispatch<SetStateAction<ApiQuery>>;
 }
@@ -37,11 +42,16 @@ const ProductsTable: FC<ProductsTableProps> = ({
   isError,
   apiQuery,
   setApiQuery,
+  handleReFetch,
   handleResetFilter,
 }) => {
+  const messageApi = useMessage();
+
   const { locale, lang } = useLang();
 
   const [confirmed, setConfirmed] = useState<Confirmed>({ open: false, ids: [] });
+
+  const { mutate: onRemoveProducts, isLoading: removeLoading } = useRemoveProducts();
 
   const dataSource = (): Product[] => {
     if (!products) return [];
@@ -53,8 +63,8 @@ const ProductsTable: FC<ProductsTableProps> = ({
     {
       id: "image",
       title: lang.common.table.head.image,
-      dataIndex: "id",
-      render: () => <Image imgWidth={40} imgHeight={40} />,
+      dataIndex: "image",
+      render: (image: ImageUpload) => <Image src={image?.path} imgWidth={40} imgHeight={40} />,
     },
     {
       id: "name",
@@ -129,11 +139,29 @@ const ProductsTable: FC<ProductsTableProps> = ({
 
   const handleCloseModal = () => setConfirmed((prev) => ({ ...prev, open: false, ids: [] }));
 
+  const handleRemove = () => {
+    const listIds = confirmed.ids.join(",");
+    const apiQuery: ApiQuery = { ids: listIds };
+    onRemoveProducts(apiQuery, {
+      onSuccess: (response) => {
+        if (!response.success) {
+          let message = "";
+          if (response.error?.status === HttpStatus.NOT_FOUND) message = lang.common.message.error.remove;
+          return messageApi.error(message);
+        }
+        messageApi.success(lang.common.message.success.remove);
+        handleReFetch();
+        handleCloseModal();
+      },
+    });
+  };
+
   const renderContent = () => {
     if (isError) return <Error />;
     return (
       <Table<Product>
         color="green"
+        rowKey="id"
         hasFilter
         hasPagination
         hasRowSelection
@@ -158,6 +186,8 @@ const ProductsTable: FC<ProductsTableProps> = ({
       {renderContent()}
       <ConfirmModal
         open={confirmed.open}
+        okButtonProps={{ loading: removeLoading }}
+        onOk={handleRemove}
         onCancel={handleCloseModal}
         desciption={
           <Space align="middle" justify="center">

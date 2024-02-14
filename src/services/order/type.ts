@@ -19,7 +19,7 @@ export type Order = {
 
   status: EOrderStatus;
   paymentStatus: EPaymentStatus;
-  recievedType: ERecievedType; 
+  recievedType: ERecievedType;
   paymentMethod: EPaymentMethod | number;
   customerId: string;
   note: string;
@@ -33,6 +33,4 @@ export type Order = {
   updatedAt?: Date | string;
 };
 
-export type OrderFormData = Omit<Order, "id" | "items" | "createdAt" | "updatedAt"> & {
-  items: Array<Pick<OrderItem, "productId" | "orderId" | "quantity">>;
-};
+export type OrderFormData = Omit<Order, "id" | "createdAt" | "updatedAt">;

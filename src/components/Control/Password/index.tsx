@@ -14,11 +14,11 @@ import { HiEye, HiEyeSlash, HiXCircle } from "react-icons/hi2";
 import { useFormContext } from "react-hook-form";
 import { ControlColor, ControlShape, InputValue } from "../type";
 import { ComponentSize } from "@/common/type";
+import { useLang } from "@/hooks";
 import FormContext from "../Form/FormContext";
 import FormItemContext from "../Form/FormItemContext";
 import useLayout from "@/components/UI/Layout/useLayout";
 import utils from "@/utils";
-import { useLang } from "@/hooks";
 
 export interface InputPasswordProps extends InputHTMLAttributes<HTMLInputElement> {
   rootClassName?: string;
@@ -149,9 +149,9 @@ const InputPassword: ForwardRefRenderFunction<HTMLInputElement, InputPasswordPro
   };
 
   const handleClearInput = () => {
+    onChangeInput?.("");
     if (isRhf) return rhfMethods.setValue(rhfName, "");
     setInputValue("");
-    onChangeInput?.("");
   };
 
   const onChangeFn = rhfOnChange ? rhfOnChange : handleChange;

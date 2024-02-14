@@ -27,6 +27,9 @@ export const getApiQuery = (query: ApiQuery) => {
     wardId,
     wardCode,
     hasSub,
+    hasCate,
+    hasLike,
+    convertName,
     role,
     gender,
     productStatus,
@@ -69,6 +72,9 @@ export const getApiQuery = (query: ApiQuery) => {
   wardId && (rs += `&wardId=${wardId}`);
   wardCode && (rs += `&wardCode=${wardCode}`);
   hasSub && (rs += `&hasSub=${hasSub}`);
+  hasCate && (rs += `&hasCate=${hasCate}`);
+  hasLike && (rs += `&hasLike=${hasLike}`);
+  convertName && (rs += `&convertName=${convertName}`);
   role && (rs += `&role=${role}`);
   gender && (rs += `&gender=${gender}`);
   productStatus && (rs += `&productStatus=${productStatus}`);

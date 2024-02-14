@@ -24,4 +24,4 @@ const useGetSubCategoriesPaging = (apiQuery: ApiQuery) => {
   return { refetch, ...rest };
 };
 
-export default useGetSubCategoriesPaging
+export default useGetSubCategoriesPaging;

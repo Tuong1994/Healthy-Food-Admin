@@ -1,6 +1,7 @@
 export enum EProductStatus {
   DRAFT = 1,
   ACTIVE = 2,
+  ALL = 3,
 }
 
 export enum EProductUnit {

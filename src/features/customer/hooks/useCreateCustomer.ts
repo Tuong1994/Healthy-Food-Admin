@@ -21,6 +21,7 @@ const useCreateCustomer = () => {
 
   const mutation = useMutation(createNewCustomer, {
     onSuccess: (response) => {
+      if (!response.success) return messageApi.error(lang.common.message.error.create);
       messageApi.success(lang.common.message.success.create);
       navigate(CUSTOMER, { state: { id: response.data?.id } });
     },

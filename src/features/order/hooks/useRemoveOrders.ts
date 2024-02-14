@@ -1,24 +1,24 @@
-import { useLang } from "@/hooks";
-import { removeCustomers } from "@/services/customer/api";
 import { useMutation } from "react-query";
+import { useLang } from "@/hooks";
+import { removeOrders } from "@/services/order/api";
 import type { ApiQuery } from "@/services/type";
 import useMessage from "@/components/UI/ToastMessage/useMessage";
 
-const useRemoveCustomers = () => {
+const useRemoveOrders = () => {
   const messageApi = useMessage();
 
   const { lang } = useLang();
 
-  const onRemoveCustomers = async (query: ApiQuery) => {
-    const response = await removeCustomers(query);
+  const onRemoveOrders = async (query: ApiQuery) => {
+    const response = await removeOrders(query);
     return response;
   };
 
-  const mutation = useMutation(onRemoveCustomers, {
+  const mutation = useMutation(onRemoveOrders, {
     onError: () => messageApi.error(lang.common.message.error.remove),
   });
 
   return mutation;
 };
 
-export default useRemoveCustomers;
+export default useRemoveOrders;

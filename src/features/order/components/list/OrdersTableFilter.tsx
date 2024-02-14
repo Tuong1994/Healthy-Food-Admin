@@ -2,9 +2,9 @@ import { FC, Fragment, Dispatch, SetStateAction } from "react";
 import { Grid } from "@/components/UI";
 import { Input, Select } from "@/components/Control";
 import { useSelectOption } from "@/hooks";
-import type { GridColProps } from "@/components/UI/Grid/Col";
 import type { Lang } from "@/common/type";
 import type { ApiQuery } from "@/services/type";
+import type { GridColProps } from "@/components/UI/Grid/Col";
 
 const { Col } = Grid;
 

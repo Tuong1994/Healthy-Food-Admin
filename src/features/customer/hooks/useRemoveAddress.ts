@@ -1,8 +1,8 @@
 import { useLang } from "@/hooks";
-import { removeAddress } from "@/services/customer/api";
-import { ApiQuery } from "@/services/type";
-import useMessage from "@/components/UI/ToastMessage/useMessage";
 import { useMutation } from "react-query";
+import { removeAddress } from "@/services/customer/api";
+import type { ApiQuery } from "@/services/type";
+import useMessage from "@/components/UI/ToastMessage/useMessage";
 
 const useRemoveAddress = () => {
   const messageApi = useMessage();

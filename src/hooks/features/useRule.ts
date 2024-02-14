@@ -15,6 +15,10 @@ const useRule = () => {
     return [{ required: true, message: lang.common.form.rule.required }];
   };
 
+  const minNumber = (min: number) => {
+    return [{ min, message: lang.common.form.rule.required }];
+  };
+
   const email = (): FormRule[] => {
     return [
       { required: true, message: lang.common.form.rule.required },
@@ -46,7 +50,7 @@ const useRule = () => {
     ];
   };
 
-  return { common, email, password, phone };
+  return { common, minNumber, email, password, phone };
 };
 
 export default useRule;

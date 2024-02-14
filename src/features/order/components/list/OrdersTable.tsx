@@ -10,14 +10,17 @@ import { PiWarning } from "react-icons/pi";
 import { REPLACE_NUM_REGEX } from "@/common/constant/regex";
 import { Link } from "react-router-dom";
 import { linkPaths } from "@/common/constant/url";
+import { HttpStatus } from "@/services/axios";
 import { useLang } from "@/hooks";
 import OrdersTableFilter from "./OrdersTableFilter";
 import ConfirmModal from "@/components/Page/ConfirmModal";
 import Error from "@/components/Page/Error";
-import useMenu from "@/components/UI/Layout/Menu/useMenu";
 import getDisplayOrderStatus from "@/features/order/data-display/getDisplayOrderStatus";
 import getDisplayPaymentStatus from "@/features/order/data-display/getDisplayPaymentStatus";
 import getDisplayPaymentMethod from "@/features/order/data-display/getDisplayPaymentMethod";
+import useMenu from "@/components/UI/Layout/Menu/useMenu";
+import useMessage from "@/components/UI/ToastMessage/useMessage";
+import useRemoveOrders from "../../hooks/useRemoveOrders";
 import moment from "moment";
 import utils from "@/utils";
 
@@ -29,6 +32,7 @@ interface OrdersTableProps {
   isError: boolean;
   apiQuery: ApiQuery;
   handleResetFilter: () => void;
+  handleReFetch: () => void;
   setApiQuery: Dispatch<SetStateAction<ApiQuery>>;
 }
 
@@ -38,13 +42,18 @@ const OrdersTable: FC<OrdersTableProps> = ({
   isError,
   apiQuery,
   setApiQuery,
+  handleReFetch,
   handleResetFilter,
 }) => {
+  const messageApi = useMessage();
+
   const { locale, lang } = useLang();
 
   const { setActiveId } = useMenu();
 
   const [confirmed, setConfirmed] = useState<Confirmed>({ open: false, ids: [] });
+
+  const { mutate: onRemoveOrders, isLoading: removeLoading } = useRemoveOrders();
 
   const dataSource = (): Order[] => {
     if (!orders) return [];
@@ -85,7 +94,13 @@ const OrdersTable: FC<OrdersTableProps> = ({
       id: "createdAt",
       title: lang.common.table.head.createdAt,
       dataIndex: "createdAt",
-      render: (data: Date) => <>{moment(data).format("DD/MM/YYYY")}</>,
+      render: (date: Date) => <>{moment(date).format("DD/MM/YYYY")}</>,
+    },
+    {
+      id: "updatedAt",
+      title: lang.common.table.head.updatedAt,
+      dataIndex: "updatedAt",
+      render: (date: Date) => <>{moment(date).format("DD/MM/YYYY")}</>,
     },
   ];
 
@@ -129,6 +144,25 @@ const OrdersTable: FC<OrdersTableProps> = ({
 
   const handleCloseModal = () => setConfirmed((prev) => ({ ...prev, open: false, ids: [] }));
 
+  const handleRemove = () => {
+    const listIds = confirmed.ids.join(",");
+    onRemoveOrders(
+      { ids: listIds },
+      {
+        onSuccess: (response) => {
+          if (!response.success) {
+            let message = "";
+            if (response.error?.status === HttpStatus.NOT_FOUND) message = lang.common.message.error.remove;
+            return messageApi.error(message);
+          }
+          messageApi.success(lang.common.message.success.remove);
+          handleCloseModal();
+          handleReFetch();
+        },
+      }
+    );
+  };
+
   const renderContent = () => {
     if (isError) return <Error />;
     return (
@@ -160,6 +194,8 @@ const OrdersTable: FC<OrdersTableProps> = ({
       {renderContent()}
       <ConfirmModal
         open={confirmed.open}
+        okButtonProps={{ loading: removeLoading }}
+        onOk={handleRemove}
         onCancel={handleCloseModal}
         desciption={
           <Space align="middle" justify="center">

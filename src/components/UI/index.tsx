@@ -27,6 +27,7 @@ import Pagination from "./Pagination";
 import Breadcrumb from "./Breadcrumb";
 import NoteMessage from "./NoteMessage";
 import InfoRow from "./InfoRow";
+import Empty from "./Empty";
 
 export {
   Draggable,
@@ -58,4 +59,5 @@ export {
   NoteMessage,
   Loading,
   InfoRow,
+  Empty,
 };

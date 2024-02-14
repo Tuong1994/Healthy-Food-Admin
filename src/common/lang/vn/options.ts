@@ -13,6 +13,7 @@ const options_vn = {
     customer: "Khách hàng",
   },
   productStatus: {
+    all: "Tất cả",
     draft: "Bản nháp",
     active: "Kích hoạt",
   },

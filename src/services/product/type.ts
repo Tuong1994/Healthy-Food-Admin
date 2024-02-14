@@ -10,6 +10,8 @@ export type Product = {
   id?: string;
 
   name: string;
+  nameEn?: string;
+  nameVn?: string;
   costPrice: number;
   profit: number;
   totalPrice: number;
@@ -27,7 +29,7 @@ export type Product = {
 
   category?: Category;
   subCategory?: SubCategory;
-  image?: ImageUpload[];
+  image?: ImageUpload;
   comments?: Comment[];
   rates?: Rate[];
   likes?: Like[];
@@ -36,7 +38,7 @@ export type Product = {
   updatedAt?: Date | string;
 };
 
-export type ProductFormData = {
-  nameEn: string;
-  nameVn: string;
-} & Omit<Product, "id" | "isNew" | "point" | "name" | "comments" | "rates" | "createdAt" | "updatedAt">;
+export type ProductFormData = Omit<
+  Product,
+  "id" | "isNew" | "point" | "name" | "comments" | "rates" | "createdAt" | "updatedAt"
+>;

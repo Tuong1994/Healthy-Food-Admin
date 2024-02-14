@@ -73,10 +73,11 @@ const common_vn = {
       maxLength: "Độ dài tối đa là {{max}} ký tự",
     },
     others: {
+      optional: "Không bắt buộc",
       emptyOptions: "Không có lựa chọn",
       districtsEmpty: "Vui lòng chọn thành phố",
       wardsEmpty: "Vui lòng chọn quận",
-      optional: "Không bắt buộc",
+      subCategoryEmpty: "Vui lòng chọn danh mục",
       fileSize: "Kích thước tệp không được lớn hơn {{num}}MB",
       fileType: "Chỉ chấp nhận loại tệp {{type}}",
       fileMax: "Mỗi lần chỉ có thể tải lên {{num}} hình ảnh",
@@ -157,7 +158,7 @@ const common_vn = {
       create: "Lỗi! Không thể tạo",
       update: "Lỗi! Không thể cập nhật",
       remove: "Lỗi! Không thể xóa",
-      api: 'Đã xảy ra lỗi'
+      api: "Đã xảy ra lỗi",
     },
   },
 };

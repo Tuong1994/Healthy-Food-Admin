@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Space, Avatar, Dropdown, Grid, Loading } from "@/components/UI";
+import { Space, Avatar, Image, Dropdown, Grid, Loading } from "@/components/UI";
 import type { DropdownItems } from "@/components/UI/Dropdown/type";
 import type { Lang } from "@/common/type";
 import { HiUser } from "react-icons/hi2";
@@ -55,7 +55,9 @@ const HeaderAuth: FC<HeaderAuthProps> = ({ lang }) => {
     <Row align="middle" justify="end" rootClassName="header-auth">
       <Col>
         <Dropdown items={items} placement="right">
-          <Avatar color="green" />
+          <Avatar color="green">
+            <Image src={info.image?.path} imgWidth="100%" imgHeight="100%" />
+          </Avatar>
         </Dropdown>
       </Col>
     </Row>

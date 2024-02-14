@@ -13,6 +13,7 @@ const options_en = {
     customer: "Customer",
   },
   productStatus: {
+    all: 'All',
     draft: "Draft",
     active: "Active",
   },

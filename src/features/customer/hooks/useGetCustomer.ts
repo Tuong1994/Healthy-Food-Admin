@@ -12,10 +12,7 @@ const useGetCustomer = (apiQuery: ApiQuery, isUpdate: boolean) => {
     return response;
   };
 
-  const { refetch, ...rest } = useQuery([queryKey, isUpdate], getCustomerDetail, {
-    enabled: isUpdate,
-    refetchOnWindowFocus: false,
-  });
+  const { refetch, ...rest } = useQuery([queryKey, isUpdate], getCustomerDetail, { enabled: isUpdate });
 
   useEffect(() => {
     if (isUpdate) refetch();

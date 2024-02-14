@@ -73,10 +73,11 @@ const common_en = {
       maxLength: "Maximum length {{max}} characters",
     },
     others: {
+      optional: "Optional",
       emptyOptions: "No options",
       districtsEmpty: "Please select city",
       wardsEmpty: "Please select district",
-      optional: "Optional",
+      subCategoryEmpty: "Please select category",
       fileSize: "File size must not greater than {{num}}MB",
       fileType: "Only accept file type {{type}}",
       fileMax: "Can only upload {{num}} image per time",
@@ -157,7 +158,7 @@ const common_en = {
       create: "Error! Cannot create",
       update: "Error! Cannot update",
       remove: "Error! Cannot remove",
-      api: 'Api network failed'
+      api: "Api network failed",
     },
   },
 };

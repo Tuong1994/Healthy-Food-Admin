@@ -130,6 +130,7 @@
 // paragraph
 .paragraph {
   line-height: $h-1 * 2;
+  word-break: break-word;
   * {
     margin: 0;
     line-height: $h-1 * 2;

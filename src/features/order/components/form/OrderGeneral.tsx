@@ -3,16 +3,19 @@ import { Card, InfoRow, Divider } from "@/components/UI";
 import { FormItem, TextArea } from "@/components/Control";
 import type { Lang } from "@/common/type";
 import type { InfoRowProps } from "@/components/UI/InfoRow";
+import type { Order } from "@/services/order/type";
 import { useLang } from "@/hooks";
-import { EPaymentMethod } from "@/services/order/enum";
 import getDisplayPaymentMethod from "@/features/order/data-display/getDisplayPaymentMethod";
+import sumPrice from "../../helper/sumPrice";
+import sumQuantity from "../../helper/sumQuantity";
 import utils from "@/utils";
 
 interface OrderGeneralProps {
   lang: Lang;
+  order: Order | undefined;
 }
 
-const OrderGeneral: FC<OrderGeneralProps> = ({ lang }) => {
+const OrderGeneral: FC<OrderGeneralProps> = ({ lang, order }) => {
   const { locale } = useLang();
 
   const infoRowProps: InfoRowProps = {
@@ -30,10 +33,10 @@ const OrderGeneral: FC<OrderGeneralProps> = ({ lang }) => {
       <InfoRow
         {...infoRowProps}
         label={lang.order.form.paymentMethods}
-        textElement={getDisplayPaymentMethod(lang, EPaymentMethod.TRANSFER)}
+        textElement={getDisplayPaymentMethod(lang, order?.paymentMethod as number)}
       />
-      <InfoRow {...infoRowProps} label={lang.order.form.quantity} text="0" />
-      <InfoRow {...infoRowProps} label={lang.order.form.shipmentFee} text="0" />
+      <InfoRow {...infoRowProps} label={lang.order.form.quantity} text={String(sumQuantity(order))} />
+      <InfoRow {...infoRowProps} label={lang.order.form.shipmentFee} text={String(order?.shipmentFee)} />
       <InfoRow {...infoRowProps} label={lang.order.form.tax} text="10%" />
       <Divider />
       <InfoRow
@@ -41,7 +44,7 @@ const OrderGeneral: FC<OrderGeneralProps> = ({ lang }) => {
         labelProps={{ size: 16 }}
         textProps={{ variant: "success", size: 16 }}
         label={lang.order.form.totalPayment}
-        text={utils.formatPrice(locale, 250000)}
+        text={utils.formatPrice(locale, order?.totalPayment)}
       />
     </Card>
   );

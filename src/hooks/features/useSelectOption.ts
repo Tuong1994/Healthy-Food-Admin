@@ -35,6 +35,7 @@ const useSelectOption = () => {
   ];
 
   const productStatus: SelectOptions = [
+    { label: lang.options.productStatus.all, value: EProductStatus.ALL },
     { label: lang.options.productStatus.draft, value: EProductStatus.DRAFT },
     { label: lang.options.productStatus.active, value: EProductStatus.ACTIVE },
   ];
@@ -46,7 +47,7 @@ const useSelectOption = () => {
     { label: lang.options.inventoryStatus.outOfStock, value: EInventoryStatus.OUT_OF_STOCK },
   ];
 
-  const supplier: SelectOptions = [{ label: "Heathy Food", value: "Heathy Food" }];
+  const supplier: SelectOptions = [{ label: "Healthy Food", value: "Healthy Food" }];
 
   const profit: SelectOptions = [
     { label: "25%", value: 25 },
