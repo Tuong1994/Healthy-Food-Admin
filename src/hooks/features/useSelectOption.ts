@@ -1,9 +1,9 @@
-import useLang from "./useLang";
-import type { SelectOptions } from "@/components/Control/type";
 import { EGender, ERole } from "@/services/customer/enum";
 import { EInventoryStatus, EProductOrigin, EProductStatus, EProductUnit } from "@/services/product/enum";
-import { EOrderStatus, EPaymentMethod, EPaymentStatus } from "@/services/order/enum";
+import { EOrderStatus, EPaymentMethod, EPaymentStatus, EReceivedType } from "@/services/order/enum";
 import { ESort } from "@/common/enum";
+import type { SelectOptions } from "@/components/Control/type";
+import useLang from "./useLang";
 
 const useSelectOption = () => {
   const { lang } = useLang();
@@ -73,6 +73,11 @@ const useSelectOption = () => {
     { label: lang.options.paymentMethod.cash, value: EPaymentMethod.CASH },
   ];
 
+  const receivedType: SelectOptions = [
+    { label: lang.order.form.received.store, value: EReceivedType.STORE },
+    { label: lang.order.form.received.delivery, value: EReceivedType.DELIVERY },
+  ];
+
   return {
     sortBy,
     gender,
@@ -86,6 +91,7 @@ const useSelectOption = () => {
     orderStatus,
     paymentStatus,
     paymentMethod,
+    receivedType,
   };
 };
 

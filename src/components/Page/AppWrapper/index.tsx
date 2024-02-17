@@ -1,12 +1,16 @@
-import { ReactNode, FC, useContext, Fragment } from "react";
+import { ReactNode, FC, useContext, Fragment, useEffect } from "react";
 import { Section, Space, Divider, Layout } from "@/components/UI";
 import { Routes, useNavigate } from "react-router-dom";
 import { GridAppContext } from "@/components/UI/Grid/Context";
+import { routerPaths } from "@/common/constant/url";
 import { useLang } from "@/hooks";
 import Header from "../Header";
 import HeaderTranslate from "../Header/HeaderTranslate";
 import HeaderAuth from "../Header/HeaderAuth";
 import useMenu from "./useMenu";
+import usePathnameStore from "@/store/PathnameStore";
+
+const { AUTH } = routerPaths;
 
 const { Container, Head, Body, Side, Content, Menu } = Layout;
 
@@ -19,14 +23,25 @@ const AppWrapper: FC<AppWrapperProps> = ({ children }) => {
 
   const { isPhone } = useContext(GridAppContext);
 
+  const setPreviousPath = usePathnameStore((state) => state.setPreviousPath);
+
   const navigate = useNavigate();
 
   const items = useMenu();
+
+  const onSetPreviousPath = () => {
+    const { pathname, search } = window.location;
+    if (pathname === AUTH) return;
+    const path = pathname + search;
+    setPreviousPath(path);
+  };
 
   const handleNavigate = (id: string) => {
     const currentMenu = items.find((item) => item.id === id);
     navigate(currentMenu?.path ?? "");
   };
+
+  useEffect(() => onSetPreviousPath(), [window.location.pathname]);
 
   return (
     <Container theme="light" color="green">

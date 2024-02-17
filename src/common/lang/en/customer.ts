@@ -18,7 +18,6 @@ const customer_en = {
     address: {
       title: "Address",
       note: "Add infomation",
-      confirm: "Data after removed could not be restored. Are you sure want to proceed?",
     },
   },
 };

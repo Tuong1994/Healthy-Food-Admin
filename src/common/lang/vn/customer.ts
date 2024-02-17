@@ -18,7 +18,6 @@ const customer_vn = {
     address: {
       title: "Địa chỉ",
       note: "Thêm thông tin",
-      confirm: "Dữ liệu sau khi xóa không thể khôi phục được. Bạn có chắc chắn muốn tiếp tục không?",
     },
   },
 };

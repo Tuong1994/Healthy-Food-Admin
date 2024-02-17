@@ -120,6 +120,7 @@ const common_vn = {
       quantity: "Số lượng",
       price: "Đơn giá",
       orderNumber: "Mã đơn hàng",
+      customer: 'Khách hàng',
       status: "Trạng thái",
       paymentStatus: "Tình trạng thanh toán",
       paymentMethod: "Phương thức thanh toán",
@@ -132,6 +133,7 @@ const common_vn = {
       comment: "Bình luận",
       rate: "Đánh giá",
       shipmentNumber: "Mã vận chuyển",
+      totalPayment: "Tổng tiền thanh toán",
       createdAt: "Ngày tạo",
       updatedAt: "Ngày cập nhật",
     },
@@ -141,6 +143,7 @@ const common_vn = {
     noData:
       "Đã xảy ra lỗi. Có vẻ như đang gặp khó khăn khi lấy dữ liệu. Vui lòng thử lại hoặc liên hệ với nhóm hỗ trợ của chúng tôi",
     empty: "Không có dữ liệu",
+    confirm: "Dữ liệu sau khi xóa sẽ không thể khôi phục. Bạn có chắc chắn muốn tiếp tục không?",
   },
   message: {
     success: {

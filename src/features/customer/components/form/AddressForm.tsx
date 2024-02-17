@@ -7,6 +7,7 @@ import type { District } from "@/services/district/type";
 import type { Ward } from "@/services/ward/type";
 import type { CustomerAddress } from "@/services/customer/type";
 import type { ApiQuery } from "@/services/type";
+import { HttpStatus } from "@/services/axios";
 import { useRule } from "@/hooks";
 import ConfirmModal from "@/components/Page/ConfirmModal";
 import useLocationStore from "@/store/LocationStore";
@@ -15,7 +16,6 @@ import useGetWards from "@/components/Page/AppWrapper/AppData/hooks/useGetWards"
 import useRemoveAddress from "../../hooks/useRemoveAddress";
 import useMessage from "@/components/UI/ToastMessage/useMessage";
 import utils from "@/utils";
-import { HttpStatus } from "@/services/axios";
 
 const { Paragraph } = Typography;
 
@@ -145,7 +145,7 @@ const AddressForm: FC<AddressFormProps> = ({ lang, isUpdate, address, onReFetch,
         onCancel={handleOpenModal}
         desciption={
           <Paragraph align="center" variant="danger">
-            {lang.customer.form.address.confirm}
+            {lang.common.description.confirm}
           </Paragraph>
         }
       />

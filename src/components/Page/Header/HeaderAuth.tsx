@@ -55,8 +55,8 @@ const HeaderAuth: FC<HeaderAuthProps> = ({ lang }) => {
     <Row align="middle" justify="end" rootClassName="header-auth">
       <Col>
         <Dropdown items={items} placement="right">
-          <Avatar color="green">
-            <Image src={info.image?.path} imgWidth="100%" imgHeight="100%" />
+          <Avatar color="green" letter={!info.image ? info.fullName : undefined}>
+            {info.image && <Image src={info.image.path} imgWidth="100%" imgHeight="100%" />}
           </Avatar>
         </Dropdown>
       </Col>

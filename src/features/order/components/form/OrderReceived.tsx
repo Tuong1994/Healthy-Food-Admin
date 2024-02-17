@@ -1,0 +1,123 @@
+import { FC, Dispatch, SetStateAction, Fragment, useState } from "react";
+import { Card, Divider, Space, InfoRow, Typography, Button, Tooltip } from "@/components/UI";
+import { Select } from "@/components/Control";
+import { EReceivedType } from "@/services/order/enum";
+import { HiPencilAlt } from "react-icons/hi";
+import { useSelectOption } from "@/hooks";
+import type { Lang } from "@/common/type";
+import type { Shipment } from "@/services/shipment/type";
+import type { InfoRowProps } from "@/components/UI/InfoRow";
+import type { GeneralInfo } from "@/pages/order/form";
+import ConfirmModal from "@/components/Page/ConfirmModal";
+import utils from "@/utils";
+
+const { Paragraph } = Typography;
+
+interface OrderReceivedProps {
+  lang: Lang;
+  isUpdate: boolean;
+  shipment: Shipment | undefined;
+  info: GeneralInfo;
+  handleOpenShipment: () => void;
+  setInfo: Dispatch<SetStateAction<GeneralInfo>>;
+  setShipment: Dispatch<SetStateAction<Shipment | undefined>>;
+}
+
+const OrderReceived: FC<OrderReceivedProps> = ({
+  lang,
+  isUpdate,
+  shipment,
+  info,
+  setInfo,
+  setShipment,
+  handleOpenShipment,
+}) => {
+  const options = useSelectOption();
+
+  const [confirmed, setConfirmed] = useState<boolean>(false);
+
+  const infoRowProps: InfoRowProps = {
+    hasColon: true,
+    labelSpanProps: { span: 8 },
+    textSpanProps: { span: 14 },
+  };
+
+  const handleSelect = (value: any) => {
+    if (value === EReceivedType.DELIVERY) handleOpenShipment();
+    setInfo((prev) => ({ ...prev, receivedType: value }));
+  };
+
+  const handleEdit = () => handleOpenShipment();
+
+  const handleRemoveClient = () => {
+    if (!isUpdate) return setShipment(undefined);
+    setConfirmed(!confirmed);
+  };
+
+  const handleRemoveApi = () => {
+    console.log(shipment?.id);
+  };
+
+  return (
+    <Fragment>
+      <Card
+        rootClassName="card-section"
+        head={
+          <Paragraph size={16} weight={600}>
+            {lang.order.form.received.title}
+          </Paragraph>
+        }
+      >
+        <Select
+          color="green"
+          hasClear={false}
+          disabled={Boolean(shipment)}
+          defaultValue={info.receivedType}
+          options={options.receivedType}
+          onChangeSelect={handleSelect}
+        />
+
+        {shipment && (
+          <Fragment>
+            <Divider>
+              <span>{lang.order.form.shipmentInfo}</span>
+            </Divider>
+            <Space justify="end">
+              <Tooltip label={lang.common.actions.edit} placement="left" color="green">
+                <Button text onClick={handleEdit}>
+                  <HiPencilAlt size={16} />
+                </Button>
+              </Tooltip>
+            </Space>
+            <InfoRow {...infoRowProps} label={lang.common.form.label.fullName} text={shipment.fullName} />
+            <InfoRow
+              {...infoRowProps}
+              label={lang.common.form.label.phone}
+              text={utils.formatPhoneNumber(shipment.phone)}
+            />
+            <InfoRow {...infoRowProps} label={lang.common.form.label.email} text={shipment.email} />
+            <InfoRow {...infoRowProps} label={lang.common.form.label.fullAddress} text={shipment.address} />
+            <Space justify="end">
+              <Button ghost color="red" onClick={handleRemoveClient}>
+                {lang.common.actions.remove}
+              </Button>
+            </Space>
+          </Fragment>
+        )}
+      </Card>
+
+      <ConfirmModal
+        open={confirmed}
+        onOk={handleRemoveApi}
+        onCancel={handleRemoveClient}
+        desciption={
+          <Paragraph align="center" variant="danger">
+            {lang.common.description.confirm}
+          </Paragraph>
+        }
+      />
+    </Fragment>
+  );
+};
+
+export default OrderReceived;

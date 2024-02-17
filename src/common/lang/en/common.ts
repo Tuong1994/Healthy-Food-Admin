@@ -120,6 +120,7 @@ const common_en = {
       quantity: "Quantity",
       price: "Price",
       orderNumber: "Order number",
+      customer: 'Customer',
       status: "Status",
       paymentStatus: "Payment status",
       paymentMethod: "Payment method",
@@ -132,6 +133,7 @@ const common_en = {
       comment: "Comment",
       rate: "Rate",
       shipmentNumber: "Shipment number",
+      totalPayment: "Total payment",
       createdAt: "Created date",
       updatedAt: "Updated date",
     },
@@ -141,6 +143,7 @@ const common_en = {
     noData:
       "Something went wrong. Look like there are trouble for getting data. Please try again or contact to our support team",
     empty: "No data",
+    confirm: "Data once deleted cannot be restored. Are you sure you want to continue?",
   },
   message: {
     success: {

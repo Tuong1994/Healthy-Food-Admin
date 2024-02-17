@@ -12,7 +12,6 @@ import { REPLACE_NUM_REGEX } from "@/common/constant/regex";
 import ShipmentsTableFilter from "./ShipmentsTableFilter";
 import ConfirmModal from "@/components/Page/ConfirmModal";
 import Error from "@/components/Page/Error";
-import useMenu from "@/components/UI/Layout/Menu/useMenu";
 import moment from "moment";
 
 const { SHIPMENT, ORDER } = linkPaths;
@@ -36,8 +35,6 @@ const ShipmentsTable: FC<ShipmentsTableProps> = ({
   setApiQuery,
   handleResetFilter,
 }) => {
-  const { setActiveId } = useMenu();
-
   const [confirmed, setConfirmed] = useState<Confirmed>({ open: false, ids: [] });
 
   const dataSource = (): Shipment[] => {
@@ -49,7 +46,7 @@ const ShipmentsTable: FC<ShipmentsTableProps> = ({
   const columns: Columns<Shipment> = [
     {
       id: "shipmentNumber",
-      title: lang.common.table.head.customerName,
+      title: lang.common.table.head.shipmentNumber,
       dataIndex: "shipmentNumber",
       render: (number: string, shipment: Shipment) => (
         <Link to={SHIPMENT} state={{ id: shipment.id }}>
@@ -82,7 +79,7 @@ const ShipmentsTable: FC<ShipmentsTableProps> = ({
       title: lang.common.table.head.orderNumber,
       dataIndex: "order",
       render: (order: Order) => (
-        <Link to={ORDER} state={{ id: order?.id }} onClick={() => setActiveId(["order"])}>
+        <Link to={ORDER} state={{ id: order?.id }}>
           <Button text>{order?.orderNumber}</Button>
         </Link>
       ),

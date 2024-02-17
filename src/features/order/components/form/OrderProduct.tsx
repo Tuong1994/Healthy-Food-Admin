@@ -3,8 +3,12 @@ import { Space, Card, Image, Button, Divider, Typography, Grid } from "@/compone
 import { HiMinus, HiPlus, HiTrash } from "react-icons/hi2";
 import { ONLY_DIGIT_REGEX } from "@/components/Control/regex";
 import { useLang } from "@/hooks";
+import { linkPaths } from "@/common/constant/url";
+import { Link } from "react-router-dom";
 import type { OrderItem } from "@/services/order/type";
 import utils from "@/utils";
+
+const { PRODUCT } = linkPaths;
 
 const { Paragraph } = Typography;
 
@@ -13,16 +17,10 @@ const { Row, Col } = Grid;
 interface OrderProductProps {
   selectedItems: OrderItem[];
   handleOpenSelect: () => void;
-  handleOpenCreate: () => void;
   setSelectedItems: Dispatch<SetStateAction<OrderItem[]>>;
 }
 
-const OrderProduct: FC<OrderProductProps> = ({
-  selectedItems,
-  setSelectedItems,
-  handleOpenSelect,
-  handleOpenCreate,
-}) => {
+const OrderProduct: FC<OrderProductProps> = ({ selectedItems, setSelectedItems, handleOpenSelect }) => {
   const { locale, lang } = useLang();
 
   const handleQuantityClick = (type: "plus" | "minus", productId: string) => {
@@ -119,9 +117,9 @@ const OrderProduct: FC<OrderProductProps> = ({
         <Button color="blue" onClick={handleOpenSelect}>
           {lang.order.form.select}
         </Button>
-        <Button ghost onClick={handleOpenCreate}>
-          {lang.order.form.create}
-        </Button>
+        <Link to={PRODUCT}>
+          <Button ghost>{lang.order.form.create}</Button>
+        </Link>
       </Space>
       <Divider />
       {renderList()}

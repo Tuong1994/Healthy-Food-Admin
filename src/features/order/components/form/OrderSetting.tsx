@@ -1,17 +1,30 @@
-import { FC } from "react";
+import { FC, Dispatch, SetStateAction } from "react";
 import { Card, Typography } from "@/components/UI";
 import { FormItem, Select } from "@/components/Control";
 import { useSelectOption } from "@/hooks";
 import type { Lang } from "@/common/type";
+import type { GeneralInfo } from "@/pages/order/form";
+import type { Shipment } from "@/services/shipment/type";
+import { EPaymentMethod, EReceivedType } from "@/services/order/enum";
 
 const { Paragraph } = Typography;
 
 interface OrderSettingProps {
   lang: Lang;
+  shipment: Shipment | undefined;
+  handleOpenShipment: () => void;
+  setInfo: Dispatch<SetStateAction<GeneralInfo>>;
 }
 
-const OrderSetting: FC<OrderSettingProps> = ({ lang }) => {
+const OrderSetting: FC<OrderSettingProps> = ({ lang, shipment, setInfo, handleOpenShipment }) => {
   const options = useSelectOption();
+
+  const handleSelectMethod = (value: any) => {
+    const isCod = value === EPaymentMethod.COD;
+    const receivedType = isCod ? EReceivedType.DELIVERY : EReceivedType.STORE;
+    setInfo((prev) => ({ ...prev, receivedType, method: value }));
+    if (isCod && !shipment) handleOpenShipment();
+  };
 
   return (
     <Card
@@ -26,7 +39,11 @@ const OrderSetting: FC<OrderSettingProps> = ({ lang }) => {
         <Select label={lang.common.form.label.status} options={options.orderStatus} />
       </FormItem>
       <FormItem name="paymentMethod">
-        <Select label={lang.common.form.label.paymentMethod} options={options.paymentMethod} />
+        <Select
+          label={lang.common.form.label.paymentMethod}
+          options={options.paymentMethod}
+          onChangeSelect={handleSelectMethod}
+        />
       </FormItem>
       <FormItem name="paymentStatus">
         <Select label={lang.common.form.label.paymentStatus} options={options.paymentStatus} />

@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { Dispatch, FC, SetStateAction, useState, useEffect } from "react";
 import { Card, Space, Divider, Image, Modal, Pagination, Loading, Typography, Empty } from "@/components/UI";
 import { Input } from "@/components/Control";
 import type { ModalProps } from "@/components/UI/Modal";
@@ -16,14 +16,24 @@ const { Paragraph } = Typography;
 
 const { Spinner } = Loading;
 
+type SelectedProduct = Pick<Product, "id" | "name" | "image" | "totalPrice">;
+
 interface SelectProductModalProps extends ModalProps {
-  onSelect: (items: OrderItem[]) => void;
+  isUpdate: boolean;
+  selectedItems: OrderItem[];
+  setSelectedItems: Dispatch<SetStateAction<OrderItem[]>>;
 }
 
-const SelectProductModal: FC<SelectProductModalProps> = ({ onSelect, onCancel, ...restProps }) => {
+const SelectProductModal: FC<SelectProductModalProps> = ({
+  isUpdate,
+  selectedItems,
+  setSelectedItems,
+  onCancel,
+  ...restProps
+}) => {
   const { lang, locale } = useLang();
 
-  const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
+  const [selectedProducts, setSelectedProducts] = useState<SelectedProduct[]>([]);
 
   const [apiQuery, setApiQuery] = useState<ApiQuery>({
     page: 1,
@@ -35,9 +45,33 @@ const SelectProductModal: FC<SelectProductModalProps> = ({ onSelect, onCancel, .
 
   const { data: response, isFetching, isError } = useGetProductsOptions({ ...apiQuery, keywords: debounce });
 
+  const onSetDefaultData = () => {
+    if (!isUpdate) return;
+    const products: SelectedProduct[] = selectedItems.map((item) => ({
+      ...(item.product as SelectedProduct),
+    }));
+    setSelectedProducts([...products]);
+  };
+
+  const onUnSelectProduct = () => {
+    const filterProducts = [...selectedProducts].filter(
+      (product) => selectedItems.findIndex((item) => item.productId === product.id) > -1
+    );
+    setSelectedProducts([...filterProducts]);
+  };
+
+  useEffect(() => onUnSelectProduct(), [selectedItems.length]);
+
+  useEffect(() => onSetDefaultData(), [isUpdate, selectedItems.length]);
+
   const handleChangePage = (page: number) => setApiQuery((prev) => ({ ...prev, page }));
 
   const handleSearch = (text: string) => setApiQuery((prev) => ({ ...prev, keywords: text }));
+
+  const handleCloseModal = () => {
+    setApiQuery({ page: 1, limit: 10, keywords: "" });
+    onCancel?.();
+  };
 
   const handleSelect = (product: Product) => {
     let products = [...selectedProducts];
@@ -48,14 +82,18 @@ const SelectProductModal: FC<SelectProductModalProps> = ({ onSelect, onCancel, .
   };
 
   const handleFinish = () => {
-    const items: OrderItem[] = selectedProducts.map((product) => ({
-      productId: product.id as string,
-      quantity: 1,
-      orderId: "",
-      product,
-    }));
-    onSelect(items);
-    onCancel?.();
+    const items: OrderItem[] = selectedProducts.map((product) => {
+      const item = selectedItems.find((item) => item.productId === product.id);
+      return {
+        id: item ? item.id : "",
+        productId: product.id ?? "",
+        quantity: item ? item.quantity : 1,
+        orderId: item ? item.orderId : "",
+        product,
+      };
+    });
+    setSelectedItems([...items]);
+    handleCloseModal();
   };
 
   const renderProducts = () => {
@@ -101,7 +139,7 @@ const SelectProductModal: FC<SelectProductModalProps> = ({ onSelect, onCancel, .
     head: lang.order.form.select,
     cancelButtonProps: { ghost: true, color: "green" },
     onOk: handleFinish,
-    onCancel,
+    onCancel: handleCloseModal,
     ...restProps,
   };
 

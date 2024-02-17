@@ -5,6 +5,7 @@ import type { Order, OrderItem } from "@/services/order/type";
 import type { Product } from "@/services/product/type";
 import type { ApiQuery, ApiResponse, Paging } from "@/services/type";
 import type { Confirmed } from "@/common/type";
+import type { Customer } from "@/services/customer/type";
 import { EOrderStatus, EPaymentMethod, EPaymentStatus } from "@/services/order/enum";
 import { PiWarning } from "react-icons/pi";
 import { REPLACE_NUM_REGEX } from "@/common/constant/regex";
@@ -18,13 +19,12 @@ import Error from "@/components/Page/Error";
 import getDisplayOrderStatus from "@/features/order/data-display/getDisplayOrderStatus";
 import getDisplayPaymentStatus from "@/features/order/data-display/getDisplayPaymentStatus";
 import getDisplayPaymentMethod from "@/features/order/data-display/getDisplayPaymentMethod";
-import useMenu from "@/components/UI/Layout/Menu/useMenu";
 import useMessage from "@/components/UI/ToastMessage/useMessage";
 import useRemoveOrders from "../../hooks/useRemoveOrders";
 import moment from "moment";
 import utils from "@/utils";
 
-const { ORDER, PRODUCT } = linkPaths;
+const { ORDER, CUSTOMER, PRODUCT } = linkPaths;
 
 interface OrdersTableProps {
   orders: ApiResponse<Paging<Order>> | undefined;
@@ -48,8 +48,6 @@ const OrdersTable: FC<OrdersTableProps> = ({
   const messageApi = useMessage();
 
   const { locale, lang } = useLang();
-
-  const { setActiveId } = useMenu();
 
   const [confirmed, setConfirmed] = useState<Confirmed>({ open: false, ids: [] });
 
@@ -91,6 +89,22 @@ const OrdersTable: FC<OrdersTableProps> = ({
       render: (paymentStatus: EPaymentStatus) => <>{getDisplayPaymentStatus(lang, paymentStatus)}</>,
     },
     {
+      id: "totalPayment",
+      title: lang.common.table.head.totalPayment,
+      dataIndex: "totalPayment",
+      render: (payment: number) => <>{utils.formatPrice(locale, payment)}</>,
+    },
+    {
+      id: "customer",
+      title: lang.common.table.head.customer,
+      dataIndex: "customer",
+      render: (customer: Customer) => (
+        <Link to={CUSTOMER} state={{ id: customer.id }}>
+          <Button text>{customer.fullName}</Button>
+        </Link>
+      ),
+    },
+    {
       id: "createdAt",
       title: lang.common.table.head.createdAt,
       dataIndex: "createdAt",
@@ -117,7 +131,7 @@ const OrdersTable: FC<OrdersTableProps> = ({
         title: lang.common.table.head.productName,
         dataIndex: "product",
         render: (product: Product) => (
-          <Link to={PRODUCT} state={{ id: product.id }} onClick={() => setActiveId(["product"])}>
+          <Link to={PRODUCT} state={{ id: product.id }}>
             <Button text>{product.name}</Button>
           </Link>
         ),

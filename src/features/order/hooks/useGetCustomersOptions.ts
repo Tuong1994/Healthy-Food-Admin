@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { getApiQuery } from "@/services/helper";
+import { getCustomers } from "@/services/customer/api";
 import type { ApiQuery } from "@/services/type";
-import useGetCustomersPaging from "@/features/customer/hooks/useGetCustomersPaging";
 
 const useGetCustomersOptions = (apiQuery: ApiQuery) => {
   const queryKey = "getCustomersOptions" + getApiQuery(apiQuery);
 
   const getCustomersOptions = async () => {
-    const response = await useGetCustomersPaging(apiQuery);
+    const response = await getCustomers(apiQuery);
     return response;
   };
 

@@ -5,15 +5,15 @@ import { AuthSignIn } from "@/services/auth/type";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router";
 import { HttpStatus } from "@/services/axios";
-import { linkPaths } from "@/common/constant/url";
 import useAuthStore from "@/store/AuthStore";
-
-const { DASHBOARD } = linkPaths;
+import usePathnameStore from "@/store/PathnameStore";
 
 const useSignIn = () => {
   const messageApi = useMessage();
 
   const { lang } = useLang();
+
+  const previousPath = usePathnameStore((state) => state.previousPath);
 
   const setAuth = useAuthStore((state) => state.setAuth);
 
@@ -35,7 +35,7 @@ const useSignIn = () => {
       }
       messageApi.success(lang.common.message.success.signIn);
       setAuth(response.data);
-      navigate(DASHBOARD);
+      navigate(previousPath);
     },
     onError: () => messageApi.error(lang.common.message.error.signIn),
   });
