@@ -74,8 +74,8 @@ const useSelectOption = () => {
   ];
 
   const receivedType: SelectOptions = [
-    { label: lang.order.form.received.store, value: EReceivedType.STORE },
-    { label: lang.order.form.received.delivery, value: EReceivedType.DELIVERY },
+    { label: lang.options.receivedType.store, value: EReceivedType.STORE },
+    { label: lang.options.receivedType.delivery, value: EReceivedType.DELIVERY },
   ];
 
   return {

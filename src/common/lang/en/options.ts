@@ -13,7 +13,7 @@ const options_en = {
     customer: "Customer",
   },
   productStatus: {
-    all: 'All',
+    all: "All",
     draft: "Draft",
     active: "Active",
   },
@@ -46,6 +46,10 @@ const options_en = {
   paymentStatus: {
     unPaid: "Unpaid",
     paid: "Paid",
+  },
+  receivedType: {
+    store: "Pickup at store",
+    delivery: "Delivery",
   },
 };
 

@@ -124,7 +124,7 @@ const common_en = {
       status: "Status",
       paymentStatus: "Payment status",
       paymentMethod: "Payment method",
-      recievedType: "Recieved method",
+      receivedType: "Received method",
       origin: "Origin",
       unit: "Unit",
       inventory: "Inventory",

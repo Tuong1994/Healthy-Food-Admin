@@ -1,4 +1,7 @@
 .order-product {
+  .product-remove-btn {
+    margin-bottom: $m-1;
+  }
   .product-card {
     margin-bottom: $m-1;
     &:last-child {
@@ -49,22 +52,12 @@
           text-align: center;
         }
       }
-      .inner-remove {
-        width: $w-2;
-        height: $h-2;
-        border: unset;
-        background: transparent;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        path {
-          color: $text-red;
-          transition: all $transition-time-sm $transition-fn;
-        }
-        &:hover path {
-          opacity: 0.6;
-        }
+      .inner-checkbox {
+        margin: 0;
       }
+    }
+    .card-inner-selected {
+      border-color: $bg-green;
     }
   }
 }

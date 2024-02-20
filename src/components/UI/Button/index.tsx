@@ -51,9 +51,9 @@ const Button: ForwardRefRenderFunction<HTMLButtonElement, ButtonProps> = (
 
   const buttonColor = color ? color : rhfColor;
 
-  const buttonSize = rhfSizes ? rhfSizes : sizes;
+  const buttonSize = sizes ? sizes : rhfSizes;
 
-  const buttonShape = rhfShape ? rhfShape : shape;
+  const buttonShape = shape ? shape : rhfShape;
 
   const isLoading = loading && !text;
 

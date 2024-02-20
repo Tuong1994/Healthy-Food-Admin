@@ -85,7 +85,7 @@ const SelectProductModal: FC<SelectProductModalProps> = ({
     const items: OrderItem[] = selectedProducts.map((product) => {
       const item = selectedItems.find((item) => item.productId === product.id);
       return {
-        id: item ? item.id : "",
+        id: item ? item.id : undefined,
         productId: product.id ?? "",
         quantity: item ? item.quantity : 1,
         orderId: item ? item.orderId : "",

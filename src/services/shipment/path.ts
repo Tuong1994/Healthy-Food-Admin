@@ -4,6 +4,7 @@ const shipmentApiPaths = {
   create: "api/shipment/create",
   update: "api/shipment/update",
   remove: "api/shipment/remove",
+  removePermanent: "api/shipment/removePermanent",
 };
 
 export default shipmentApiPaths;

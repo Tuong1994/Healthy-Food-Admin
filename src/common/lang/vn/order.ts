@@ -29,12 +29,9 @@ const order_vn = {
     tooltipNote: "Xóa thông tin giao hàng",
     addShipment: "Tạo vận chuyển",
     shipmentInfo: "Thông tin vận chuyển",
-    shipmentFeeNote: 'Lưu ý về phí vận chuyển: Nếu tổng giá sản phẩm ít hơn 100.000. Tổng giá trước thuế sẽ tính thêm 50.000 cho phí vận chuyển',
-    received: {
-      title: "Nhận hàng",
-      store: "Nhận hàng tại cửa hàng",
-      delivery: "Giao nhận",
-    },
+    shipmentFeeNote:
+      "Lưu ý về phí vận chuyển: Nếu tổng giá sản phẩm ít hơn 100.000. Tổng giá trước thuế sẽ tính thêm 50.000 cho phí vận chuyển",
+    received: "Nhận hàng",
     removeShipmentModal: {
       confirmModalTitle: "Xóa vận chuyển",
       confirmModalContent: "Bạn có chắc muốn xóa thông tin này",

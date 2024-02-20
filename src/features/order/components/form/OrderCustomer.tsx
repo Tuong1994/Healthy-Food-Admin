@@ -4,6 +4,7 @@ import { FormItem, Select } from "@/components/Control";
 import type { Lang } from "@/common/type";
 import type { ApiQuery } from "@/services/type";
 import type { Customer } from "@/services/customer/type";
+import { useRule } from "@/hooks";
 import useGetCustomersOptions from "../../hooks/useGetCustomersOptions";
 import useDebounce from "@/hooks/features/useDebounce";
 import utils from "@/utils";
@@ -15,6 +16,8 @@ interface OrderCustomerProps {
 }
 
 const OrderCustomer: FC<OrderCustomerProps> = ({ lang }) => {
+  const { common } = useRule();
+
   const [apiQuery, setApiQuery] = useState<ApiQuery>({ page: 1, limit: 10, keywords: "" });
 
   const debounce = useDebounce(apiQuery.keywords as string);
@@ -42,9 +45,10 @@ const OrderCustomer: FC<OrderCustomerProps> = ({ lang }) => {
         </Paragraph>
       }
     >
-      <FormItem name="customerId">
+      <FormItem name="customerId" rules={common()}>
         <Select
           async
+          required
           loading={isFetching}
           options={customersOptions}
           total={response?.data?.totalItems}

@@ -31,11 +31,7 @@ const order_en = {
     shipmentInfo: "Shipment infomation",
     shipmentFeeNote:
       "Note about shipping fee: If the total product price is less than 100,000. Total price before tax will include an additional 50,000 for shipping fee",
-    received: {
-      title: "Receive goods",
-      store: "Pickup at store",
-      delivery: "Delivery",
-    },
+    received: "Receive goods",
     removeShipmentModal: {
       confirmModalTitle: "Remove shipment",
       confirmModalContent: "Are you wish to remove this infomation",

@@ -124,7 +124,7 @@ const common_vn = {
       status: "Trạng thái",
       paymentStatus: "Tình trạng thanh toán",
       paymentMethod: "Phương thức thanh toán",
-      recievedType: "Phương thức nhận hàng",
+      receivedType: "Phương thức nhận hàng",
       unit: "Đơn vị",
       origin: "Xuất xứ",
       inventory: "Hàng tồn kho",

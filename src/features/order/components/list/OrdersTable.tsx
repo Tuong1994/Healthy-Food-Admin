@@ -6,7 +6,7 @@ import type { Product } from "@/services/product/type";
 import type { ApiQuery, ApiResponse, Paging } from "@/services/type";
 import type { Confirmed } from "@/common/type";
 import type { Customer } from "@/services/customer/type";
-import { EOrderStatus, EPaymentMethod, EPaymentStatus } from "@/services/order/enum";
+import { EOrderStatus, EPaymentMethod, EPaymentStatus, EReceivedType } from "@/services/order/enum";
 import { PiWarning } from "react-icons/pi";
 import { REPLACE_NUM_REGEX } from "@/common/constant/regex";
 import { Link } from "react-router-dom";
@@ -23,6 +23,7 @@ import useMessage from "@/components/UI/ToastMessage/useMessage";
 import useRemoveOrders from "../../hooks/useRemoveOrders";
 import moment from "moment";
 import utils from "@/utils";
+import getDisplayReceivedType from "../../data-display/getDisplayReceivedType";
 
 const { ORDER, CUSTOMER, PRODUCT } = linkPaths;
 
@@ -87,6 +88,12 @@ const OrdersTable: FC<OrdersTableProps> = ({
       title: lang.common.table.head.paymentStatus,
       dataIndex: "paymentStatus",
       render: (paymentStatus: EPaymentStatus) => <>{getDisplayPaymentStatus(lang, paymentStatus)}</>,
+    },
+    {
+      id: "receivedType",
+      title: lang.common.table.head.receivedType,
+      dataIndex: "receivedType",
+      render: (receivedType: EReceivedType) => <>{getDisplayReceivedType(lang, receivedType)}</>,
     },
     {
       id: "totalPayment",

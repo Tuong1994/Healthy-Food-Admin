@@ -1,14 +1,15 @@
 import { FC, Dispatch, SetStateAction, Fragment, useState } from "react";
 import { Card, Divider, Space, InfoRow, Typography, Button, Tooltip } from "@/components/UI";
-import { Select } from "@/components/Control";
+import { FormItem, Select } from "@/components/Control";
 import { EReceivedType } from "@/services/order/enum";
 import { HiPencilAlt } from "react-icons/hi";
-import { useSelectOption } from "@/hooks";
+import { useRule, useSelectOption } from "@/hooks";
 import type { Lang } from "@/common/type";
 import type { Shipment } from "@/services/shipment/type";
 import type { InfoRowProps } from "@/components/UI/InfoRow";
 import type { GeneralInfo } from "@/pages/order/form";
 import ConfirmModal from "@/components/Page/ConfirmModal";
+import useRemoveShipments from "@/features/shipment/hooks/useRemoveShipments";
 import utils from "@/utils";
 
 const { Paragraph } = Typography;
@@ -18,6 +19,7 @@ interface OrderReceivedProps {
   isUpdate: boolean;
   shipment: Shipment | undefined;
   info: GeneralInfo;
+  onReFetch: () => void;
   handleOpenShipment: () => void;
   setInfo: Dispatch<SetStateAction<GeneralInfo>>;
   setShipment: Dispatch<SetStateAction<Shipment | undefined>>;
@@ -30,11 +32,16 @@ const OrderReceived: FC<OrderReceivedProps> = ({
   info,
   setInfo,
   setShipment,
+  onReFetch,
   handleOpenShipment,
 }) => {
   const options = useSelectOption();
 
+  const { common } = useRule();
+
   const [confirmed, setConfirmed] = useState<boolean>(false);
+
+  const { mutate: removeShipment, isLoading } = useRemoveShipments();
 
   const infoRowProps: InfoRowProps = {
     hasColon: true,
@@ -55,7 +62,8 @@ const OrderReceived: FC<OrderReceivedProps> = ({
   };
 
   const handleRemoveApi = () => {
-    console.log(shipment?.id);
+    const ids = shipment?.id;
+    removeShipment({ ids }, { onSuccess: () => onReFetch() });
   };
 
   return (
@@ -64,18 +72,13 @@ const OrderReceived: FC<OrderReceivedProps> = ({
         rootClassName="card-section"
         head={
           <Paragraph size={16} weight={600}>
-            {lang.order.form.received.title}
+            {lang.order.form.received}
           </Paragraph>
         }
       >
-        <Select
-          color="green"
-          hasClear={false}
-          disabled={Boolean(shipment)}
-          defaultValue={info.receivedType}
-          options={options.receivedType}
-          onChangeSelect={handleSelect}
-        />
+        <FormItem name="receivedType" disabled={Boolean(shipment)} rules={common()}>
+          <Select required color="green" options={options.receivedType} onChangeSelect={handleSelect} />
+        </FormItem>
 
         {shipment && (
           <Fragment>
@@ -108,6 +111,7 @@ const OrderReceived: FC<OrderReceivedProps> = ({
 
       <ConfirmModal
         open={confirmed}
+        okButtonProps={{ loading: isLoading }}
         onOk={handleRemoveApi}
         onCancel={handleRemoveClient}
         desciption={

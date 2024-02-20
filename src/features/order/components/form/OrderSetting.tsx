@@ -1,7 +1,7 @@
 import { FC, Dispatch, SetStateAction } from "react";
 import { Card, Typography } from "@/components/UI";
 import { FormItem, Select } from "@/components/Control";
-import { useSelectOption } from "@/hooks";
+import { useRule, useSelectOption } from "@/hooks";
 import type { Lang } from "@/common/type";
 import type { GeneralInfo } from "@/pages/order/form";
 import type { Shipment } from "@/services/shipment/type";
@@ -19,6 +19,8 @@ interface OrderSettingProps {
 const OrderSetting: FC<OrderSettingProps> = ({ lang, shipment, setInfo, handleOpenShipment }) => {
   const options = useSelectOption();
 
+  const { common } = useRule();
+
   const handleSelectMethod = (value: any) => {
     const isCod = value === EPaymentMethod.COD;
     const receivedType = isCod ? EReceivedType.DELIVERY : EReceivedType.STORE;
@@ -35,18 +37,19 @@ const OrderSetting: FC<OrderSettingProps> = ({ lang, shipment, setInfo, handleOp
         </Paragraph>
       }
     >
-      <FormItem name="status">
-        <Select label={lang.common.form.label.status} options={options.orderStatus} />
+      <FormItem name="status" rules={common()}>
+        <Select required label={lang.common.form.label.status} options={options.orderStatus} />
       </FormItem>
-      <FormItem name="paymentMethod">
+      <FormItem name="paymentMethod" rules={common()}>
         <Select
+          required
           label={lang.common.form.label.paymentMethod}
           options={options.paymentMethod}
           onChangeSelect={handleSelectMethod}
         />
       </FormItem>
-      <FormItem name="paymentStatus">
-        <Select label={lang.common.form.label.paymentStatus} options={options.paymentStatus} />
+      <FormItem name="paymentStatus" rules={common()}>
+        <Select required label={lang.common.form.label.paymentStatus} options={options.paymentStatus} />
       </FormItem>
     </Card>
   );

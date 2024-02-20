@@ -10,14 +10,18 @@ import useForm from "@/components/Control/Form/useForm";
 interface ShipmentModalProps extends ModalProps {
   lang: Lang;
   isUpdate: boolean;
+  orderId: string | undefined;
   shipment: Shipment | undefined;
+  onReFetch: () => void;
   onFinish: (data: ShipmentFormData) => void;
 }
 
 const ShipmentModal: FC<ShipmentModalProps> = ({
   lang,
   isUpdate,
+  orderId,
   shipment,
+  onReFetch,
   onFinish,
   onCancel,
   ...restProps
@@ -44,8 +48,9 @@ const ShipmentModal: FC<ShipmentModalProps> = ({
     orderId: shipment ? shipment.orderId : "",
   };
 
-  const handleFinish = (data: ShipmentFormData) => {
-    if (!isUpdate) onFinish(data);
+  const handleFinish = (formData: ShipmentFormData) => {
+    const prepareData: ShipmentFormData = { ...formData, orderId: orderId ? orderId : "" };
+    onFinish(prepareData);
     onCancel?.();
   };
 

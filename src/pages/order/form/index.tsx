@@ -51,6 +51,8 @@ const Order: FC<OrderProps> = () => {
 
   const [selectedItems, setSelectedItems] = useState<OrderItem[]>([]);
 
+  const [itemRemovedIds, setItemRemovedIds] = useState<string[]>([]);
+
   const [info, setInfo] = useState<GeneralInfo>({
     receivedType: EReceivedType.STORE,
     method: EPaymentMethod.TRANSFER,
@@ -110,16 +112,16 @@ const Order: FC<OrderProps> = () => {
   const initialData: OrderFormData = useMemo(
     () => ({
       paymentMethod: info.method,
+      receivedType: info.receivedType,
+      shipmentFee: info.shipmentFee,
       status: response ? response.data?.status : EOrderStatus.WAITTING,
       paymentStatus: response ? response.data?.paymentStatus : EPaymentStatus.UNPAID,
-      receivedType: response ? response.data?.receivedType : EReceivedType.STORE,
-      shipmentFee: response ? response.data?.shipmentFee : 0,
       totalPayment: response ? response.data?.totalPayment : 0,
       customerId: response ? response.data?.customerId : "",
       note: response ? response.data?.note : "",
       items: [],
     }),
-    [response, info.method]
+    [response, info.method, info.receivedType, info.shipmentFee]
   );
 
   const headerProps: ContentHeaderProps = {
@@ -139,28 +141,36 @@ const Order: FC<OrderProps> = () => {
   const handleSetShipment = (data: ShipmentFormData) => setShipment(data);
 
   const handleSubmit = (data: OrderFormData) => {
-    const items = selectedItems.map((item) => ({
-      productId: item.productId,
-      quantity: item.quantity,
-      orderId: item.orderId,
-    }));
-    const preprareData: OrderFormData = {
+    const items = selectedItems.map((item) => {
+      delete item.product;
+      if (!item.id) delete item.id;
+      return { ...item };
+    });
+    const prepareData: OrderFormData = {
       ...data,
       items,
       shipment,
       totalPayment,
+      paymentMethod: info.method,
       shipmentFee: info.shipmentFee,
+      receivedType: info.receivedType,
     };
-    if (!isUpdate) return createOrder(preprareData);
-    const args = { query: { orderId: response?.data?.id }, formData: preprareData };
+    if (!isUpdate) return createOrder(prepareData);
+    const args = {
+      query: { orderId: response?.data?.id, ids: itemRemovedIds.join(",") },
+      formData: prepareData,
+    };
     return updateOrder(args, { onSuccess: () => onReFetch() });
   };
 
   const leftItems = (
     <Fragment>
       <OrderProduct
+        isUpdate={isUpdate}
         selectedItems={selectedItems}
+        onReFetch={onReFetch}
         setSelectedItems={setSelectedItems}
+        setItemRemovedIds={setItemRemovedIds}
         handleOpenSelect={handleOpenSelect}
       />
       <OrderGeneral lang={lang} info={info} totalPrice={totalPrice} selectedItems={selectedItems} />
@@ -183,6 +193,7 @@ const Order: FC<OrderProps> = () => {
         shipment={shipment}
         setInfo={setInfo}
         setShipment={setShipment}
+        onReFetch={onReFetch}
         handleOpenShipment={handleOpenShipment}
       />
     </Fragment>
@@ -210,8 +221,10 @@ const Order: FC<OrderProps> = () => {
       <ShipmentModal
         lang={lang}
         isUpdate={isUpdate}
+        orderId={state?.id as string}
         shipment={shipment}
         open={openShipment}
+        onReFetch={onReFetch}
         onFinish={handleSetShipment}
         onCancel={handleOpenShipment}
       />

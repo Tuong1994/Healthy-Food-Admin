@@ -28,3 +28,8 @@ export const removeShipments = async (query: ApiQuery) => {
   const response = await Fetch.Delete<any>(shipmentApiPaths.remove + getApiQuery(query));
   return response;
 };
+
+export const removeShipmentsPermanent = async (query: ApiQuery) => {
+  const response = await Fetch.Delete<any>(shipmentApiPaths.removePermanent + getApiQuery(query));
+  return response;
+};
