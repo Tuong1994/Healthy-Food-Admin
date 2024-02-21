@@ -69,11 +69,12 @@ const Order: FC<OrderProps> = () => {
     if (!isUpdate) return;
     setSelectedItems(response ? response.data?.items : []);
     setShipment(response ? response.data?.shipment : undefined);
-    setInfo({
+    setInfo((prev) => ({
+      ...prev,
       receivedType: response ? response.data?.receivedType : EReceivedType.STORE,
       method: response ? response.data?.paymentMethod : EPaymentMethod.TRANSFER,
       shipmentFee: response ? response.data?.shipmentFee : 0,
-    });
+    }));
   };
 
   const setShipmentFee = () => {
@@ -188,7 +189,6 @@ const Order: FC<OrderProps> = () => {
       <OrderCustomer lang={lang} />
       <OrderReceived
         lang={lang}
-        info={info}
         isUpdate={isUpdate}
         shipment={shipment}
         setInfo={setInfo}

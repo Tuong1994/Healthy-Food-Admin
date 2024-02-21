@@ -11,7 +11,6 @@ import { PiWarning } from "react-icons/pi";
 import { REPLACE_NUM_REGEX } from "@/common/constant/regex";
 import { Link } from "react-router-dom";
 import { linkPaths } from "@/common/constant/url";
-import { HttpStatus } from "@/services/axios";
 import { useLang } from "@/hooks";
 import OrdersTableFilter from "./OrdersTableFilter";
 import ConfirmModal from "@/components/Page/ConfirmModal";
@@ -19,11 +18,10 @@ import Error from "@/components/Page/Error";
 import getDisplayOrderStatus from "@/features/order/data-display/getDisplayOrderStatus";
 import getDisplayPaymentStatus from "@/features/order/data-display/getDisplayPaymentStatus";
 import getDisplayPaymentMethod from "@/features/order/data-display/getDisplayPaymentMethod";
-import useMessage from "@/components/UI/ToastMessage/useMessage";
+import getDisplayReceivedType from "../../data-display/getDisplayReceivedType";
 import useRemoveOrders from "../../hooks/useRemoveOrders";
 import moment from "moment";
 import utils from "@/utils";
-import getDisplayReceivedType from "../../data-display/getDisplayReceivedType";
 
 const { ORDER, CUSTOMER, PRODUCT } = linkPaths;
 
@@ -46,8 +44,6 @@ const OrdersTable: FC<OrdersTableProps> = ({
   handleReFetch,
   handleResetFilter,
 }) => {
-  const messageApi = useMessage();
-
   const { locale, lang } = useLang();
 
   const [confirmed, setConfirmed] = useState<Confirmed>({ open: false, ids: [] });
@@ -167,21 +163,13 @@ const OrdersTable: FC<OrdersTableProps> = ({
 
   const handleRemove = () => {
     const listIds = confirmed.ids.join(",");
-    onRemoveOrders(
-      { ids: listIds },
-      {
-        onSuccess: (response) => {
-          if (!response.success) {
-            let message = "";
-            if (response.error?.status === HttpStatus.NOT_FOUND) message = lang.common.message.error.remove;
-            return messageApi.error(message);
-          }
-          messageApi.success(lang.common.message.success.remove);
-          handleCloseModal();
-          handleReFetch();
-        },
-      }
-    );
+    const apiQuery: ApiQuery = { ids: listIds };
+    onRemoveOrders(apiQuery, {
+      onSuccess: () => {
+        handleCloseModal();
+        handleReFetch();
+      },
+    });
   };
 
   const renderContent = () => {

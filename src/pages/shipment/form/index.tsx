@@ -1,13 +1,16 @@
-import { FC, Fragment } from "react";
-import { Breadcrumb, Card, Button } from "@/components/UI";
-import { FormItem, Input, Select } from "@/components/Control";
+import { FC, Fragment, useMemo } from "react";
+import { Breadcrumb, Button } from "@/components/UI";
 import { useLang, useHasLocationState } from "@/hooks";
 import { Link } from "react-router-dom";
 import type { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
 import type { ContentHeaderProps } from "@/components/Page/ContentHeader";
-import type { Shipment } from "@/services/shipment/type";
+import type { ShipmentFormData } from "@/services/shipment/type";
 import { linkPaths } from "@/common/constant/url";
 import FormLayout from "@/components/Page/FormLayout";
+import ShipmentForm from "@/features/shipment/components/form/ShipmentForm";
+import ShipmentOrder from "@/features/shipment/components/form/ShipmentOrder";
+import useGetShipment from "@/features/shipment/hooks/useGetShipment";
+import useUpdateShipment from "@/features/shipment/hooks/useUpdateShipment";
 
 const { SHIPMENTS } = linkPaths;
 
@@ -16,52 +19,60 @@ interface ShipmentProps {}
 const Shipment: FC<ShipmentProps> = () => {
   const { lang } = useLang();
 
-  const { isUpdate } = useHasLocationState();
+  const { state } = useHasLocationState();
 
-  const pageTitle = isUpdate ? lang.shipment.form.editTitle : lang.shipment.form.addTitle;
+  const { data: response, isFetching, refetch } = useGetShipment({ shipmentId: state?.id as string });
+
+  const { mutate: updateShipment, isLoading: updateLoading } = useUpdateShipment();
+
+  const pageTitle = lang.shipment.form.editTitle;
 
   const items: BreadcrumbItems = [
     { id: "1", label: <Link to={SHIPMENTS}>{lang.shipment.list.title}</Link> },
     { id: "2", label: pageTitle, actived: true },
   ];
 
-  const initialData: Shipment = {
-    fullName: "",
-    phone: "",
-    email: "",
-    address: "",
-    orderId: "",
-  };
+  const initialData: ShipmentFormData = useMemo(
+    () => ({
+      fullName: response ? response.data?.fullName : "",
+      phone: response ? response.data?.phone : "",
+      email: response ? response.data?.email : "",
+      address: response ? response.data?.address : "",
+      orderId: response ? response.data?.orderId : "",
+    }),
+    [response]
+  );
 
   const headerProps: ContentHeaderProps = {
     headTitle: pageTitle,
-    right: () => <Button>{lang.common.actions.save}</Button>,
+    right: () =>
+      !isFetching && (
+        <Button loading={updateLoading} type="submit">
+          {lang.common.actions.update}
+        </Button>
+      ),
   };
 
-  const leftItems = (
-    <Card>
-      <FormItem name="fullName">
-        <Input label={lang.common.form.label.fullName} />
-      </FormItem>
-      <FormItem name="phone">
-        <Input label={lang.common.form.label.phone} />
-      </FormItem>
-      <FormItem name="email">
-        <Input label={lang.common.form.label.email} />
-      </FormItem>
-      <FormItem name="address">
-        <Input label={lang.common.form.label.fullAddress} />
-      </FormItem>
-      <FormItem name="orderId">
-        <Select async label={lang.common.form.label.orderNumber} />
-      </FormItem>
-    </Card>
-  );
+  const handleSubmit = (formData: ShipmentFormData) => {
+    const args = { query: { shipmentId: response?.data?.id }, formData };
+    updateShipment(args, { onSuccess: () => refetch() });
+  };
+
+  const leftItems = <ShipmentForm lang={lang} />;
+
+  const rightItems = <ShipmentOrder lang={lang} shipment={response?.data} />;
 
   return (
     <Fragment>
       <Breadcrumb items={items} />
-      <FormLayout<Shipment> headerProps={headerProps} initialData={initialData} leftItems={leftItems} />
+      <FormLayout<ShipmentFormData>
+        loading={isFetching}
+        headerProps={headerProps}
+        initialData={initialData}
+        leftItems={leftItems}
+        rightItems={rightItems}
+        onFinish={handleSubmit}
+      />
     </Fragment>
   );
 };

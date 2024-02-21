@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 import { linkPaths } from "@/common/constant/url";
 import { EInventoryStatus, EProductOrigin, EProductStatus, EProductUnit } from "@/services/product/enum";
 import { PiWarning } from "react-icons/pi";
-import { HttpStatus } from "@/services/axios";
 import { REPLACE_NUM_REGEX } from "@/common/constant/regex";
 import { useLang } from "@/hooks";
 import ProductsTableFilter from "./ProductsTableFilter";
@@ -20,7 +19,6 @@ import getDisplayProductStatus from "@/features/product/data-display/getDisplayP
 import getDisplayProductOrigin from "@/features/product/data-display/getDisplayProductOrigin";
 import getDisplayProductUnit from "@/features/product/data-display/getDisplayProductUnit";
 import useRemoveProducts from "../../hooks/useRemoveProducts";
-import useMessage from "@/components/UI/ToastMessage/useMessage";
 import moment from "moment";
 import utils from "@/utils";
 
@@ -45,8 +43,6 @@ const ProductsTable: FC<ProductsTableProps> = ({
   handleReFetch,
   handleResetFilter,
 }) => {
-  const messageApi = useMessage();
-
   const { locale, lang } = useLang();
 
   const [confirmed, setConfirmed] = useState<Confirmed>({ open: false, ids: [] });
@@ -143,13 +139,7 @@ const ProductsTable: FC<ProductsTableProps> = ({
     const listIds = confirmed.ids.join(",");
     const apiQuery: ApiQuery = { ids: listIds };
     onRemoveProducts(apiQuery, {
-      onSuccess: (response) => {
-        if (!response.success) {
-          let message = "";
-          if (response.error?.status === HttpStatus.NOT_FOUND) message = lang.common.message.error.remove;
-          return messageApi.error(message);
-        }
-        messageApi.success(lang.common.message.success.remove);
+      onSuccess: () => {
         handleReFetch();
         handleCloseModal();
       },

@@ -15,6 +15,10 @@ const useRemoveCustomers = () => {
   };
 
   const mutation = useMutation(onRemoveCustomers, {
+    onSuccess: (response) => {
+      if (!response.success) return messageApi.error(lang.common.message.error.remove);
+      messageApi.success(lang.common.message.success.remove);
+    },
     onError: () => messageApi.error(lang.common.message.error.remove),
   });
 

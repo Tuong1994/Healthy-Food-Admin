@@ -1,6 +1,6 @@
 import type { OrderItem } from "@/services/order/type";
 
-const sumQuantity = (items: OrderItem[]) => {
+const sumQuantity = (items: OrderItem[] = []) => {
   if (!items.length) return 0;
   const quantity =
     items.reduce((total, item) => {

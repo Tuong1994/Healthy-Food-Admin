@@ -10,14 +10,12 @@ import { Link } from "react-router-dom";
 import { linkPaths } from "@/common/constant/url";
 import { PiWarning } from "react-icons/pi";
 import { REPLACE_NUM_REGEX } from "@/common/constant/regex";
-import { HttpStatus } from "@/services/axios";
 import { useLang } from "@/hooks";
 import CustomersTableFilter from "./CustomersTableFilter";
 import ConfirmModal from "@/components/Page/ConfirmModal";
 import Error from "@/components/Page/Error";
 import getDisplayGender from "@/features/customer/data-display/getDisplayGender";
 import getDisplayRole from "@/features/customer/data-display/getDisplayRole";
-import useMessage from "@/components/UI/ToastMessage/useMessage";
 import useRemoveCustomers from "../../hooks/useRemoveCustomers";
 import utils from "@/utils";
 import moment from "moment";
@@ -43,8 +41,6 @@ const CustomersTable: FC<CustomersTableProps> = ({
   handleReFetch,
   handleResetFilter,
 }) => {
-  const messageApi = useMessage();
-
   const { lang } = useLang();
 
   const [confirmed, setConfirmed] = useState<Confirmed>({ open: false, ids: [] });
@@ -133,13 +129,7 @@ const CustomersTable: FC<CustomersTableProps> = ({
     const listIds = confirmed.ids.join(",");
     const apiQuery: ApiQuery = { ids: listIds };
     onRemoveCustomers(apiQuery, {
-      onSuccess: (response) => {
-        if (!response.success) {
-          let message = "";
-          if (response.error?.status === HttpStatus.NOT_FOUND) message = lang.common.message.error.remove;
-          return messageApi.error(message);
-        }
-        messageApi.success(lang.common.message.success.remove);
+      onSuccess: () => {
         handleReFetch();
         handleCloseModal();
       },

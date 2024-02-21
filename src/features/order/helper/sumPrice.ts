@@ -1,6 +1,6 @@
 import type { OrderItem } from "@/services/order/type";
 
-const sumPrice = (items: OrderItem[]) => {
+const sumPrice = (items: OrderItem[] = []) => {
   if (!items.length) return 0;
   const price =
     items?.reduce((total, item) => {

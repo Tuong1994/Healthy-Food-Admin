@@ -18,7 +18,6 @@ interface OrderReceivedProps {
   lang: Lang;
   isUpdate: boolean;
   shipment: Shipment | undefined;
-  info: GeneralInfo;
   onReFetch: () => void;
   handleOpenShipment: () => void;
   setInfo: Dispatch<SetStateAction<GeneralInfo>>;
@@ -29,7 +28,6 @@ const OrderReceived: FC<OrderReceivedProps> = ({
   lang,
   isUpdate,
   shipment,
-  info,
   setInfo,
   setShipment,
   onReFetch,

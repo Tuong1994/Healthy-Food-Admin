@@ -1,5 +1,5 @@
 import { FC, Fragment, Dispatch, SetStateAction, useState, Key } from "react";
-import { Table, Button, Space } from "@/components/UI";
+import { Table, Button, Space, Typography } from "@/components/UI";
 import type { Confirmed, Lang } from "@/common/type";
 import type { Columns } from "@/components/UI/Table/type";
 import type { Shipment } from "@/services/shipment/type";
@@ -12,9 +12,12 @@ import { REPLACE_NUM_REGEX } from "@/common/constant/regex";
 import ShipmentsTableFilter from "./ShipmentsTableFilter";
 import ConfirmModal from "@/components/Page/ConfirmModal";
 import Error from "@/components/Page/Error";
+import useRemoveShipments from "@/features/shipment/hooks/useRemoveShipments";
 import moment from "moment";
 
 const { SHIPMENT, ORDER } = linkPaths;
+
+const { Paragraph } = Typography;
 
 interface ShipmentsTableProps {
   lang: Lang;
@@ -23,6 +26,7 @@ interface ShipmentsTableProps {
   isError: boolean;
   apiQuery: ApiQuery;
   handleResetFilter: () => void;
+  handleReFetch: () => void;
   setApiQuery: Dispatch<SetStateAction<ApiQuery>>;
 }
 
@@ -33,9 +37,12 @@ const ShipmentsTable: FC<ShipmentsTableProps> = ({
   isError,
   apiQuery,
   setApiQuery,
+  handleReFetch,
   handleResetFilter,
 }) => {
   const [confirmed, setConfirmed] = useState<Confirmed>({ open: false, ids: [] });
+
+  const { mutate: onRemoveShipments, isLoading: removeLoading } = useRemoveShipments();
 
   const dataSource = (): Shipment[] => {
     if (!shipments) return [];
@@ -104,11 +111,23 @@ const ShipmentsTable: FC<ShipmentsTableProps> = ({
 
   const handleCloseModal = () => setConfirmed((prev) => ({ ...prev, open: false, ids: [] }));
 
+  const handleRemove = () => {
+    const listIds = confirmed.ids.join(",");
+    const apiQuery: ApiQuery = { ids: listIds };
+    onRemoveShipments(apiQuery, {
+      onSuccess: () => {
+        handleCloseModal();
+        handleReFetch();
+      },
+    });
+  };
+
   const renderContent = () => {
     if (isError) return <Error />;
     return (
       <Table<Shipment>
         color="green"
+        rowKey="id"
         hasFilter
         hasPagination
         hasRowSelection
@@ -133,14 +152,21 @@ const ShipmentsTable: FC<ShipmentsTableProps> = ({
       {renderContent()}
       <ConfirmModal
         open={confirmed.open}
+        okButtonProps={{ loading: removeLoading }}
+        onOk={handleRemove}
         onCancel={handleCloseModal}
         desciption={
-          <Space align="middle" justify="center">
-            <PiWarning size={20} className="remove-modal-icon" />
-            <span>
-              {lang.common.description.remove.replace(REPLACE_NUM_REGEX, String(confirmed.ids.length))}
-            </span>
-          </Space>
+          <Fragment>
+            <Space align="middle" justify="center">
+              <PiWarning size={20} className="remove-modal-icon" />
+              <span>
+                {lang.common.description.remove.replace(REPLACE_NUM_REGEX, String(confirmed.ids.length))}
+              </span>
+            </Space>
+            <Paragraph align="center" variant="danger">
+              {lang.common.description.confirm}
+            </Paragraph>
+          </Fragment>
         }
       />
     </Fragment>

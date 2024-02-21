@@ -15,6 +15,10 @@ const useRemoveOrders = () => {
   };
 
   const mutation = useMutation(onRemoveOrders, {
+    onSuccess: (response) => {
+      if (!response.success) return messageApi.error(lang.common.message.error.remove);
+      messageApi.success(lang.common.message.success.remove);
+    },
     onError: () => messageApi.error(lang.common.message.error.remove),
   });
 
