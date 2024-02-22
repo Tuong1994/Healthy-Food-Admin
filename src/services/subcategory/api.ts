@@ -21,16 +21,13 @@ export const getSubCategory = async (query: ApiQuery) => {
   return response;
 };
 
-export const createSubCategory = async (data: SubCategoryFormData) => {
-  const response = await Fetch.Post<SubCategoryFormData, SubCategory>(subCategoryApiPaths.create, data);
+export const createSubCategory = async (data: FormData) => {
+  const response = await Fetch.Post<FormData, SubCategory>(subCategoryApiPaths.create, data);
   return response;
 };
 
-export const updateSubCategory = async (query: ApiQuery, data: SubCategoryFormData) => {
-  const response = await Fetch.Put<SubCategoryFormData, any>(
-    subCategoryApiPaths.update + getApiQuery(query),
-    data
-  );
+export const updateSubCategory = async (query: ApiQuery, data: FormData) => {
+  const response = await Fetch.Put<FormData, any>(subCategoryApiPaths.update + getApiQuery(query), data);
   return response;
 };
 

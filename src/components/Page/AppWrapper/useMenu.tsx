@@ -4,7 +4,7 @@ import { linkPaths } from "@/common/constant/url";
 import type { MenuItems } from "@/components/UI/Layout/Menu/type";
 import useLayout from "@/components/UI/Layout/useLayout";
 
-const { DASHBOARD, PRODUCTS, CUSTOMERS, ORDERS, SHIPMENTS, CATEGORY } = linkPaths;
+const { DASHBOARD, PRODUCTS, CUSTOMERS, ORDERS, SHIPMENTS, CATEGORIES } = linkPaths;
 
 const ICON_SIZE = 18;
 
@@ -34,7 +34,7 @@ const useMenu = () => {
       id: "category",
       label: <div onClick={handleHideSide}>{lang.common.menu.category}</div>,
       icon: <HiListBullet size={ICON_SIZE} />,
-      path: CATEGORY,
+      path: CATEGORIES,
       isRoot: true,
     },
     {

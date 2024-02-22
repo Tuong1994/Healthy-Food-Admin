@@ -2,25 +2,29 @@ import { FC, Fragment, Key, useState } from "react";
 import { Image, Table, Button, Space } from "@/components/UI";
 import type { Confirmed, Lang } from "@/common/type";
 import type { Columns } from "@/components/UI/Table/type";
-import type { Category } from "@/services/category/type";
+import type { SubCategory } from "@/services/subcategory/type";
 import type { ApiQuery } from "@/services/type";
 import { ESort } from "@/common/enum";
 import { PiWarning } from "react-icons/pi";
 import { REPLACE_NUM_REGEX } from "@/common/constant/regex";
+import { linkPaths } from "@/common/constant/url";
+import { Link } from "react-router-dom";
 import ContentHeader from "@/components/Page/ContentHeader";
-import CategoriesTableFilter from "./CategoriesTableFilter";
-import ConfirmModal from "@/components/Page/ConfirmModal";
+import SubCategoriesTableFilter from "./SubCategoriesTableFilter";
 import Error from "@/components/Page/Error";
-import useGetCategoriesPaging from "../hooks/useGetCategoriesPaging";
+import ConfirmModal from "@/components/Page/ConfirmModal";
 import useDebounce from "@/hooks/features/useDebounce";
+import useGetSubCategoriesPaging from "@/features/category/hooks/subcategory/useGetSubCategoriesPaging";
+import useRemoveSubCategories from "@/features/category/hooks/subcategory/useRemoveSubCategores";
 import moment from "moment";
 
-interface CategoriesTableProps {
+const { SUBCATEGORY } = linkPaths;
+
+interface SubCategoriesTableProps {
   lang: Lang;
-  handleOpenModal: (activeId: string | null) => void;
 }
 
-const CategoriesTable: FC<CategoriesTableProps> = ({ lang, handleOpenModal }) => {
+const SubCategoriesTable: FC<SubCategoriesTableProps> = ({ lang }) => {
   const initialApiQuery: ApiQuery = {
     page: 1,
     limit: 10,
@@ -35,18 +39,21 @@ const CategoriesTable: FC<CategoriesTableProps> = ({ lang, handleOpenModal }) =>
   const debounce = useDebounce(apiQuery.keywords as string);
 
   const {
-    data: categories,
+    data: subCategories,
     isFetching,
     isError,
-  } = useGetCategoriesPaging({ ...apiQuery, keywords: debounce });
+    refetch,
+  } = useGetSubCategoriesPaging({ ...apiQuery, keywords: debounce });
 
-  const dataSource = (): Category[] => {
-    if (!categories) return [];
-    if (!categories.success) return [];
-    return categories.data?.items || [];
+  const { mutate: onRemoveSubCategories, isLoading: removeLoading } = useRemoveSubCategories();
+
+  const dataSource = (): SubCategory[] => {
+    if (!subCategories) return [];
+    if (!subCategories.success) return [];
+    return subCategories.data?.items || [];
   };
 
-  const columns: Columns<Category> = [
+  const columns: Columns<SubCategory> = [
     {
       id: "id",
       title: lang.common.table.head.image,
@@ -57,10 +64,10 @@ const CategoriesTable: FC<CategoriesTableProps> = ({ lang, handleOpenModal }) =>
       id: "name",
       title: lang.common.table.head.name,
       dataIndex: "name",
-      render: (name: string, data: Category) => (
-        <Button text onClick={() => handleOpenModal(data.id as string)}>
-          {name}
-        </Button>
+      render: (name: string, data: SubCategory) => (
+        <Link to={SUBCATEGORY} state={{ id: data.id }}>
+          <Button text>{name}</Button>
+        </Link>
       ),
     },
     {
@@ -85,24 +92,35 @@ const CategoriesTable: FC<CategoriesTableProps> = ({ lang, handleOpenModal }) =>
 
   const handleCloseConfirmModal = () => setConfirmed((prev) => ({ ...prev, open: false, ids: [] }));
 
+  const handleRemove = () => {
+    const listIds = confirmed.ids.join(",");
+    const apiQuery: ApiQuery = { ids: listIds };
+    onRemoveSubCategories(apiQuery, {
+      onSuccess: () => {
+        refetch();
+        handleCloseConfirmModal();
+      },
+    });
+  };
+
   const renderContent = () => {
     if (isError) return <Error />;
     return (
-      <Table<Category>
+      <Table<SubCategory>
         color="green"
         hasFilter
         hasPagination
         hasRowSelection
         loading={isFetching}
-        columns={columns}
         showRemove={confirmed.open}
+        columns={columns}
         dataSource={dataSource()}
         onSelectRows={handleOpenConfirmModal}
-        filter={<CategoriesTableFilter lang={lang} apiQuery={apiQuery} setApiQuery={setApiQuery} />}
+        filter={<SubCategoriesTableFilter lang={lang} apiQuery={apiQuery} setApiQuery={setApiQuery} />}
         filterProps={{ hasFilterButton: false, onCancelFilter: handleResetFilter }}
         paginationProps={{
           showContent: true,
-          total: categories?.data?.totalItems ?? 0,
+          total: subCategories?.data?.totalItems ?? 0,
           onChangePage: handleChangePage,
         }}
       />
@@ -112,17 +130,19 @@ const CategoriesTable: FC<CategoriesTableProps> = ({ lang, handleOpenModal }) =>
   return (
     <Fragment>
       <ContentHeader
-        headTitle={lang.category.categoryTitle}
-        total={categories?.data?.totalItems}
+        headTitle={lang.category.subcategory.list.title}
+        total={subCategories?.data?.totalItems}
         right={() => (
-          <Button color="green" onClick={() => handleOpenModal(null)}>
-            {lang.common.actions.create}
-          </Button>
+          <Link to={SUBCATEGORY}>
+            <Button color="green">{lang.common.actions.create}</Button>
+          </Link>
         )}
       />
       {renderContent()}
       <ConfirmModal
         open={confirmed.open}
+        okButtonProps={{ loading: removeLoading }}
+        onOk={handleRemove}
         onCancel={handleCloseConfirmModal}
         desciption={
           <Space align="middle" justify="center">
@@ -137,4 +157,4 @@ const CategoriesTable: FC<CategoriesTableProps> = ({ lang, handleOpenModal }) =>
   );
 };
 
-export default CategoriesTable;
+export default SubCategoriesTable;

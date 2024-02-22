@@ -57,6 +57,13 @@ const utils = {
     return apiQuery;
   },
 
+  getNameCurrentUrl: () => {
+    if (!window) return "";
+    const { pathname } = window.location;
+    const name = pathname.split("/")[1];
+    return name ? name : "dashboard";
+  },
+
   mapDataToOptions: <M extends object>(list: M[], label: keyof M, value: keyof M) => {
     if (!list.length) return [];
     const options: SelectOptions = list.map((item) => ({ label: item[label], value: item[value] }));

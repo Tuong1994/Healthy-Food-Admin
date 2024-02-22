@@ -1,10 +1,22 @@
 const category_vn = {
-  categoryTitle: "Danh mục",
-  subCategoryTitle: "Danh mục phụ",
-  addCategoryTitle: "Thêm danh mục",
-  editCategoryTitle: "Cập nhật danh mục",
-  addSubCategoryTitle: "Thêm danh mục phụ",
-  editSubCategoryTitle: "Cập nhật danh mục phụ",
+  mainCategory: {
+    list: {
+      title: "Danh mục",
+    },
+    form: {
+      addTitle: "Thêm danh mục",
+      editTitle: "Cập nhật danh mục",
+    },
+  },
+  subcategory: {
+    list: {
+      title: "Danh mục phụ",
+    },
+    form: {
+      addTitle: "Thêm danh mục phụ",
+      editTitle: "Cập nhật danh mục phụ",
+    },
+  },
   filter: {
     placeholder: {
       search: "Tìm kiếm tên theo ngôn ngữ",

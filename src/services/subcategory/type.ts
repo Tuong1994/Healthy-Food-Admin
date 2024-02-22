@@ -4,8 +4,9 @@ export type SubCategory = {
   id?: string;
 
   name: string;
+  nameEn?: string;
+  nameVn?: string;
   categoryId: string;
-  path?: string;
   image?: ImageUpload;
 
   createdAt?: Date | string;

@@ -5,14 +5,13 @@ export type Category = {
   id?: string;
 
   name: string;
+  nameEn?: string;
+  nameVn?: string;
+  image?: ImageUpload;
   subCategories: SubCategory[];
 
   createdAt?: Date | string;
   updatedAt?: Date | string;
 };
 
-export type CategoryFormData = {
-  nameEn: string;
-  nameVn: string;
-  image?: ImageUpload;
-};
+export type CategoryFormData = Pick<Category, "nameEn" | "nameVn">;

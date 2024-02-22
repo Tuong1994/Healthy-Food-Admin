@@ -119,7 +119,7 @@ const Customer: FC<CustomerProps> = () => {
       if (showAddress && key === "address") formData.append(key, JSON.stringify(value));
       else formData.append(key, value as string);
     }
-
+    
     if (!isUpdate) return createCustomer(formData);
     const args = { query: { customerId: response?.data?.id }, formData };
     return updateCustomer(args, { onSuccess: () => onReFetch() });

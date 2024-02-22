@@ -9,20 +9,24 @@ import Orders from "@/pages/order/list";
 import Order from "@/pages/order/form";
 import Shipments from "@/pages/shipment/list";
 import Shipment from "@/pages/shipment/form";
-import Category from "@/pages/category";
+import Categories from "@/pages/category/list";
+import Category from "@/pages/category/form";
 import NotFound from "@/pages/404";
 
 const {
   DASHBOARD,
-  PRODUCT_LIST,
-  PRODUCT_FORM,
   CUSTOMER_LIST,
   CUSTOMER_FORM,
+  CATEGORY_LIST,
+  CATEGORY_FORM,
+  SUBCATEGORY_LIST,
+  SUBCATEGORY_FORM,
+  PRODUCT_LIST,
+  PRODUCT_FORM,
   ORDER_LIST,
   ORDER_FORM,
   SHIPMENT_LIST,
   SHIPMENT_FORM,
-  CATEGORY,
 } = routerPaths;
 
 const routes: RouteProps[] = [
@@ -40,6 +44,26 @@ const routes: RouteProps[] = [
     id: "customer",
     path: CUSTOMER_FORM,
     element: <Customer />,
+  },
+  {
+    id: "categories",
+    path: CATEGORY_LIST,
+    element: <Categories />,
+  },
+  {
+    id: "category",
+    path: CATEGORY_FORM,
+    element: <Category />,
+  },
+  {
+    id: "subcategories",
+    path: SUBCATEGORY_LIST,
+    element: <Categories />,
+  },
+  {
+    id: "subcategory",
+    path: SUBCATEGORY_FORM,
+    element: <Category />,
   },
   {
     id: "products",
@@ -70,11 +94,6 @@ const routes: RouteProps[] = [
     id: "shipment",
     path: SHIPMENT_FORM,
     element: <Shipment />,
-  },
-  {
-    id: "category",
-    path: CATEGORY,
-    element: <Category />,
   },
   {
     id: "notFound",

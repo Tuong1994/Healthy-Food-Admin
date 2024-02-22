@@ -1,10 +1,22 @@
 const category_en = {
-  categoryTitle: "Category",
-  subCategoryTitle: "Sub category",
-  addCategoryTitle: "Add category",
-  editCategoryTitle: "Update category",
-  addSubCategoryTitle: "Add sub category",
-  editSubCategoryTitle: "Update sub category",
+  mainCategory: {
+    list: {
+      title: "Category",
+    },
+    form: {
+      addTitle: "Add category",
+      editTitle: "Update category",
+    },
+  },
+  subcategory: {
+    list: {
+      title: "Sub category",
+    },
+    form: {
+      addTitle: "Add sub category",
+      editTitle: "Update sub category",
+    },
+  },
   filter: {
     placeholder: {
       search: "Search name by langauge",
