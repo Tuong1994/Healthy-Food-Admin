@@ -4,7 +4,8 @@ import type { Confirmed, Lang } from "@/common/type";
 import type { Columns } from "@/components/UI/Table/type";
 import type { Category } from "@/services/category/type";
 import type { ApiQuery } from "@/services/type";
-import { ESort } from "@/common/enum";
+import type { ImageUpload } from "@/services/image/type";
+import { ERecordStatus, ESort } from "@/common/enum";
 import { PiWarning } from "react-icons/pi";
 import { REPLACE_NUM_REGEX } from "@/common/constant/regex";
 import { linkPaths } from "@/common/constant/url";
@@ -13,6 +14,7 @@ import ContentHeader from "@/components/Page/ContentHeader";
 import CategoriesTableFilter from "./CategoriesTableFilter";
 import ConfirmModal from "@/components/Page/ConfirmModal";
 import Error from "@/components/Page/Error";
+import getDisplayRecordStatus from "@/common/data-display/getDisplayRecordStatus";
 import useDebounce from "@/hooks/features/useDebounce";
 import useGetCategoriesPaging from "@/features/category/hooks/category/useGetCategoriesPaging";
 import useRemoveCategories from "@/features/category/hooks/category/useRemoveCategories";
@@ -30,6 +32,7 @@ const CategoriesTable: FC<CategoriesTableProps> = ({ lang }) => {
     limit: 10,
     keywords: "",
     sortBy: ESort.NEWEST,
+    cateStatus: ERecordStatus.ALL,
   };
 
   const [apiQuery, setApiQuery] = useState<ApiQuery>(initialApiQuery);
@@ -55,10 +58,10 @@ const CategoriesTable: FC<CategoriesTableProps> = ({ lang }) => {
 
   const columns: Columns<Category> = [
     {
-      id: "id",
+      id: "image",
       title: lang.common.table.head.image,
-      dataIndex: "id",
-      render: () => <Image imgWidth={40} imgHeight={40} />,
+      dataIndex: "image",
+      render: (image: ImageUpload) => <Image src={image?.path} imgWidth={40} imgHeight={40} />,
     },
     {
       id: "name",
@@ -69,6 +72,12 @@ const CategoriesTable: FC<CategoriesTableProps> = ({ lang }) => {
           <Button text>{name}</Button>
         </Link>
       ),
+    },
+    {
+      id: "status",
+      title: lang.common.table.head.status,
+      dataIndex: "status",
+      render: (status: ERecordStatus) => <>{getDisplayRecordStatus(lang, status)}</>,
     },
     {
       id: "createdAt",
@@ -108,6 +117,7 @@ const CategoriesTable: FC<CategoriesTableProps> = ({ lang }) => {
     return (
       <Table<Category>
         color="green"
+        rowKey="id"
         hasFilter
         hasPagination
         hasRowSelection

@@ -3,7 +3,7 @@ import { Breadcrumb, Button } from "@/components/UI";
 import type { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
 import type { ContentHeaderProps } from "@/components/Page/ContentHeader";
 import type { Product, ProductFormData } from "@/services/product/type";
-import { EInventoryStatus, EProductOrigin, EProductStatus, EProductUnit } from "@/services/product/enum";
+import { EInventoryStatus, EProductOrigin, EProductUnit } from "@/services/product/enum";
 import { useLang, useHasLocationState } from "@/hooks";
 import { Link } from "react-router-dom";
 import { linkPaths } from "@/common/constant/url";
@@ -16,6 +16,7 @@ import ProductOthers from "@/features/product/components/form/ProductOthers";
 import useGetProduct from "@/features/product/hooks/useGetProduct";
 import useCreateProduct from "@/features/product/hooks/useCreateProduct";
 import useUpdateProduct from "@/features/product/hooks/useUpdateProduct";
+import { ERecordStatus } from "@/common/enum";
 
 const { PRODUCTS } = linkPaths;
 
@@ -58,7 +59,7 @@ const Product: FC<ProductProps> = () => {
       totalPrice: response ? response.data?.totalPrice : 0,
       inventory: response ? response.data?.inventory : 0,
       unit: response ? response.data?.unit : EProductUnit.KG,
-      status: response ? response.data?.status : EProductStatus.DRAFT,
+      status: response ? response.data?.status : ERecordStatus.DRAFT,
       origin: response ? response.data?.origin : EProductOrigin.VN,
       inventoryStatus: response ? response.data?.inventoryStatus : EInventoryStatus.OUT_OF_STOCK,
       supplier: response ? response.data?.supplier : "Healthy Food",

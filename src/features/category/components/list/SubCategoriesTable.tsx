@@ -4,7 +4,9 @@ import type { Confirmed, Lang } from "@/common/type";
 import type { Columns } from "@/components/UI/Table/type";
 import type { SubCategory } from "@/services/subcategory/type";
 import type { ApiQuery } from "@/services/type";
-import { ESort } from "@/common/enum";
+import type { ImageUpload } from "@/services/image/type";
+import type { Category } from "@/services/category/type";
+import { ERecordStatus, ESort } from "@/common/enum";
 import { PiWarning } from "react-icons/pi";
 import { REPLACE_NUM_REGEX } from "@/common/constant/regex";
 import { linkPaths } from "@/common/constant/url";
@@ -13,12 +15,13 @@ import ContentHeader from "@/components/Page/ContentHeader";
 import SubCategoriesTableFilter from "./SubCategoriesTableFilter";
 import Error from "@/components/Page/Error";
 import ConfirmModal from "@/components/Page/ConfirmModal";
+import getDisplayRecordStatus from "@/common/data-display/getDisplayRecordStatus";
 import useDebounce from "@/hooks/features/useDebounce";
 import useGetSubCategoriesPaging from "@/features/category/hooks/subcategory/useGetSubCategoriesPaging";
 import useRemoveSubCategories from "@/features/category/hooks/subcategory/useRemoveSubCategores";
 import moment from "moment";
 
-const { SUBCATEGORY } = linkPaths;
+const { SUBCATEGORY, CATEGORY } = linkPaths;
 
 interface SubCategoriesTableProps {
   lang: Lang;
@@ -30,6 +33,7 @@ const SubCategoriesTable: FC<SubCategoriesTableProps> = ({ lang }) => {
     limit: 10,
     keywords: "",
     sortBy: ESort.NEWEST,
+    subCateStatus: ERecordStatus.ALL,
   };
 
   const [apiQuery, setApiQuery] = useState<ApiQuery>(initialApiQuery);
@@ -55,10 +59,10 @@ const SubCategoriesTable: FC<SubCategoriesTableProps> = ({ lang }) => {
 
   const columns: Columns<SubCategory> = [
     {
-      id: "id",
+      id: "image",
       title: lang.common.table.head.image,
-      dataIndex: "id",
-      render: () => <Image imgWidth={40} imgHeight={40} />,
+      dataIndex: "image",
+      render: (image: ImageUpload) => <Image src={image?.path} imgWidth={40} imgHeight={40} />,
     },
     {
       id: "name",
@@ -67,6 +71,22 @@ const SubCategoriesTable: FC<SubCategoriesTableProps> = ({ lang }) => {
       render: (name: string, data: SubCategory) => (
         <Link to={SUBCATEGORY} state={{ id: data.id }}>
           <Button text>{name}</Button>
+        </Link>
+      ),
+    },
+    {
+      id: "status",
+      title: lang.common.table.head.status,
+      dataIndex: "status",
+      render: (status: ERecordStatus) => <>{getDisplayRecordStatus(lang, status)}</>,
+    },
+    {
+      id: "category",
+      title: lang.common.table.head.category,
+      dataIndex: "category",
+      render: (category: Category) => (
+        <Link to={CATEGORY} state={{ id: category?.id }}>
+          <Button text>{category?.name}</Button>
         </Link>
       ),
     },
@@ -108,6 +128,7 @@ const SubCategoriesTable: FC<SubCategoriesTableProps> = ({ lang }) => {
     return (
       <Table<SubCategory>
         color="green"
+        rowKey="id"
         hasFilter
         hasPagination
         hasRowSelection

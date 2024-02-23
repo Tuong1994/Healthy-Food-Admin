@@ -54,7 +54,7 @@ const MultipleImageUpload: ForwardRefRenderFunction<HTMLInputElement, MultipleIm
   },
   ref
 ) => {
-  const { isForm, color: rhfColor, shape: rhfShape } = useContext(FormContext);
+  const { isForm, color: rhfColor, shape: rhfShape, disabled: formDisabled } = useContext(FormContext);
 
   const [images, setImages] = useState<UploadItems>([]);
 
@@ -70,6 +70,8 @@ const MultipleImageUpload: ForwardRefRenderFunction<HTMLInputElement, MultipleIm
 
   const controlShape = isForm ? rhfShape : shape;
 
+  const controlDisabled = formDisabled ? formDisabled : disabled;
+
   const shapeClassName = `multiple-image-upload-${controlShape}`;
 
   const colorClassName = `multiple-image-upload-${controlColor}`;
@@ -78,7 +80,7 @@ const MultipleImageUpload: ForwardRefRenderFunction<HTMLInputElement, MultipleIm
 
   const dragClassName = dragged ? "upload-group-dragged" : "";
 
-  const disabledClassName = disabled ? "upload-group-disabled" : "";
+  const disabledClassName = controlDisabled ? "upload-group-disabled" : "";
 
   const errorClassName = error ? "upload-group-error" : "";
 
@@ -200,7 +202,7 @@ const MultipleImageUpload: ForwardRefRenderFunction<HTMLInputElement, MultipleIm
           controlClassName={controlClassName}
           controlStyle={controlStyle}
           accept={fileAccepted}
-          disabled={disabled}
+          disabled={controlDisabled}
           onChange={handleChange}
         />
       </div>
@@ -208,11 +210,21 @@ const MultipleImageUpload: ForwardRefRenderFunction<HTMLInputElement, MultipleIm
       {error?.active && <NoteMessage type="error" message={errorMessage()} />}
 
       {defaultViewImages.length > 0 && (
-        <ViewArea title="Default images" items={defaultViewImages} handleRemove={onRemoveDefaultImages} />
+        <ViewArea
+          title="Default images"
+          items={defaultViewImages}
+          controlDisabled={controlDisabled}
+          handleRemove={onRemoveDefaultImages}
+        />
       )}
 
       {viewImages.length > 0 && (
-        <ViewArea title="New images" items={viewImages} handleRemove={handleRemove} />
+        <ViewArea
+          title="New images"
+          items={viewImages}
+          controlDisabled={controlDisabled}
+          handleRemove={handleRemove}
+        />
       )}
     </div>
   );

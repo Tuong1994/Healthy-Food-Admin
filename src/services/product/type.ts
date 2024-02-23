@@ -1,10 +1,11 @@
+import { ERecordStatus } from "@/common/enum";
 import { Category } from "../category/type";
 import { Comment } from "../comment/type";
 import { ImageUpload } from "../image/type";
 import { Like } from "../like/type";
 import { Rate } from "../rate/type";
 import { SubCategory } from "../subcategory/type";
-import { EInventoryStatus, EProductOrigin, EProductStatus, EProductUnit } from "./enum";
+import { EInventoryStatus, EProductOrigin, EProductUnit } from "./enum";
 
 export type Product = {
   id?: string;
@@ -17,7 +18,7 @@ export type Product = {
   totalPrice: number;
   inventory: number;
   unit: EProductUnit;
-  status: EProductStatus;
+  status: ERecordStatus;
   inventoryStatus: EInventoryStatus;
   origin: EProductOrigin;
   supplier: string;

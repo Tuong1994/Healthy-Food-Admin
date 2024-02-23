@@ -39,6 +39,7 @@ const FileUpload: ForwardRefRenderFunction<HTMLInputElement, FileUploadProps> = 
     rootStyle,
     controlStyle,
     label,
+    disabled,
     color = "blue",
     shape = "square",
     limit = DEFAULT_FILE_SIZE,
@@ -52,7 +53,7 @@ const FileUpload: ForwardRefRenderFunction<HTMLInputElement, FileUploadProps> = 
 
   const { layoutTheme: theme } = layoutValue;
 
-  const { isForm, color: rhfColor, shape: rhfShape } = useContext(FormContext);
+  const { isForm, color: rhfColor, shape: rhfShape, disabled: formDisabled } = useContext(FormContext);
 
   const [files, setFiles] = useState<UploadItems>([]);
 
@@ -63,6 +64,8 @@ const FileUpload: ForwardRefRenderFunction<HTMLInputElement, FileUploadProps> = 
   const controlColor = isForm ? rhfColor : color;
 
   const controlShape = isForm ? rhfShape : shape;
+
+  const controlDisabled = formDisabled ? formDisabled : disabled;
 
   const colorClassName = `file-upload-${controlColor}`;
 
@@ -150,11 +153,12 @@ const FileUpload: ForwardRefRenderFunction<HTMLInputElement, FileUploadProps> = 
         ref={ref}
         {...restProps}
         id="fileUpload"
+        label={label}
         controlClassName={controlClassName}
         controlStyle={controlStyle}
         error={error}
         dragged={dragged}
-        label={label}
+        disabled={controlDisabled}
         accept={fileAccepted ?? ACCEPT_FILE_TYPE.join(",")}
         onChange={handleChange}
         handleDrag={handleDrag}
@@ -163,7 +167,7 @@ const FileUpload: ForwardRefRenderFunction<HTMLInputElement, FileUploadProps> = 
 
       {error?.active && <NoteMessage type="error" message={errorMessage()} />}
 
-      <Items files={files} handleRemove={handleRemove} />
+      <Items files={files} controlDisabled={controlDisabled} handleRemove={handleRemove} />
     </div>
   );
 };

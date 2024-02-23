@@ -134,6 +134,7 @@ const common_en = {
       rate: "Rate",
       shipmentNumber: "Shipment number",
       totalPayment: "Total payment",
+      category: 'Category',
       createdAt: "Created date",
       updatedAt: "Updated date",
     },

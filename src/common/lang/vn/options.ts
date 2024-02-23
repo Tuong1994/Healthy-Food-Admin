@@ -12,7 +12,7 @@ const options_vn = {
     admin: "Quản trị",
     customer: "Khách hàng",
   },
-  productStatus: {
+  recordStatus: {
     all: "Tất cả",
     draft: "Bản nháp",
     active: "Kích hoạt",

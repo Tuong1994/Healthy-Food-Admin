@@ -2,8 +2,7 @@ import { FC, Fragment, useState } from "react";
 import { Space, Button } from "@/components/UI";
 import { Link } from "react-router-dom";
 import { linkPaths } from "@/common/constant/url";
-import { ESort } from "@/common/enum";
-import { EProductStatus } from "@/services/product/enum";
+import { ERecordStatus, ESort } from "@/common/enum";
 import { useLang } from "@/hooks";
 import type { ApiQuery } from "@/services/type";
 import ContentHeader from "@/components/Page/ContentHeader";
@@ -22,7 +21,7 @@ const Products: FC<ProductsProps> = () => {
     page: 1,
     limit: 10,
     keywords: "",
-    productStatus: EProductStatus.ALL,
+    productStatus: ERecordStatus.ALL,
     productUnit: undefined,
     inventoryStatus: undefined,
     sortBy: ESort.NEWEST,

@@ -17,7 +17,7 @@ interface CategoriesTableFilterProps {
 const CategoriesTableFilter: FC<CategoriesTableFilterProps> = ({ lang, apiQuery, setApiQuery }) => {
   const options = useSelectOption();
 
-  const { keywords, sortBy } = apiQuery;
+  const { keywords, sortBy, cateStatus } = apiQuery;
 
   const commonProps: GridColProps = {
     xs: 24,
@@ -34,6 +34,16 @@ const CategoriesTableFilter: FC<CategoriesTableFilterProps> = ({ lang, apiQuery,
           value={keywords}
           placeholder={lang.category.filter.placeholder.search}
           onChangeInput={(text) => setApiQuery((prev) => ({ ...prev, keywords: text }))}
+        />
+      </Col>
+      <Col {...commonProps} span={3}>
+        <Select
+          sizes="sm"
+          color="green"
+          hasClear={false}
+          defaultValue={cateStatus}
+          options={options.recordStatus}
+          onChangeSelect={(value: any) => setApiQuery((prev) => ({ ...prev, cateStatus: value }))}
         />
       </Col>
       <Col {...commonProps} span={3}>

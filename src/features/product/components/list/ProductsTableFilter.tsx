@@ -63,7 +63,7 @@ const ProductsTableFilter: FC<ProductsTableFilterProps> = ({ lang, apiQuery, set
           color="green"
           placeholder={lang.product.list.filter.placeholder.status}
           defaultValue={productStatus}
-          options={options.productStatus}
+          options={options.recordStatus}
           onChangeSelect={(value: any) => setApiQuery((prev) => ({ ...prev, productStatus: value }))}
         />
       </Col>

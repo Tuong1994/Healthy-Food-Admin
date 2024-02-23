@@ -7,7 +7,8 @@ import type { Confirmed } from "@/common/type";
 import type { ImageUpload } from "@/services/image/type";
 import { Link } from "react-router-dom";
 import { linkPaths } from "@/common/constant/url";
-import { EInventoryStatus, EProductOrigin, EProductStatus, EProductUnit } from "@/services/product/enum";
+import { EInventoryStatus, EProductOrigin, EProductUnit } from "@/services/product/enum";
+import { ERecordStatus } from "@/common/enum";
 import { PiWarning } from "react-icons/pi";
 import { REPLACE_NUM_REGEX } from "@/common/constant/regex";
 import { useLang } from "@/hooks";
@@ -15,9 +16,9 @@ import ProductsTableFilter from "./ProductsTableFilter";
 import ConfirmModal from "@/components/Page/ConfirmModal";
 import Error from "@/components/Page/Error";
 import getDisplayInventoryStatus from "@/features/product/data-display/getDisplayInventoryStatus";
-import getDisplayProductStatus from "@/features/product/data-display/getDisplayProductStatus";
 import getDisplayProductOrigin from "@/features/product/data-display/getDisplayProductOrigin";
 import getDisplayProductUnit from "@/features/product/data-display/getDisplayProductUnit";
+import getDisplayRecordStatus from "@/common/data-display/getDisplayRecordStatus";
 import useRemoveProducts from "../../hooks/useRemoveProducts";
 import moment from "moment";
 import utils from "@/utils";
@@ -94,7 +95,7 @@ const ProductsTable: FC<ProductsTableProps> = ({
       id: "status",
       title: lang.common.table.head.status,
       dataIndex: "status",
-      render: (status: EProductStatus) => <>{getDisplayProductStatus(lang, status)}</>,
+      render: (status: ERecordStatus) => <>{getDisplayRecordStatus(lang, status)}</>,
     },
     {
       id: "origin",

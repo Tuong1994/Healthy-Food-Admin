@@ -12,7 +12,7 @@ const options_en = {
     admin: "Admin",
     customer: "Customer",
   },
-  productStatus: {
+  recordStatus: {
     all: "All",
     draft: "Draft",
     active: "Active",

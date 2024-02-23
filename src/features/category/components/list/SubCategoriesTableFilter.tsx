@@ -17,7 +17,7 @@ interface SubCategoriesTableFilterProps {
 const SubCategoriesTableFilter: FC<SubCategoriesTableFilterProps> = ({ lang, apiQuery, setApiQuery }) => {
   const options = useSelectOption();
 
-  const { keywords, sortBy } = apiQuery;
+  const { keywords, sortBy, subCateStatus } = apiQuery;
 
   const commonProps: GridColProps = {
     xs: 24,
@@ -34,6 +34,16 @@ const SubCategoriesTableFilter: FC<SubCategoriesTableFilterProps> = ({ lang, api
           value={keywords}
           placeholder={lang.category.filter.placeholder.search}
           onChangeInput={(text) => setApiQuery((prev) => ({ ...prev, keywords: text }))}
+        />
+      </Col>
+      <Col {...commonProps} span={3}>
+        <Select
+          sizes="sm"
+          color="green"
+          hasClear={false}
+          defaultValue={subCateStatus}
+          options={options.recordStatus}
+          onChangeSelect={(value: any) => setApiQuery((prev) => ({ ...prev, subCateStatus: value }))}
         />
       </Col>
       <Col {...commonProps} span={3}>

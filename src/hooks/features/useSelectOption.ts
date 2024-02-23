@@ -1,7 +1,7 @@
 import { EGender, ERole } from "@/services/customer/enum";
-import { EInventoryStatus, EProductOrigin, EProductStatus, EProductUnit } from "@/services/product/enum";
+import { EInventoryStatus, EProductOrigin, EProductUnit } from "@/services/product/enum";
 import { EOrderStatus, EPaymentMethod, EPaymentStatus, EReceivedType } from "@/services/order/enum";
-import { ESort } from "@/common/enum";
+import { ERecordStatus, ESort } from "@/common/enum";
 import type { SelectOptions } from "@/components/Control/type";
 import useLang from "./useLang";
 
@@ -32,12 +32,6 @@ const useSelectOption = () => {
     { label: lang.options.productUnit.bottle, value: EProductUnit.BOTTLE },
     { label: lang.options.productUnit.box, value: EProductUnit.BOX },
     { label: lang.options.productUnit.can, value: EProductUnit.CAN },
-  ];
-
-  const productStatus: SelectOptions = [
-    { label: lang.options.productStatus.all, value: EProductStatus.ALL },
-    { label: lang.options.productStatus.draft, value: EProductStatus.DRAFT },
-    { label: lang.options.productStatus.active, value: EProductStatus.ACTIVE },
   ];
 
   const origin: SelectOptions = [{ label: lang.options.productOrigin.vn, value: EProductOrigin.VN }];
@@ -78,13 +72,19 @@ const useSelectOption = () => {
     { label: lang.options.receivedType.delivery, value: EReceivedType.DELIVERY },
   ];
 
+  const recordStatus: SelectOptions = [
+    { label: lang.options.recordStatus.all, value: ERecordStatus.ALL },
+    { label: lang.options.recordStatus.draft, value: ERecordStatus.DRAFT },
+    { label: lang.options.recordStatus.active, value: ERecordStatus.ACTIVE },
+  ];
+
   return {
     sortBy,
     gender,
     role,
     unit,
     origin,
-    productStatus,
+    recordStatus,
     inventoryStatus,
     supplier,
     profit,
