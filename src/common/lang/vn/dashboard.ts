@@ -3,7 +3,12 @@ const dashboard_vn = {
   customers: "Khách hàng",
   orders: "Đơn hàng",
   revenue: "Doanh thu",
-  listTitle: "Sản phẩm bán chạy nhất",
+  listTitle: "Đơn hàng gần nhất",
+  emptyNote: "Gần đây không có đơn hàng nào",
+  tooltip: {
+    date: "Ngày",
+    total: "Doanh thu",
+  },
 };
 
 export default dashboard_vn;

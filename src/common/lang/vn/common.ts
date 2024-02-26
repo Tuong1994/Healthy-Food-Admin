@@ -85,6 +85,7 @@ const common_vn = {
   },
   unit: {
     quanity: "sl",
+    date: "ngày",
     day: "ngày",
     month: "tháng",
     year: "năm",

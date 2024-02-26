@@ -1,26 +1,60 @@
-import { FC } from "react";
-import type { Lang } from "@/common/type";
-import { Space, Card, Grid, Typography } from "@/components/UI";
+import { FC, useMemo } from "react";
+import { Space, Card, Grid, Typography, Loading } from "@/components/UI";
 import { HiInbox, HiShoppingCart, HiUser } from "react-icons/hi2";
 import { HiCash } from "react-icons/hi";
+import { useLang } from "@/hooks";
+import useGetGeneral from "../hooks/useGetGeneral";
+import utils from "@/utils";
 
 const { Row, Col } = Grid;
 
 const { Paragraph } = Typography;
 
+const { Skeleton } = Loading;
+
 const ICON_SIZE = 30;
 
-interface DashboardGeneralProps {
-  lang: Lang;
-}
+interface DashboardGeneralProps {}
 
-const DashboardGeneral: FC<DashboardGeneralProps> = ({ lang }) => {
-  const items = [
-    { id: "customers", title: lang.dashboard.customers, icon: <HiUser size={ICON_SIZE} />, total: 2350 },
-    { id: "products", title: lang.dashboard.products, icon: <HiInbox size={ICON_SIZE} />, total: 500 },
-    { id: "orders", title: lang.dashboard.orders, icon: <HiShoppingCart size={ICON_SIZE} />, total: 1500 },
-    { id: "revenue", title: lang.dashboard.revenue, icon: <HiCash size={ICON_SIZE} />, total: 340545000 },
-  ];
+const DashboardGeneral: FC<DashboardGeneralProps> = () => {
+  const { locale, lang } = useLang();
+
+  const { data: response, isFetching } = useGetGeneral();
+
+  const totalCustomers = response ? response.data?.totalCustomers : 0;
+  const totalProducts = response ? response.data?.totalProducts : 0;
+  const totalOrders = response ? response.data?.totalOrders : 0;
+  const totalRevenue = response ? response.data?.totalRevenue : 0;
+
+  const items = useMemo(
+    () => [
+      {
+        id: "customers",
+        title: lang.dashboard.customers,
+        icon: <HiUser size={ICON_SIZE} />,
+        total: totalCustomers.toLocaleString(),
+      },
+      {
+        id: "products",
+        title: lang.dashboard.products,
+        icon: <HiInbox size={ICON_SIZE} />,
+        total: totalProducts.toLocaleString(),
+      },
+      {
+        id: "orders",
+        title: lang.dashboard.orders,
+        icon: <HiShoppingCart size={ICON_SIZE} />,
+        total: totalOrders.toLocaleString(),
+      },
+      {
+        id: "revenue",
+        title: lang.dashboard.revenue,
+        icon: <HiCash size={ICON_SIZE} />,
+        total: utils.formatPrice(locale, totalRevenue),
+      },
+    ],
+    [response, lang]
+  );
 
   const renderItems = () => {
     return items.map((item, idx) => (
@@ -36,7 +70,7 @@ const DashboardGeneral: FC<DashboardGeneralProps> = ({ lang }) => {
               </Col>
               <Col>
                 <Paragraph size={10} italic>
-                  {lang.common.unit.year} 2023
+                  {lang.common.unit.year} {new Date().getFullYear()}
                 </Paragraph>
               </Col>
             </Row>
@@ -45,9 +79,13 @@ const DashboardGeneral: FC<DashboardGeneralProps> = ({ lang }) => {
         >
           <Space size="md" align="middle" rootClassName="item-total">
             <span>{item.icon}</span>
-            <Paragraph size={25} weight={600}>
-              {item.total.toLocaleString()}
-            </Paragraph>
+            {isFetching ? (
+              <Skeleton type="title" options={{ width: 150 }} />
+            ) : (
+              <Paragraph size={20} weight={600}>
+                {item.total}
+              </Paragraph>
+            )}
           </Space>
         </Card>
       </Col>

@@ -47,6 +47,8 @@
   overflow-y: hidden;
   overflow-x: auto;
   .chart-tooltip {
+    min-width: max-content;
+    padding: $p-1 - 0.5;
     background: $bg-green !important;
     border-color: $bg-green !important;
     border-radius: $rounded;
@@ -65,6 +67,14 @@
     padding: $p-1;
     height: calc($h-full - 6rem);
     overflow-y: auto;
+    .body-loading {
+      width: $w-full;
+      height: $h-full;
+      background: $bg-white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
     .body-item {
       margin-bottom: $m-1;
       display: block;

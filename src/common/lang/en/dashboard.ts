@@ -3,7 +3,12 @@ const dashboard_en = {
   customers: "Customers",
   orders: "Orders",
   revenue: "Revenue",
-  listTitle: "Best sale products",
+  listTitle: "Recent orders",
+  emptyNote: "There are no order recently",
+  tooltip: {
+    date: "Date",
+    total: "Revenue",
+  },
 };
 
 export default dashboard_en;

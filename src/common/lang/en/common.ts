@@ -85,6 +85,7 @@ const common_en = {
   },
   unit: {
     quanity: "qty",
+    date: 'date',
     day: "day",
     month: "month",
     year: "year",

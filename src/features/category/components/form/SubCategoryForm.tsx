@@ -16,7 +16,6 @@ import useGetCategoriesOptions from "@/features/product/hooks/useGetCategoriesOp
 import useCreateSubCategory from "../../hooks/subcategory/useCreateSubCategory";
 import useUpdateSubCategory from "../../hooks/subcategory/useUpdateSubCategory";
 import utils from "@/utils";
-import { FileUpload } from "@/components/Control/Upload";
 
 const { SUBCATEGORIES } = linkPaths;
 
@@ -118,7 +117,6 @@ const SubCategoryForm: FC<SubCategoryFormProps> = () => {
           </FormItem>
         </Col>
       </Row>
-      <FileUpload />
     </Card>
   );
 

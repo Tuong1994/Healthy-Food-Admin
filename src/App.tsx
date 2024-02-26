@@ -2,9 +2,9 @@ import { Fragment } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastMessage } from "./components/UI";
 import { routerPaths } from "./common/constant/url";
-import AppWrapper from "./components/Page/AppWrapper";
-import AppData from "./components/Page/AppWrapper/AppData";
-import AppAuth from "./components/Page/AppWrapper/AppAuth";
+import AppMain from "./components/Page/AppMain";
+import AppData from "./components/Page/AppMain/AppData";
+import AppAuth from "./components/Page/AppMain/AppAuth";
 import Auth from "./pages/auth";
 import useAuthStore from "./store/AuthStore";
 import routes from "./router";
@@ -27,11 +27,11 @@ function App() {
     }
 
     return (
-      <AppWrapper>
+      <AppMain>
         {routes.map((route) => (
           <Route key={route.id} path={route.path} element={route.element} />
         ))}
-      </AppWrapper>
+      </AppMain>
     );
   };
 
