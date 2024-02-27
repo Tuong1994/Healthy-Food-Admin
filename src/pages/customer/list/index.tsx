@@ -9,13 +9,14 @@ import ContentHeader from "@/components/Page/ContentHeader";
 import CustomersTable from "@/features/customer/components/list/CustomersTable";
 import useGetCustomersPaging from "@/features/customer/hooks/useGetCustomersPaging";
 import useDebounce from "@/hooks/features/useDebounce";
+import useExportCustomer from "@/features/customer/hooks/useExportCustomer";
 
 const { CUSTOMER } = linkPaths;
 
 interface CustomersProps {}
 
 const Customers: FC<CustomersProps> = () => {
-  const { lang } = useLang();
+  const { locale, lang } = useLang();
 
   const initialApiQuery: ApiQuery = {
     page: 1,
@@ -37,9 +38,16 @@ const Customers: FC<CustomersProps> = () => {
     refetch,
   } = useGetCustomersPaging({ ...apiQuery, keywords: debounce });
 
+  const { mutate: onExportCustomer, isLoading } = useExportCustomer();
+
   const handleResetFilter = () => setApiQuery(initialApiQuery);
 
   const handleReFetch = () => refetch();
+
+  const handleExport = () => {
+    const apiQuery: ApiQuery = { langCode: locale };
+    onExportCustomer(apiQuery);
+  };
 
   return (
     <Fragment>
@@ -49,7 +57,7 @@ const Customers: FC<CustomersProps> = () => {
         right={() => (
           <Fragment>
             <Space>
-              <Button color="blue" ghost>
+              <Button ghost color="blue" loading={isLoading} onClick={handleExport}>
                 {lang.common.actions.export}
               </Button>
               <Link to={CUSTOMER}>

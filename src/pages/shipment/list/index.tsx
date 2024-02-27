@@ -7,11 +7,12 @@ import ContentHeader from "@/components/Page/ContentHeader";
 import ShipmentsTable from "@/features/shipment/components/list/ShipmentsTable";
 import useDebounce from "@/hooks/features/useDebounce";
 import useGetShipmentsPaging from "@/features/shipment/hooks/useGetShipmentsPaging";
+import useExportShipment from "@/features/shipment/hooks/useExportShipment";
 
 interface ShipmentsProps {}
 
 const Shipments: FC<ShipmentsProps> = () => {
-  const { lang } = useLang();
+  const { locale, lang } = useLang();
 
   const initialApiQuery: ApiQuery = {
     page: 1,
@@ -31,9 +32,16 @@ const Shipments: FC<ShipmentsProps> = () => {
     refetch,
   } = useGetShipmentsPaging({ ...apiQuery, keywords: debounce });
 
+  const { mutate: onExportShipment, isLoading } = useExportShipment();
+
   const handleResetFilter = () => setApiQuery(initialApiQuery);
 
   const handleReFetch = () => refetch();
+
+  const handleExport = () => {
+    const apiQuery: ApiQuery = { langCode: locale };
+    onExportShipment(apiQuery);
+  };
 
   return (
     <Fragment>
@@ -42,7 +50,7 @@ const Shipments: FC<ShipmentsProps> = () => {
         total={shipments?.data?.totalItems}
         right={() => (
           <Space>
-            <Button color="blue" ghost>
+            <Button ghost color="blue" loading={isLoading} onClick={handleExport}>
               {lang.common.actions.export}
             </Button>
           </Space>

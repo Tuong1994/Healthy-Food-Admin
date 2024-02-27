@@ -9,13 +9,14 @@ import ContentHeader from "@/components/Page/ContentHeader";
 import ProductsTable from "@/features/product/components/list/ProductsTable";
 import useGetProductsPaging from "@/features/product/hooks/useGetProductsPaging";
 import useDebounce from "@/hooks/features/useDebounce";
+import useExportProduct from "@/features/product/hooks/useExportProduct";
 
 const { PRODUCT } = linkPaths;
 
 interface ProductsProps {}
 
 const Products: FC<ProductsProps> = () => {
-  const { lang } = useLang();
+  const { locale, lang } = useLang();
 
   const initialApiQuery: ApiQuery = {
     page: 1,
@@ -38,9 +39,16 @@ const Products: FC<ProductsProps> = () => {
     refetch,
   } = useGetProductsPaging({ ...apiQuery, keywords: debounce });
 
+  const { mutate: onExportProduct, isLoading } = useExportProduct();
+
   const handleResetFilter = () => setApiQuery(initialApiQuery);
 
   const handleReFetch = () => refetch();
+
+  const handleExport = () => {
+    const apiQuery: ApiQuery = { langCode: locale };
+    onExportProduct(apiQuery);
+  };
 
   return (
     <Fragment>
@@ -50,7 +58,7 @@ const Products: FC<ProductsProps> = () => {
         right={() => (
           <Fragment>
             <Space>
-              <Button color="blue" ghost>
+              <Button ghost color="blue" loading={isLoading} onClick={handleExport}>
                 {lang.common.actions.export}
               </Button>
               <Link to={PRODUCT}>

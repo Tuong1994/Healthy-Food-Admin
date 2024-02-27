@@ -20,7 +20,7 @@ interface CategoriesProps {}
 const Categories: FC<CategoriesProps> = () => {
   const name = utils.getNameCurrentUrl();
 
-  const { lang } = useLang();
+  const { locale, lang } = useLang();
 
   const navigate = useNavigate();
 
@@ -30,12 +30,12 @@ const Categories: FC<CategoriesProps> = () => {
     {
       id: "category",
       title: lang.category.mainCategory.list.title,
-      content: <CategoriesTable lang={lang} />,
+      content: <CategoriesTable locale={locale} lang={lang} />,
     },
     {
       id: "subcategory",
       title: lang.category.subcategory.list.title,
-      content: <SubCategoriesTable lang={lang} />,
+      content: <SubCategoriesTable locale={locale} lang={lang} />,
     },
   ];
 

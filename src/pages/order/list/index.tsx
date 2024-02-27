@@ -9,13 +9,14 @@ import ContentHeader from "@/components/Page/ContentHeader";
 import OrdersTable from "@/features/order/components/list/OrdersTable";
 import useDebounce from "@/hooks/features/useDebounce";
 import useGetOrdersPaging from "@/features/order/hooks/useGetOrdersPaging";
+import useExportOrder from "@/features/order/hooks/useExportOrder";
 
 const { ORDER } = linkPaths;
 
 interface OrdersProps {}
 
 const Orders: FC<OrdersProps> = () => {
-  const { lang } = useLang();
+  const { locale, lang } = useLang();
 
   const initialApiQuery: ApiQuery = {
     page: 1,
@@ -38,9 +39,16 @@ const Orders: FC<OrdersProps> = () => {
     refetch,
   } = useGetOrdersPaging({ ...apiQuery, keywords: debounce });
 
+  const { mutate: onExportOrder, isLoading } = useExportOrder();
+
   const handleResetFilter = () => setApiQuery(initialApiQuery);
 
   const handleReFetch = () => refetch();
+
+  const handleExport = () => {
+    const apiQuery: ApiQuery = { langCode: locale };
+    onExportOrder(apiQuery);
+  };
 
   return (
     <Fragment>
@@ -50,7 +58,7 @@ const Orders: FC<OrdersProps> = () => {
         right={() => (
           <Fragment>
             <Space>
-              <Button color="blue" ghost>
+              <Button ghost color="blue" loading={isLoading} onClick={handleExport}>
                 {lang.common.actions.export}
               </Button>
               <Link to={ORDER}>

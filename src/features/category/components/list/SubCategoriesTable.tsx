@@ -6,7 +6,7 @@ import type { SubCategory } from "@/services/subcategory/type";
 import type { ApiQuery } from "@/services/type";
 import type { ImageUpload } from "@/services/image/type";
 import type { Category } from "@/services/category/type";
-import { ERecordStatus, ESort } from "@/common/enum";
+import { ELang, ERecordStatus, ESort } from "@/common/enum";
 import { PiWarning } from "react-icons/pi";
 import { REPLACE_NUM_REGEX } from "@/common/constant/regex";
 import { linkPaths } from "@/common/constant/url";
@@ -19,15 +19,17 @@ import getDisplayRecordStatus from "@/common/data-display/getDisplayRecordStatus
 import useDebounce from "@/hooks/features/useDebounce";
 import useGetSubCategoriesPaging from "@/features/category/hooks/subcategory/useGetSubCategoriesPaging";
 import useRemoveSubCategories from "@/features/category/hooks/subcategory/useRemoveSubCategores";
+import useExportSubCategory from "../../hooks/subcategory/useExportSubCategory";
 import moment from "moment";
 
 const { SUBCATEGORY, CATEGORY } = linkPaths;
 
 interface SubCategoriesTableProps {
+  locale: ELang;
   lang: Lang;
 }
 
-const SubCategoriesTable: FC<SubCategoriesTableProps> = ({ lang }) => {
+const SubCategoriesTable: FC<SubCategoriesTableProps> = ({ locale, lang }) => {
   const initialApiQuery: ApiQuery = {
     page: 1,
     limit: 10,
@@ -48,6 +50,8 @@ const SubCategoriesTable: FC<SubCategoriesTableProps> = ({ lang }) => {
     isError,
     refetch,
   } = useGetSubCategoriesPaging({ ...apiQuery, keywords: debounce });
+
+  const { mutate: onExportSubCategory, isLoading: exportLoading } = useExportSubCategory();
 
   const { mutate: onRemoveSubCategories, isLoading: removeLoading } = useRemoveSubCategories();
 
@@ -112,6 +116,11 @@ const SubCategoriesTable: FC<SubCategoriesTableProps> = ({ lang }) => {
 
   const handleCloseConfirmModal = () => setConfirmed((prev) => ({ ...prev, open: false, ids: [] }));
 
+  const handleExport = () => {
+    const apiQuery: ApiQuery = { langCode: locale };
+    onExportSubCategory(apiQuery);
+  };
+
   const handleRemove = () => {
     const listIds = confirmed.ids.join(",");
     const apiQuery: ApiQuery = { ids: listIds };
@@ -154,9 +163,14 @@ const SubCategoriesTable: FC<SubCategoriesTableProps> = ({ lang }) => {
         headTitle={lang.category.subcategory.list.title}
         total={subCategories?.data?.totalItems}
         right={() => (
-          <Link to={SUBCATEGORY}>
-            <Button color="green">{lang.common.actions.create}</Button>
-          </Link>
+          <Space>
+            <Button ghost color="blue" loading={exportLoading} onClick={handleExport}>
+              {lang.common.actions.export}
+            </Button>
+            <Link to={SUBCATEGORY}>
+              <Button color="green">{lang.common.actions.create}</Button>
+            </Link>
+          </Space>
         )}
       />
       {renderContent()}

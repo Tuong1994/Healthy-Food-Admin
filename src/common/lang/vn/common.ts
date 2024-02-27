@@ -104,7 +104,7 @@ const common_vn = {
     update: "Cập nhật",
     remove: "Xóa",
     cancel: "Hủy",
-    export: "Export excel",
+    export: "Xuất excel",
   },
   table: {
     head: {
@@ -163,6 +163,7 @@ const common_vn = {
       create: "Lỗi! Không thể tạo",
       update: "Lỗi! Không thể cập nhật",
       remove: "Lỗi! Không thể xóa",
+      export: "Lỗi! Không thể xuất dữ liệu",
       api: "Đã xảy ra lỗi",
     },
   },

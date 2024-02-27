@@ -5,7 +5,7 @@ import type { Columns } from "@/components/UI/Table/type";
 import type { Category } from "@/services/category/type";
 import type { ApiQuery } from "@/services/type";
 import type { ImageUpload } from "@/services/image/type";
-import { ERecordStatus, ESort } from "@/common/enum";
+import { ELang, ERecordStatus, ESort } from "@/common/enum";
 import { PiWarning } from "react-icons/pi";
 import { REPLACE_NUM_REGEX } from "@/common/constant/regex";
 import { linkPaths } from "@/common/constant/url";
@@ -18,15 +18,17 @@ import getDisplayRecordStatus from "@/common/data-display/getDisplayRecordStatus
 import useDebounce from "@/hooks/features/useDebounce";
 import useGetCategoriesPaging from "@/features/category/hooks/category/useGetCategoriesPaging";
 import useRemoveCategories from "@/features/category/hooks/category/useRemoveCategories";
+import useExportCategory from "../../hooks/category/useExportCategory";
 import moment from "moment";
 
 const { CATEGORY } = linkPaths;
 
 interface CategoriesTableProps {
+  locale: ELang;
   lang: Lang;
 }
 
-const CategoriesTable: FC<CategoriesTableProps> = ({ lang }) => {
+const CategoriesTable: FC<CategoriesTableProps> = ({ locale, lang }) => {
   const initialApiQuery: ApiQuery = {
     page: 1,
     limit: 10,
@@ -47,6 +49,8 @@ const CategoriesTable: FC<CategoriesTableProps> = ({ lang }) => {
     isError,
     refetch,
   } = useGetCategoriesPaging({ ...apiQuery, keywords: debounce });
+
+  const { mutate: onExportCategory, isLoading: exportLoading } = useExportCategory();
 
   const { mutate: onRemoveCategories, isLoading: removeLoading } = useRemoveCategories();
 
@@ -101,6 +105,11 @@ const CategoriesTable: FC<CategoriesTableProps> = ({ lang }) => {
 
   const handleCloseConfirmModal = () => setConfirmed((prev) => ({ ...prev, open: false, ids: [] }));
 
+  const handleExport = () => {
+    const apiQuery: ApiQuery = { langCode: locale };
+    onExportCategory(apiQuery);
+  };
+
   const handleRemove = () => {
     const listIds = confirmed.ids.join(",");
     const apiQuery: ApiQuery = { ids: listIds };
@@ -143,9 +152,14 @@ const CategoriesTable: FC<CategoriesTableProps> = ({ lang }) => {
         headTitle={lang.category.mainCategory.list.title}
         total={categories?.data?.totalItems}
         right={() => (
-          <Link to={CATEGORY}>
-            <Button color="green">{lang.common.actions.create}</Button>
-          </Link>
+          <Space>
+            <Button ghost color="blue" loading={exportLoading} onClick={handleExport}>
+              {lang.common.actions.export}
+            </Button>
+            <Link to={CATEGORY}>
+              <Button color="green">{lang.common.actions.create}</Button>
+            </Link>
+          </Space>
         )}
       />
       {renderContent()}
