@@ -16,12 +16,12 @@ import { useFormContext } from "react-hook-form";
 import { ControlColor, ControlShape, InputValue } from "../type";
 import { ComponentSize } from "@/common/type";
 import { ONLY_DIGIT_REGEX } from "../regex";
+import { useLang } from "@/hooks";
 import FormItemContext from "../Form/FormItemContext";
 import FormContext from "../Form/FormContext";
 import formatPhoneNumber from "./formatPhoneNumber";
 import useLayout from "@/components/UI/Layout/useLayout";
 import utils from "@/utils";
-import { useLang } from "@/hooks";
 
 export interface InputPhoneProps extends InputHTMLAttributes<HTMLInputElement> {
   rootClassName?: string;
