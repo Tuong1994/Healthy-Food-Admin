@@ -12,8 +12,12 @@ import Shipment from "@/pages/shipment/form";
 import Categories from "@/pages/category/list";
 import Category from "@/pages/category/form";
 import NotFound from "@/pages/404";
+import Auth from "@/pages/auth";
 
 const {
+  AUTH_SIGN_IN,
+  AUTH_FORGOT_PASSWORD,
+  AUTH_RESET_PASSWORD,
   DASHBOARD,
   CUSTOMER_LIST,
   CUSTOMER_FORM,
@@ -29,7 +33,25 @@ const {
   SHIPMENT_FORM,
 } = routerPaths;
 
-const routes: RouteProps[] = [
+export const authRoutes: RouteProps[] = [
+  {
+    id: "signIn",
+    path: AUTH_SIGN_IN,
+    element: <Auth />,
+  },
+  {
+    id: "forgotPassword",
+    path: AUTH_FORGOT_PASSWORD,
+    element: <Auth />,
+  },
+  {
+    id: "resetPassword",
+    path: AUTH_RESET_PASSWORD,
+    element: <Auth />,
+  },
+];
+
+export const pageRoutes: RouteProps[] = [
   {
     id: "dashboard",
     path: DASHBOARD,
@@ -101,5 +123,3 @@ const routes: RouteProps[] = [
     element: <NotFound />,
   },
 ];
-
-export default routes;

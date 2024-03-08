@@ -1,8 +1,8 @@
+import { useLang } from "..";
 import { useCallback, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { ApiQuery } from "@/services/type";
 import { getApiQuery } from "@/services/helper";
-import { useLang } from "..";
+import type { ApiQuery } from "@/services/type";
 import utils from "@/utils";
 
 const useUrlQuery = (apiQuery: ApiQuery) => {

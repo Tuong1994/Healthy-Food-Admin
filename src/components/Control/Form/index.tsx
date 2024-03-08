@@ -3,7 +3,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { ComponentSize } from "@/common/type";
 import { ControlColor, ControlShape } from "../type";
 import FormContext, { FormContextState } from "./FormContext";
-import useFormStore from "./FormStore";
+import useFormStore, { FormMethods } from "./FormStore";
 
 export interface FormProps<M> extends FormHTMLAttributes<HTMLFormElement> {
   initialData: M;
@@ -28,13 +28,20 @@ const Form = <M extends object>(
   }: FormProps<M>,
   ref: ForwardedRef<HTMLFormElement>
 ) => {
-  const setSubmit = useFormStore((state) => state.setSubmit);
+  const setForm = useFormStore((state) => state.setForm);
 
   const rhfMethods = useForm<M>({ values: initialData, mode: "all" });
 
   const formContextState: FormContextState = { isForm: true, color, sizes, shape, disabled };
 
-  useEffect(() => setSubmit(rhfMethods.handleSubmit(onSubmit)), []);
+  useEffect(() => {
+    const { handleSubmit, watch } = rhfMethods;
+    const methods: FormMethods = {
+      watchField: watch,
+      handleSubmit: handleSubmit(onSubmit),
+    };
+    setForm(methods);
+  }, []);
 
   const onSubmit = (formData: M) => onFinish?.(formData);
 

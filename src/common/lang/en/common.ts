@@ -15,6 +15,7 @@ const common_en = {
       password: "Password",
       oldPassword: "Old password",
       newPassword: "New password",
+      confirmPassword: 'Confirm password',
       firstName: "First name",
       lastName: "Last name",
       fullName: "Full name",
@@ -66,6 +67,7 @@ const common_en = {
       required: "This field is required",
       phone: "Phone invalid",
       email: "Email invalid",
+      confirmPassword: 'The passwords do not match',
       whiteSpace: "White space are not allowed",
       min: "{{min}} is minimum",
       max: "{{max}} is maximum",
@@ -153,6 +155,7 @@ const common_en = {
       update: "Updated successfully",
       remove: "Removed successfully",
       signIn: "Sign in successfully",
+      resetPassword: "Password has been reset",
       logout: "Logouted",
     },
     error: {

@@ -57,10 +57,10 @@ const utils = {
     return apiQuery;
   },
 
-  getNameCurrentUrl: () => {
+  getNameCurrentUrl: (stringIndex = 1) => {
     if (!window) return "";
     const { pathname } = window.location;
-    const name = pathname.split("/")[1];
+    const name = pathname.split("/")[stringIndex];
     return name ? name : "dashboard";
   },
 

@@ -7,7 +7,6 @@ import Header from "../Header";
 import HeaderTranslate from "../Header/HeaderTranslate";
 import HeaderAuth from "../Header/HeaderAuth";
 import useMenu from "./useMenu";
-import AppPath from "./AppPath";
 
 const { Container, Head, Body, Side, Content, Menu } = Layout;
 
@@ -30,39 +29,32 @@ const AppWrapper: FC<AppWrapperProps> = ({ children }) => {
   };
 
   return (
-    <AppPath>
-      <Container theme="light" color="green">
-        <Head>
-          <Header />
-        </Head>
-        <Body>
-          <Side hasCollapseButton={false} collapsable>
-            {isPhone && (
-              <Fragment>
-                <Space align="middle" justify="end" size="md" style={{ padding: "0 10px" }}>
-                  <HeaderTranslate />
-                  <HeaderAuth lang={lang} />
-                </Space>
+    <Container theme="light" color="green">
+      <Head>
+        <Header />
+      </Head>
+      <Body>
+        <Side hasCollapseButton={false} collapsable>
+          {isPhone && (
+            <Fragment>
+              <Space align="middle" justify="end" size="md" style={{ padding: "0 10px" }}>
+                <HeaderTranslate />
+                <HeaderAuth lang={lang} />
+              </Space>
 
-                <Divider />
-              </Fragment>
-            )}
+              <Divider />
+            </Fragment>
+          )}
 
-            <Menu
-              defaultActiveId={["dashboard"]}
-              type="vertical"
-              items={items}
-              onSelectMenu={handleNavigate}
-            />
-          </Side>
-          <Content>
-            <Section>
-              <Routes>{children}</Routes>
-            </Section>
-          </Content>
-        </Body>
-      </Container>
-    </AppPath>
+          <Menu defaultActiveId={["dashboard"]} type="vertical" items={items} onSelectMenu={handleNavigate} />
+        </Side>
+        <Content>
+          <Section>
+            <Routes>{children}</Routes>
+          </Section>
+        </Content>
+      </Body>
+    </Container>
   );
 };
 

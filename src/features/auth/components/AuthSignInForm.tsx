@@ -3,13 +3,17 @@ import { Card, Button, Space, Divider, Typography } from "@/components/UI";
 import { Form, FormItem, Input, InputPassword } from "@/components/Control";
 import { AuthSignIn } from "@/services/auth/type";
 import { useLang, useRule } from "@/hooks";
+import { linkPaths } from "@/common/constant/url";
+import { Link } from "react-router-dom";
 import useSignIn from "../hooks/useSignIn";
+
+const { AUTH_FORGOT_PASSWORD } = linkPaths;
 
 const { Title } = Typography;
 
-interface AuthFormProps {}
+interface AuthSignInFormProps {}
 
-const AuthForm: FC<AuthFormProps> = () => {
+const AuthSignInForm: FC<AuthSignInFormProps> = () => {
   const { lang } = useLang();
 
   const { email, password } = useRule();
@@ -24,7 +28,7 @@ const AuthForm: FC<AuthFormProps> = () => {
   const handleSubmit = (formData: AuthSignIn) => onLogin(formData);
 
   return (
-    <Card head={<Title level={3}>{lang.auth.title}</Title>} rootClassName="content-form">
+    <Card head={<Title level={3}>{lang.auth.signIn.title}</Title>} rootClassName="content-form">
       <Form<AuthSignIn> color="green" disabled={isLoading} initialData={initialData} onFinish={handleSubmit}>
         <FormItem name="email" rules={email()}>
           <Input required label={lang.common.form.label.email} />
@@ -33,12 +37,14 @@ const AuthForm: FC<AuthFormProps> = () => {
           <InputPassword required label={lang.common.form.label.password} />
         </FormItem>
         <Space justify="end">
-          <Button text>{lang.auth.forgot}</Button>
+          <Link to={AUTH_FORGOT_PASSWORD}>
+            <Button text>{lang.auth.forgot}</Button>
+          </Link>
         </Space>
         <Divider />
         <Space>
           <Button loading={isLoading} type="submit" rootClassName="form-btn">
-            {lang.auth.title}
+            {lang.auth.signIn.title}
           </Button>
         </Space>
       </Form>
@@ -46,4 +52,4 @@ const AuthForm: FC<AuthFormProps> = () => {
   );
 };
 
-export default AuthForm;
+export default AuthSignInForm;

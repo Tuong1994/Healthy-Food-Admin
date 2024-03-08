@@ -7,7 +7,7 @@ import { linkPaths } from "@/common/constant/url";
 import useMessage from "@/components/UI/ToastMessage/useMessage";
 import useAuthStore from "@/store/AuthStore";
 
-const { AUTH } = linkPaths;
+const { AUTH_SIGN_IN } = linkPaths;
 
 const useLogout = () => {
   const messageApi = useMessage();
@@ -29,7 +29,7 @@ const useLogout = () => {
     onSuccess: () => {
       messageApi.success(lang.common.message.success.logout);
       resetAuth();
-      navigate(AUTH);
+      navigate(AUTH_SIGN_IN);
     },
     onError: () => messageApi.error(lang.common.message.error.logout),
   });

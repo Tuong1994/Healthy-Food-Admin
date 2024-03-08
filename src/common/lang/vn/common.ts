@@ -15,6 +15,7 @@ const common_vn = {
       password: "Mật khẩu",
       oldPassword: "Mật khẩu cũ",
       newPassword: "Mật khẩu mới",
+      confirmPassword: "Xác nhận mật khẩu",
       firstName: "Tên",
       lastName: "Họ",
       fullName: "Họ và Tên",
@@ -66,6 +67,7 @@ const common_vn = {
       required: "Trường này là bắt buộc",
       phone: "Điện thoại không hợp lệ",
       email: "Email không hợp lệ",
+      confirmPassword: 'Mật khẩu không trùng khớp',
       whiteSpace: "Không được có khoảng trắng",
       min: "{{min}} là tối thiểu",
       max: "{{max}} là tối đa",
@@ -153,6 +155,7 @@ const common_vn = {
       update: "Cập nhật thành công",
       remove: "Xóa thành công",
       signIn: "Đăng nhập thành công",
+      resetPassword: "Mật khẩu đã được đặt lại",
       logout: "Đã đăng xuất",
     },
     error: {

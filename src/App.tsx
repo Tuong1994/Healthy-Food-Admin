@@ -1,16 +1,13 @@
 import { Fragment } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastMessage } from "./components/UI";
-import { routerPaths } from "./common/constant/url";
+import { authRoutes, pageRoutes } from "./router";
 import AppMain from "./components/Page/AppMain";
 import AppData from "./components/Page/AppMain/AppData";
 import AppAuth from "./components/Page/AppMain/AppAuth";
-import Auth from "./pages/auth";
 import useAuthStore from "./store/AuthStore";
-import routes from "./router";
 import "./style/main.scss";
-
-const { AUTH } = routerPaths;
+import AppPath from "./components/Page/AppMain/AppPath";
 
 function App() {
   const auth = useAuthStore((state) => state.auth);
@@ -21,14 +18,16 @@ function App() {
     if (!isAuth) {
       return (
         <Routes>
-          <Route path={AUTH} element={<Auth />} />
+          {authRoutes.map((route) => (
+            <Route key={route.id} path={route.path} element={route.element} />
+          ))}
         </Routes>
       );
     }
 
     return (
       <AppMain>
-        {routes.map((route) => (
+        {pageRoutes.map((route) => (
           <Route key={route.id} path={route.path} element={route.element} />
         ))}
       </AppMain>
@@ -39,7 +38,9 @@ function App() {
     <Fragment>
       <AppData>
         <Router>
-          <AppAuth>{renderPage()}</AppAuth>
+          <AppAuth>
+            <AppPath>{renderPage()}</AppPath>
+          </AppAuth>
         </Router>
       </AppData>
       <ToastMessage />

@@ -3,7 +3,7 @@ import { Modal } from "@/components/UI";
 import { Form, FormItem, InputPassword } from "@/components/Control";
 import type { Lang } from "@/common/type";
 import type { ModalProps } from "@/components/UI/Modal";
-import type { AuthPassword } from "@/services/auth/type";
+import type { AuthChangePassword } from "@/services/auth/type";
 import type { Customer } from "@/services/customer/type";
 import type { ApiQuery } from "@/services/type";
 import { useRule } from "@/hooks";
@@ -36,12 +36,12 @@ const AddressModal: FC<AddressModalProps> = ({ lang, customer, onReFetch, onCanc
     ...restProps,
   };
 
-  const initialData: AuthPassword = {
+  const initialData: AuthChangePassword = {
     newPassword: "",
     oldPassword: "",
   };
 
-  const handleSubmit = (formData: AuthPassword) => {
+  const handleSubmit = (formData: AuthChangePassword) => {
     const query: ApiQuery = { customerId: customer?.id };
     onChangePassword(
       { query, formData },
@@ -63,7 +63,7 @@ const AddressModal: FC<AddressModalProps> = ({ lang, customer, onReFetch, onCanc
 
   return (
     <Modal {...modalDefaultProps} onOk={form?.handleSubmit} onCancel={onCancel}>
-      <Form<AuthPassword>
+      <Form<AuthChangePassword>
         color="green"
         disabled={isLoading}
         initialData={initialData}
