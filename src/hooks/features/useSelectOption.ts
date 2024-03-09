@@ -1,4 +1,4 @@
-import { EGender, ERole } from "@/services/customer/enum";
+import { EGender, ERole } from "@/services/user/enum";
 import { EInventoryStatus, EProductOrigin, EProductUnit } from "@/services/product/enum";
 import { EOrderStatus, EPaymentMethod, EPaymentStatus, EReceivedType } from "@/services/order/enum";
 import { ERecordStatus, ESort } from "@/common/enum";
@@ -19,8 +19,9 @@ const useSelectOption = () => {
   ];
 
   const role: SelectOptions = [
-    { label: lang.options.role.superAdmin, value: ERole.SUPER_ADMIN },
-    { label: lang.options.role.admin, value: ERole.ADMIN },
+    { label: lang.options.role.manager, value: ERole.MANAGER },
+    { label: lang.options.role.leader, value: ERole.LEADER },
+    { label: lang.options.role.staff, value: ERole.STAFF },
     { label: lang.options.role.customer, value: ERole.CUSTOMER },
   ];
 

@@ -3,8 +3,8 @@ import { ApiQuery } from "../type";
 import Fetch from "..";
 import exportApiPaths from "./path";
 
-export const customerExport = async (query: ApiQuery) => {
-  const response = await Fetch.Get<any>(exportApiPaths.customer + getApiQuery(query), {
+export const userExport = async (query: ApiQuery) => {
+  const response = await Fetch.Get<any>(exportApiPaths.user + getApiQuery(query), {
     responseType: "blob",
   });
   return response;

@@ -1,5 +1,5 @@
 export type StatisticGeneral = {
-  totalCustomers: number;
+  totalUsers: number;
   totalProducts: number;
   totalOrders: number;
   totalRevenue: number;

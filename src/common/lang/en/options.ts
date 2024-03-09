@@ -8,8 +8,9 @@ const options_en = {
     female: "Female",
   },
   role: {
-    superAdmin: "Super admin",
-    admin: "Admin",
+    manager: "Manager",
+    leader: "Leader",
+    staff: "Staff",
     customer: "Customer",
   },
   recordStatus: {

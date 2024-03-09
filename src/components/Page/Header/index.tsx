@@ -7,7 +7,6 @@ import { linkPaths } from "@/common/constant/url";
 import Logo from "@/components/Page/Logo";
 import HeaderAuth from "./HeaderAuth";
 import HeaderTranslate from "./HeaderTranslate";
-import HeaderTheme from "./HeaderTheme";
 import useLayout from "@/components/UI/Layout/useLayout";
 
 const { DASHBOARD } = linkPaths;
@@ -27,10 +26,6 @@ const Header: FC<HeaderProps> = () => {
         <Link to={DASHBOARD}>
           <Logo />
         </Link>
-      </Col>
-
-      <Col md={6}>
-        <HeaderTheme />
       </Col>
 
       <Col xs={0} md={7}>

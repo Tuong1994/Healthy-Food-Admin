@@ -6,7 +6,7 @@ import RedirectModal from "./RedirectModal";
 import useAuthStore from "@/store/AuthStore";
 import utils from "@/utils";
 
-const { AUTH_SIGN_IN, AUTH_RESET_PASSWORD } = linkPaths;
+const { AUTH_SIGN_IN } = linkPaths;
 
 interface AppAuthProps {
   children?: ReactNode;
@@ -27,13 +27,13 @@ const AppAuth: FC<AppAuthProps> = ({ children }) => {
 
   const onRefresh = useCallback(async () => {
     setOpen(false);
-    const response = await refresh({ customerId: info.id });
+    const response = await refresh({ userId: info.id });
     if (!response.success) setOpen(true);
   }, [isAuth]);
 
   const onLogout = useCallback(async () => {
     if (!isAuth) return;
-    await logout({ customerId: info.id });
+    await logout({ userId: info.id });
     resetAuth();
   }, [isAuth]);
 

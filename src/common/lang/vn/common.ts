@@ -2,12 +2,13 @@ const common_vn = {
   company: "Công ty TNHH HEATHY FOOD",
   menu: {
     dashboard: "Dashboard",
-    customer: "Khách hàng",
+    user: "Người dùng",
+    category: "Danh mục",
+    subcategory: "Danh mục phụ",
     product: "Sản phẩm",
     order: "Đơn hàng",
     shipment: "Vận chuyển",
-    category: "Danh mục",
-    subcategory: "Danh mục phụ",
+    setting: "Cài đặt",
   },
   form: {
     label: {
@@ -67,7 +68,7 @@ const common_vn = {
       required: "Trường này là bắt buộc",
       phone: "Điện thoại không hợp lệ",
       email: "Email không hợp lệ",
-      confirmPassword: 'Mật khẩu không trùng khớp',
+      confirmPassword: "Mật khẩu không trùng khớp",
       whiteSpace: "Không được có khoảng trắng",
       min: "{{min}} là tối thiểu",
       max: "{{max}} là tối đa",

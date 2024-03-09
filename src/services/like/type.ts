@@ -1,4 +1,4 @@
-import { Customer } from "../customer/type";
+import { Customer } from "../user/type";
 import { Product } from "../product/type";
 
 export type Like = {

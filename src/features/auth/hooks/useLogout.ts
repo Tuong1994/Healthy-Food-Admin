@@ -20,7 +20,7 @@ const useLogout = () => {
 
   const onLogout = async () => {
     const { info } = auth;
-    const apiQuery: ApiQuery = { customerId: info.id };
+    const apiQuery: ApiQuery = { userId: info.id };
     const response = await logout(apiQuery);
     return response;
   };

@@ -7,7 +7,6 @@ import AppData from "./components/Page/AppMain/AppData";
 import AppAuth from "./components/Page/AppMain/AppAuth";
 import useAuthStore from "./store/AuthStore";
 import "./style/main.scss";
-import AppPath from "./components/Page/AppMain/AppPath";
 
 function App() {
   const auth = useAuthStore((state) => state.auth);
@@ -38,9 +37,7 @@ function App() {
     <Fragment>
       <AppData>
         <Router>
-          <AppAuth>
-            <AppPath>{renderPage()}</AppPath>
-          </AppAuth>
+          <AppAuth>{renderPage()}</AppAuth>
         </Router>
       </AppData>
       <ToastMessage />

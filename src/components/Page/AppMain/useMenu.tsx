@@ -1,10 +1,11 @@
 import { HiChartBar, HiInbox, HiListBullet, HiShoppingCart, HiTruck, HiUser } from "react-icons/hi2";
+import { HiOutlineCog } from "react-icons/hi";
 import { useLang } from "@/hooks";
 import { linkPaths } from "@/common/constant/url";
 import type { MenuItems } from "@/components/UI/Layout/Menu/type";
 import useLayout from "@/components/UI/Layout/useLayout";
 
-const { DASHBOARD, PRODUCTS, CUSTOMERS, ORDERS, SHIPMENTS, CATEGORIES } = linkPaths;
+const { DASHBOARD, PRODUCTS, USERS, ORDERS, SHIPMENTS, CATEGORIES, MAIN_SETTING } = linkPaths;
 
 const ICON_SIZE = 18;
 
@@ -24,10 +25,10 @@ const useMenu = () => {
       isRoot: true,
     },
     {
-      id: "customer",
-      label: <div onClick={handleHideSide}>{lang.common.menu.customer}</div>,
+      id: "user",
+      label: <div onClick={handleHideSide}>{lang.common.menu.user}</div>,
       icon: <HiUser size={ICON_SIZE} />,
-      path: CUSTOMERS,
+      path: USERS,
       isRoot: true,
     },
     {
@@ -56,6 +57,13 @@ const useMenu = () => {
       label: <div onClick={handleHideSide}>{lang.common.menu.shipment}</div>,
       icon: <HiTruck size={ICON_SIZE} />,
       path: SHIPMENTS,
+      isRoot: true,
+    },
+    {
+      id: "setting",
+      label: <div onClick={handleHideSide}>{lang.common.menu.setting}</div>,
+      icon: <HiOutlineCog size={ICON_SIZE} />,
+      path: MAIN_SETTING,
       isRoot: true,
     },
   ];

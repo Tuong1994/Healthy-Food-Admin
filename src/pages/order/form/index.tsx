@@ -118,7 +118,7 @@ const Order: FC<OrderProps> = () => {
       status: response ? response.data?.status : EOrderStatus.WAITTING,
       paymentStatus: response ? response.data?.paymentStatus : EPaymentStatus.UNPAID,
       totalPayment: response ? response.data?.totalPayment : 0,
-      customerId: response ? response.data?.customerId : "",
+      userId: response ? response.data?.userId : "",
       note: response ? response.data?.note : "",
       items: [],
     }),
@@ -169,7 +169,6 @@ const Order: FC<OrderProps> = () => {
       <OrderProduct
         isUpdate={isUpdate}
         selectedItems={selectedItems}
-        onReFetch={onReFetch}
         setSelectedItems={setSelectedItems}
         setItemRemovedIds={setItemRemovedIds}
         handleOpenSelect={handleOpenSelect}

@@ -3,7 +3,7 @@ import { Card, Typography } from "@/components/UI";
 import { FormItem, Select } from "@/components/Control";
 import type { Lang } from "@/common/type";
 import type { ApiQuery } from "@/services/type";
-import type { Customer } from "@/services/customer/type";
+import type { User } from "@/services/user/type";
 import { useRule } from "@/hooks";
 import useGetCustomersOptions from "../../hooks/useGetCustomersOptions";
 import useDebounce from "@/hooks/features/useDebounce";
@@ -30,7 +30,7 @@ const OrderCustomer: FC<OrderCustomerProps> = ({ lang }) => {
     return response.data.items || [];
   }, [response]);
 
-  const customersOptions = utils.mapDataToOptions<Customer>(customers, "fullName", "id");
+  const customersOptions = utils.mapDataToOptions<User>(customers, "fullName", "id");
 
   const handleSearch = (text: string) => setApiQuery((prev) => ({ ...prev, keywords: text }));
 
@@ -45,7 +45,7 @@ const OrderCustomer: FC<OrderCustomerProps> = ({ lang }) => {
         </Paragraph>
       }
     >
-      <FormItem name="customerId" rules={common()}>
+      <FormItem name="userId" rules={common()}>
         <Select
           async
           required

@@ -5,7 +5,7 @@ import type { Order, OrderItem } from "@/services/order/type";
 import type { Product } from "@/services/product/type";
 import type { ApiQuery, ApiResponse, Paging } from "@/services/type";
 import type { Confirmed } from "@/common/type";
-import type { Customer } from "@/services/customer/type";
+import type { User } from "@/services/user/type";
 import { EOrderStatus, EPaymentMethod, EPaymentStatus, EReceivedType } from "@/services/order/enum";
 import { PiWarning } from "react-icons/pi";
 import { REPLACE_NUM_REGEX } from "@/common/constant/regex";
@@ -23,7 +23,7 @@ import useRemoveOrders from "../../hooks/useRemoveOrders";
 import moment from "moment";
 import utils from "@/utils";
 
-const { ORDER, CUSTOMER, PRODUCT } = linkPaths;
+const { ORDER, USER, PRODUCT } = linkPaths;
 
 interface OrdersTableProps {
   orders: ApiResponse<Paging<Order>> | undefined;
@@ -98,12 +98,12 @@ const OrdersTable: FC<OrdersTableProps> = ({
       render: (payment: number) => <>{utils.formatPrice(locale, payment)}</>,
     },
     {
-      id: "customer",
+      id: "user",
       title: lang.common.table.head.customer,
-      dataIndex: "customer",
-      render: (customer: Customer) => (
-        <Link to={CUSTOMER} state={{ id: customer.id }}>
-          <Button text>{customer.fullName}</Button>
+      dataIndex: "user",
+      render: (user: User) => (
+        <Link to={USER} state={{ id: user.id }}>
+          <Button text>{user.fullName}</Button>
         </Link>
       ),
     },

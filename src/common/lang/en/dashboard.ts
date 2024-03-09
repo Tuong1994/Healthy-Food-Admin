@@ -1,6 +1,6 @@
 const dashboard_en = {
   products: "Products",
-  customers: "Customers",
+  users: "Users",
   orders: "Orders",
   revenue: "Revenue",
   listTitle: "Recent orders",

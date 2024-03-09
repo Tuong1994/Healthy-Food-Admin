@@ -1,5 +1,5 @@
 const exportApiPaths = {
-  customer: "api/export/customer",
+  user: "api/export/user",
   category: "api/export/category",
   subCategory: "api/export/subCategory",
   product: "api/export/product",

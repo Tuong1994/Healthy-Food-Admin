@@ -21,7 +21,7 @@ const DashboardGeneral: FC<DashboardGeneralProps> = () => {
 
   const { data: response, isFetching } = useGetGeneral();
 
-  const totalCustomers = response ? response.data?.totalCustomers : 0;
+  const totalUsers = response ? response.data?.totalUsers : 0;
   const totalProducts = response ? response.data?.totalProducts : 0;
   const totalOrders = response ? response.data?.totalOrders : 0;
   const totalRevenue = response ? response.data?.totalRevenue : 0;
@@ -30,9 +30,9 @@ const DashboardGeneral: FC<DashboardGeneralProps> = () => {
     () => [
       {
         id: "customers",
-        title: lang.dashboard.customers,
+        title: lang.dashboard.users,
         icon: <HiUser size={ICON_SIZE} />,
-        total: totalCustomers.toLocaleString(),
+        total: totalUsers.toLocaleString(),
       },
       {
         id: "products",

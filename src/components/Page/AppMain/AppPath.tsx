@@ -1,8 +1,6 @@
 import { FC, Fragment, ReactNode, useEffect } from "react";
-import { useLang } from "@/hooks";
 import useMenuStore from "@/components/UI/Layout/Menu/MenuStore";
 import usePathnameStore from "@/store/PathnameStore";
-import useUrlQuery from "@/hooks/features/useUrlQuery";
 import utils from "@/utils";
 
 interface AppPathProps {
@@ -10,8 +8,6 @@ interface AppPathProps {
 }
 
 const AppPath: FC<AppPathProps> = ({ children }) => {
-  const { locale } = useLang();
-
   const name = utils.getNameCurrentUrl();
 
   const setPreviousPath = usePathnameStore((state) => state.setPreviousPath);
@@ -34,8 +30,6 @@ const AppPath: FC<AppPathProps> = ({ children }) => {
   useEffect(() => onSetPreviousPath(), [window.location.pathname]);
 
   useEffect(() => onSetSelectedMenu(), [name]);
-
-  useUrlQuery({ langCode: locale });
 
   return <Fragment>{children}</Fragment>;
 };

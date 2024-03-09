@@ -1,4 +1,4 @@
-import { FC, Dispatch, SetStateAction, ChangeEvent, Fragment, useState } from "react";
+import { FC, Dispatch, SetStateAction, ChangeEvent, useState } from "react";
 import { Space, Card, Image, Button, Divider, Typography, Grid } from "@/components/UI";
 import { CheckBox } from "@/components/Control";
 import { HiMinus, HiPlus } from "react-icons/hi2";
@@ -18,7 +18,6 @@ const { Row, Col } = Grid;
 interface OrderProductProps {
   isUpdate: boolean;
   selectedItems: OrderItem[];
-  onReFetch: () => void;
   handleOpenSelect: () => void;
   setSelectedItems: Dispatch<SetStateAction<OrderItem[]>>;
   setItemRemovedIds: Dispatch<SetStateAction<string[]>>;
@@ -27,7 +26,6 @@ interface OrderProductProps {
 const OrderProduct: FC<OrderProductProps> = ({
   isUpdate,
   selectedItems,
-  onReFetch,
   setSelectedItems,
   setItemRemovedIds,
   handleOpenSelect,
