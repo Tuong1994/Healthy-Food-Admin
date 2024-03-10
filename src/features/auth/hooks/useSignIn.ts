@@ -5,6 +5,7 @@ import { AuthSignIn } from "@/services/auth/type";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router";
 import { HttpStatus } from "@/services/axios";
+import type { ApiQuery } from "@/services/type";
 import useAuthStore from "@/store/AuthStore";
 import usePathnameStore from "@/store/PathnameStore";
 
@@ -20,7 +21,8 @@ const useSignIn = () => {
   const navigate = useNavigate();
 
   const onSignIn = async (formData: AuthSignIn) => {
-    const response = await signIn(formData);
+    const apiQuery: ApiQuery = { admin: true };
+    const response = await signIn(apiQuery, formData);
     return response;
   };
 
@@ -31,6 +33,7 @@ const useSignIn = () => {
         let message = "";
         if (status === HttpStatus.NOT_FOUND) message = lang.common.message.error.authEmail;
         if (status === HttpStatus.FORBIDDEN) message = lang.common.message.error.authPassword;
+        if (status === HttpStatus.UNAUTHORIZED) message = lang.common.message.error.unauthorized;
         return messageApi.error(message);
       }
       messageApi.success(lang.common.message.success.signIn);

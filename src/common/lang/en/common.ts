@@ -161,8 +161,9 @@ const common_en = {
       logout: "Logouted",
     },
     error: {
-      authEmail: "Email is not correct. Please try again",
-      authPassword: "Password is not correct. Please try again",
+      authEmail: "Email is not correct",
+      authPassword: "Password is not correct",
+      unauthorized: "You're not authorize to access",
       signIn: "Sign in failed",
       logout: "Logout failed",
       create: "Error! Cannot create",

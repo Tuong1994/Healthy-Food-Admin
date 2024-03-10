@@ -14,6 +14,11 @@ const page_components_en = {
   contentHeader: {
     total: "Total",
   },
+  pagination: {
+    showing: "Showing",
+    of: "of",
+    result: "results",
+  },
 };
 
 export default page_components_en;

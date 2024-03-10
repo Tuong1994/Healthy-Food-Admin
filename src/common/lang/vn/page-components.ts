@@ -14,6 +14,11 @@ const page_components_vn = {
   contentHeader: {
     total: "Tổng cộng",
   },
+  pagination: {
+    showing: "Đang hiển thị",
+    of: "của",
+    result: "kết quả",
+  },
 };
 
 export default page_components_vn;

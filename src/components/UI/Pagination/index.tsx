@@ -18,6 +18,7 @@ import { GridAppContext } from "../Grid/Context";
 import usePagination from "./usePagination";
 import useLayout from "../Layout/useLayout";
 import utils from "@/utils";
+import { useLang } from "@/hooks";
 
 export type PageType = "first" | "prev" | "page" | "next" | "last";
 
@@ -57,6 +58,8 @@ const Pagination: ForwardRefRenderFunction<HTMLDivElement, PaginationProps> = (
   },
   ref
 ) => {
+  const { lang } = useLang();
+
   const { isPhone } = useContext(GridAppContext);
 
   const { layoutValue } = useLayout();
@@ -141,7 +144,8 @@ const Pagination: ForwardRefRenderFunction<HTMLDivElement, PaginationProps> = (
     const end = start + limit;
     const from = start === 0 ? 1 : start;
     const to = end > total ? total : end;
-    return `Showing ${from} to ${to} of ${total} result`;
+    const { showing, of, result } = lang.pageComponent.pagination;
+    return `${showing} ${from} - ${to} ${of} ${total} ${result}`;
   };
 
   const handleChangePage = (type: PageType, page?: number) => {

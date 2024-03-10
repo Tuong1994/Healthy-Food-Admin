@@ -1,12 +1,20 @@
 import { getApiQuery } from "../helper";
 import { ApiQuery } from "../type";
-import { Auth, AuthInfo, AuthChangePassword, AuthSignIn, AuthSignUp, AuthForgotPassword, AuthResetPassword } from "./type";
+import {
+  Auth,
+  AuthInfo,
+  AuthChangePassword,
+  AuthSignIn,
+  AuthSignUp,
+  AuthForgotPassword,
+  AuthResetPassword,
+} from "./type";
 import localStorageKey from "@/common/constant/storage";
 import authApiPaths from "./path";
 import Fetch from "..";
 
-export const signIn = async (data: AuthSignIn) => {
-  const response = await Fetch.Post<AuthSignIn, Auth>(authApiPaths.signIn, data);
+export const signIn = async (query: ApiQuery, data: AuthSignIn) => {
+  const response = await Fetch.Post<AuthSignIn, Auth>(authApiPaths.signIn + getApiQuery(query), data);
   if (response.success) localStorage.setItem(localStorageKey.AUTH, JSON.stringify(response.data));
   return response;
 };

@@ -161,8 +161,9 @@ const common_vn = {
       logout: "Đã đăng xuất",
     },
     error: {
-      authEmail: "Email không đúng. Vui lòng thử lại",
-      authPassword: "Mật khẩu không đúng. Vui lòng thử lại",
+      authEmail: "Email không đúng",
+      authPassword: "Mật khẩu không đúng",
+      unauthorized: "Bạn không có quyền truy cập",
       signIn: "Lỗi đăng nhập",
       logout: "Lỗi đăng xuất",
       create: "Lỗi! Không thể tạo",
