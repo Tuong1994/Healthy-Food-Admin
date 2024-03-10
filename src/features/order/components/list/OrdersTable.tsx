@@ -29,6 +29,7 @@ interface OrdersTableProps {
   orders: ApiResponse<Paging<Order>> | undefined;
   isLoading: boolean;
   isError: boolean;
+  canRemove: boolean;
   apiQuery: ApiQuery;
   handleResetFilter: () => void;
   handleReFetch: () => void;
@@ -38,6 +39,7 @@ interface OrdersTableProps {
 const OrdersTable: FC<OrdersTableProps> = ({
   orders,
   isLoading,
+  canRemove,
   isError,
   apiQuery,
   setApiQuery,
@@ -180,7 +182,7 @@ const OrdersTable: FC<OrdersTableProps> = ({
         hasFilter
         hasRowExpand
         hasPagination
-        hasRowSelection
+        hasRowSelection={canRemove}
         loading={isLoading}
         showRemove={confirmed.open}
         columns={columns}

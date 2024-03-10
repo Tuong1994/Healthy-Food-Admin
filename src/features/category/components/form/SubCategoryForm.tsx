@@ -9,7 +9,7 @@ import type { Category } from "@/services/category/type";
 import { ERecordStatus } from "@/common/enum";
 import { Link } from "react-router-dom";
 import { linkPaths } from "@/common/constant/url";
-import { useHasLocationState, useLang, useSelectOption } from "@/hooks";
+import { useHasLocationState, useLang, usePermission, useSelectOption } from "@/hooks";
 import FormLayout from "@/components/Page/FormLayout";
 import useGetSubCategory from "../../hooks/subcategory/useGetSubCategory";
 import useGetCategoriesOptions from "@/features/product/hooks/useGetCategoriesOptions";
@@ -29,6 +29,8 @@ interface SubCategoryFormProps {}
 
 const SubCategoryForm: FC<SubCategoryFormProps> = () => {
   const options = useSelectOption();
+
+  const { canCreate, canUpdate } = usePermission();
 
   const { lang } = useLang();
 
@@ -56,6 +58,8 @@ const SubCategoryForm: FC<SubCategoryFormProps> = () => {
 
   const isSubmitting = !isUpdate ? createLoading : updateLoading;
 
+  const canInteract = !isUpdate ? canCreate : canUpdate;
+
   const categoryOptions = utils.mapDataToOptions<Category>(categories?.data?.items || [], "name", "id");
 
   const statusOptions = options.recordStatus.filter((option) => option.value !== ERecordStatus.ALL);
@@ -68,7 +72,8 @@ const SubCategoryForm: FC<SubCategoryFormProps> = () => {
   const headerProps: ContentHeaderProps = {
     headTitle: pageTitle,
     right: () =>
-      !isFetching && (
+      !isFetching &&
+      canCreate && (
         <Button loading={isSubmitting} type="submit">
           {lang.common.actions[!isUpdate ? "create" : "update"]}
         </Button>
@@ -143,7 +148,7 @@ const SubCategoryForm: FC<SubCategoryFormProps> = () => {
       <Breadcrumb items={items} />
       <FormLayout<SubCategoryFormData>
         loading={isFetching}
-        submitting={isSubmitting}
+        submitting={!canInteract || isSubmitting}
         initialData={initialData}
         headerProps={headerProps}
         leftItems={leftItems}

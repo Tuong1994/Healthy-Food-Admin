@@ -5,7 +5,7 @@ import type { Lang } from "@/common/type";
 import type { ApiQuery } from "@/services/type";
 import type { User } from "@/services/user/type";
 import { useRule } from "@/hooks";
-import useGetCustomersOptions from "../../hooks/useGetCustomersOptions";
+import useGetUsersOptions from "@/hooks/actions/useGetUsersOptions";
 import useDebounce from "@/hooks/features/useDebounce";
 import utils from "@/utils";
 
@@ -22,7 +22,7 @@ const OrderCustomer: FC<OrderCustomerProps> = ({ lang }) => {
 
   const debounce = useDebounce(apiQuery.keywords as string);
 
-  const { data: response, isFetching } = useGetCustomersOptions({ ...apiQuery, keywords: debounce });
+  const { data: response, isFetching } = useGetUsersOptions({ ...apiQuery, keywords: debounce });
 
   const customers = useMemo(() => {
     if (!response) return [];

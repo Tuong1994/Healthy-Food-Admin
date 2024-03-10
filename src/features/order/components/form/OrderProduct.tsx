@@ -17,6 +17,7 @@ const { Row, Col } = Grid;
 
 interface OrderProductProps {
   isUpdate: boolean;
+  canInteract: boolean;
   selectedItems: OrderItem[];
   handleOpenSelect: () => void;
   setSelectedItems: Dispatch<SetStateAction<OrderItem[]>>;
@@ -25,6 +26,7 @@ interface OrderProductProps {
 
 const OrderProduct: FC<OrderProductProps> = ({
   isUpdate,
+  canInteract,
   selectedItems,
   setSelectedItems,
   setItemRemovedIds,
@@ -100,41 +102,47 @@ const OrderProduct: FC<OrderProductProps> = ({
               </Space>
             </Col>
             <Col span={5}>
-              <div className="inner-quantity">
-                <button
-                  type="button"
-                  disabled={btnDisabled}
-                  className={utils.formatClassName("quantity-btn", btnDisabledClassName)}
-                  onClick={() => handleQuantityClick("minus", productId)}
-                >
-                  <HiMinus />
-                </button>
-                <input
-                  className="quantity-input"
-                  value={item.quantity}
-                  onBlur={(e) => handleQuantityInput(e, productId)}
-                  onChange={(e) => handleQuantityInput(e, productId)}
-                />
-                <button
-                  type="button"
-                  className="quantity-btn"
-                  onClick={() => handleQuantityClick("plus", productId)}
-                >
-                  <HiPlus />
-                </button>
-              </div>
+              {canInteract ? (
+                <div className="inner-quantity">
+                  <button
+                    type="button"
+                    disabled={btnDisabled}
+                    className={utils.formatClassName("quantity-btn", btnDisabledClassName)}
+                    onClick={() => handleQuantityClick("minus", productId)}
+                  >
+                    <HiMinus />
+                  </button>
+                  <input
+                    className="quantity-input"
+                    value={item.quantity}
+                    onBlur={(e) => handleQuantityInput(e, productId)}
+                    onChange={(e) => handleQuantityInput(e, productId)}
+                  />
+                  <button
+                    type="button"
+                    className="quantity-btn"
+                    onClick={() => handleQuantityClick("plus", productId)}
+                  >
+                    <HiPlus />
+                  </button>
+                </div>
+              ) : (
+                <span>{item.quantity}</span>
+              )}
             </Col>
             <Col span={5}>
               <Paragraph>{utils.formatPrice(locale, product?.totalPrice)}</Paragraph>
             </Col>
-            <Col span={2}>
-              <CheckBox
-                color="green"
-                rootClassName="inner-checkbox"
-                checked={isSelected}
-                onCheck={() => handleSelect(productId)}
-              />
-            </Col>
+            {canInteract && (
+              <Col span={2}>
+                <CheckBox
+                  color="green"
+                  rootClassName="inner-checkbox"
+                  checked={isSelected}
+                  onCheck={() => handleSelect(productId)}
+                />
+              </Col>
+            )}
           </Row>
         </Card>
       );
@@ -143,12 +151,14 @@ const OrderProduct: FC<OrderProductProps> = ({
 
   return (
     <Card rootClassName="order-product card-section">
-      <Space justify="center">
-        <Button onClick={handleOpenSelect}>{lang.order.form.select}</Button>
-        <Link to={PRODUCT}>
-          <Button ghost>{lang.order.form.create}</Button>
-        </Link>
-      </Space>
+      {canInteract && (
+        <Space justify="center">
+          <Button onClick={handleOpenSelect}>{lang.order.form.select}</Button>
+          <Link to={PRODUCT}>
+            <Button ghost>{lang.order.form.create}</Button>
+          </Link>
+        </Space>
+      )}
       <Divider />
       {selectedIds.length > 0 && (
         <Space justify="end" rootClassName="product-remove-btn">

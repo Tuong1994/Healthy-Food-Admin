@@ -11,6 +11,7 @@ interface UserAddressProps {
   lang: Lang;
   isUpdate: boolean;
   showAddress: boolean;
+  canInteract: boolean;
   address: AddressType | undefined;
   onReFetch: () => void;
   handleShowAddress: () => void;
@@ -21,6 +22,7 @@ const UserAddress: FC<UserAddressProps> = ({
   isUpdate,
   address,
   showAddress,
+  canInteract,
   onReFetch,
   handleShowAddress,
 }) => {
@@ -40,6 +42,7 @@ const UserAddress: FC<UserAddressProps> = ({
       <AddressForm
         lang={lang}
         isUpdate={isUpdate}
+        canInteract={canInteract}
         address={address}
         onReFetch={onReFetch}
         handleShowAddress={handleShowAddress}

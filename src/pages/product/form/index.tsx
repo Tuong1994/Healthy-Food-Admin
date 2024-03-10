@@ -3,10 +3,11 @@ import { Breadcrumb, Button } from "@/components/UI";
 import type { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
 import type { ContentHeaderProps } from "@/components/Page/ContentHeader";
 import type { Product, ProductFormData } from "@/services/product/type";
-import { EInventoryStatus, EProductOrigin, EProductUnit } from "@/services/product/enum";
-import { useLang, useHasLocationState } from "@/hooks";
 import { Link } from "react-router-dom";
+import { EInventoryStatus, EProductOrigin, EProductUnit } from "@/services/product/enum";
+import { ERecordStatus } from "@/common/enum";
 import { linkPaths } from "@/common/constant/url";
+import { useLang, useHasLocationState, usePermission } from "@/hooks";
 import FormLayout from "@/components/Page/FormLayout";
 import ProductInfo from "@/features/product/components/form/ProductInfo";
 import ProductPrice from "@/features/product/components/form/ProductPrice";
@@ -16,7 +17,6 @@ import ProductOthers from "@/features/product/components/form/ProductOthers";
 import useGetProduct from "@/features/product/hooks/useGetProduct";
 import useCreateProduct from "@/features/product/hooks/useCreateProduct";
 import useUpdateProduct from "@/features/product/hooks/useUpdateProduct";
-import { ERecordStatus } from "@/common/enum";
 
 const { PRODUCTS } = linkPaths;
 
@@ -24,6 +24,8 @@ interface ProductProps {}
 
 const Product: FC<ProductProps> = () => {
   const { lang } = useLang();
+
+  const { canCreate, canUpdate } = usePermission();
 
   const { isUpdate, state } = useHasLocationState();
 
@@ -44,6 +46,8 @@ const Product: FC<ProductProps> = () => {
   const pageTitle = isUpdate ? lang.product.form.editTitle : lang.product.form.addTitle;
 
   const isSubmitting = !isUpdate ? createLoading : updateLoading;
+
+  const canInteract = !isUpdate ? canCreate : canUpdate;
 
   const items: BreadcrumbItems = [
     { id: "1", label: <Link to={PRODUCTS}>{lang.product.list.title}</Link> },
@@ -72,7 +76,8 @@ const Product: FC<ProductProps> = () => {
   const headerProps: ContentHeaderProps = {
     headTitle: pageTitle,
     right: () =>
-      !isFetching && (
+      !isFetching &&
+      canInteract && (
         <Button type="submit" loading={isSubmitting}>
           {lang.common.actions[!isUpdate ? "save" : "update"]}
         </Button>
@@ -113,7 +118,7 @@ const Product: FC<ProductProps> = () => {
       <Breadcrumb items={items} />
       <FormLayout<ProductFormData>
         loading={isFetching}
-        submitting={isSubmitting}
+        submitting={!canInteract || isSubmitting}
         headerProps={headerProps}
         initialData={initialData}
         leftItems={leftItems}

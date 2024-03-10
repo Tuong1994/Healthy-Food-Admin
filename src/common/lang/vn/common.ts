@@ -155,6 +155,7 @@ const common_vn = {
       create: "Tạo thành công",
       update: "Cập nhật thành công",
       remove: "Xóa thành công",
+      setting: "Thiết lập thành công",
       signIn: "Đăng nhập thành công",
       resetPassword: "Mật khẩu đã được đặt lại",
       logout: "Đã đăng xuất",
@@ -168,7 +169,11 @@ const common_vn = {
       update: "Lỗi! Không thể cập nhật",
       remove: "Lỗi! Không thể xóa",
       export: "Lỗi! Không thể xuất dữ liệu",
+      setting: "Lỗi! Không thể thiết lập",
       api: "Đã xảy ra lỗi",
+    },
+    warning: {
+      permission: "Bạn không có quyền truy cập trang này",
     },
   },
 };

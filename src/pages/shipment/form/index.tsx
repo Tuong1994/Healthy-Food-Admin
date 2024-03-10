@@ -1,6 +1,6 @@
 import { FC, Fragment, useMemo } from "react";
 import { Breadcrumb, Button } from "@/components/UI";
-import { useLang, useHasLocationState } from "@/hooks";
+import { useLang, useHasLocationState, usePermission } from "@/hooks";
 import { Link } from "react-router-dom";
 import type { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
 import type { ContentHeaderProps } from "@/components/Page/ContentHeader";
@@ -18,6 +18,8 @@ interface ShipmentProps {}
 
 const Shipment: FC<ShipmentProps> = () => {
   const { lang } = useLang();
+
+  const { canUpdate } = usePermission();
 
   const { state } = useHasLocationState();
 
@@ -46,7 +48,8 @@ const Shipment: FC<ShipmentProps> = () => {
   const headerProps: ContentHeaderProps = {
     headTitle: pageTitle,
     right: () =>
-      !isFetching && (
+      !isFetching &&
+      canUpdate && (
         <Button loading={updateLoading} type="submit">
           {lang.common.actions.update}
         </Button>
@@ -67,6 +70,7 @@ const Shipment: FC<ShipmentProps> = () => {
       <Breadcrumb items={items} />
       <FormLayout<ShipmentFormData>
         loading={isFetching}
+        submitting={!canUpdate || updateLoading}
         headerProps={headerProps}
         initialData={initialData}
         leftItems={leftItems}

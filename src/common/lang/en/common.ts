@@ -156,6 +156,7 @@ const common_en = {
       update: "Updated successfully",
       remove: "Removed successfully",
       signIn: "Sign in successfully",
+      setting: "Setting successfully",
       resetPassword: "Password has been reset",
       logout: "Logouted",
     },
@@ -168,7 +169,11 @@ const common_en = {
       update: "Error! Cannot update",
       remove: "Error! Cannot remove",
       export: "Error! Cannot export",
+      setting: "Error! Cannot setting",
       api: "Api network failed",
+    },
+    warning: {
+      permission: "You do not have permission to access this page",
     },
   },
 };

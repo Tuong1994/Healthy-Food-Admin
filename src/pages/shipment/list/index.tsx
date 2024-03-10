@@ -12,14 +12,14 @@ import useExportShipment from "@/features/shipment/hooks/useExportShipment";
 interface ShipmentsProps {}
 
 const Shipments: FC<ShipmentsProps> = () => {
-  const { locale, lang } = useLang();
-
   const initialApiQuery: ApiQuery = {
     page: 1,
     limit: 10,
     keywords: "",
     sortBy: ESort.NEWEST,
   };
+
+  const { locale, lang } = useLang();
 
   const [apiQuery, setApiQuery] = useState<ApiQuery>(initialApiQuery);
 

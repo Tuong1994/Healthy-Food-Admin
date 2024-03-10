@@ -3,7 +3,7 @@ import { Space, Button } from "@/components/UI";
 import { Link } from "react-router-dom";
 import { linkPaths } from "@/common/constant/url";
 import { ERecordStatus, ESort } from "@/common/enum";
-import { useLang } from "@/hooks";
+import { useLang, usePermission } from "@/hooks";
 import type { ApiQuery } from "@/services/type";
 import ContentHeader from "@/components/Page/ContentHeader";
 import ProductsTable from "@/features/product/components/list/ProductsTable";
@@ -16,8 +16,6 @@ const { PRODUCT } = linkPaths;
 interface ProductsProps {}
 
 const Products: FC<ProductsProps> = () => {
-  const { locale, lang } = useLang();
-
   const initialApiQuery: ApiQuery = {
     page: 1,
     limit: 10,
@@ -27,6 +25,10 @@ const Products: FC<ProductsProps> = () => {
     inventoryStatus: undefined,
     sortBy: ESort.NEWEST,
   };
+
+  const { locale, lang } = useLang();
+
+  const { canCreate, canRemove } = usePermission();
 
   const [apiQuery, setApiQuery] = useState<ApiQuery>(initialApiQuery);
 
@@ -61,17 +63,20 @@ const Products: FC<ProductsProps> = () => {
               <Button ghost color="blue" loading={isLoading} onClick={handleExport}>
                 {lang.common.actions.export}
               </Button>
-              <Link to={PRODUCT}>
-                <Button color="green">{lang.common.actions.create}</Button>
-              </Link>
+              {canCreate && (
+                <Link to={PRODUCT}>
+                  <Button color="green">{lang.common.actions.create}</Button>
+                </Link>
+              )}
             </Space>
           </Fragment>
         )}
       />
       <ProductsTable
         products={products}
-        isLoading={isFetching}
         isError={isError}
+        isLoading={isFetching}
+        canRemove={canRemove}
         apiQuery={apiQuery}
         setApiQuery={setApiQuery}
         handleReFetch={handleReFetch}

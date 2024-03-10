@@ -3,7 +3,7 @@ import { Space, Button } from "@/components/UI";
 import { Link } from "react-router-dom";
 import { ESort } from "@/common/enum";
 import { linkPaths } from "@/common/constant/url";
-import { useLang } from "@/hooks";
+import { useLang, usePermission } from "@/hooks";
 import type { ApiQuery } from "@/services/type";
 import ContentHeader from "@/components/Page/ContentHeader";
 import OrdersTable from "@/features/order/components/list/OrdersTable";
@@ -16,8 +16,6 @@ const { ORDER } = linkPaths;
 interface OrdersProps {}
 
 const Orders: FC<OrdersProps> = () => {
-  const { locale, lang } = useLang();
-
   const initialApiQuery: ApiQuery = {
     page: 1,
     limit: 10,
@@ -27,6 +25,10 @@ const Orders: FC<OrdersProps> = () => {
     paymentMethod: undefined,
     paymentStatus: undefined,
   };
+
+  const { locale, lang } = useLang();
+
+  const { canCreate, canRemove } = usePermission();
 
   const [apiQuery, setApiQuery] = useState<ApiQuery>(initialApiQuery);
 
@@ -61,9 +63,11 @@ const Orders: FC<OrdersProps> = () => {
               <Button ghost color="blue" loading={isLoading} onClick={handleExport}>
                 {lang.common.actions.export}
               </Button>
-              <Link to={ORDER}>
-                <Button color="green">{lang.common.actions.create}</Button>
-              </Link>
+              {canCreate && (
+                <Link to={ORDER}>
+                  <Button color="green">{lang.common.actions.create}</Button>
+                </Link>
+              )}
             </Space>
           </Fragment>
         )}
@@ -71,6 +75,7 @@ const Orders: FC<OrdersProps> = () => {
       <OrdersTable
         orders={orders}
         isLoading={isFetching}
+        canRemove={canRemove}
         isError={isError}
         apiQuery={apiQuery}
         setApiQuery={setApiQuery}

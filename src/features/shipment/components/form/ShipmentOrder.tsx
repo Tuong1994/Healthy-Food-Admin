@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Card, Button, Typography, InfoRow } from "@/components/UI";
+import { Card, Typography, InfoRow } from "@/components/UI";
 import type { Lang } from "@/common/type";
 import type { Shipment } from "@/services/shipment/type";
 import { Link } from "react-router-dom";
@@ -24,8 +24,8 @@ const ShipmentOrder: FC<ShipmentOrderProps> = ({ lang, shipment }) => {
         textSpanProps={{ span: 10 }}
         labelElement={<Paragraph weight={600}>{lang.common.form.label.orderNumber} :</Paragraph>}
         textElement={
-          <Link to={ORDER} state={{ id: shipment?.orderId }}>
-            <Button text>{shipment?.order?.orderNumber}</Button>
+          <Link to={ORDER} state={{ id: shipment?.orderId }} className="text-link">
+            {shipment?.order?.orderNumber}
           </Link>
         }
       />

@@ -1,6 +1,6 @@
 import { FC, Fragment, useEffect, useMemo, useState } from "react";
 import { Breadcrumb, Button } from "@/components/UI";
-import { useLang, useHasLocationState } from "@/hooks";
+import { useLang, useHasLocationState, usePermission } from "@/hooks";
 import type { UserFormData } from "@/services/user/type";
 import type { ContentHeaderProps } from "@/components/Page/ContentHeader";
 import type { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
@@ -24,13 +24,11 @@ interface UserProps {}
 const User: FC<UserProps> = () => {
   const { lang } = useLang();
 
+  const { canCreate, canUpdate } = usePermission();
+
   const { isUpdate, state } = useHasLocationState();
 
-  const {
-    data: response,
-    isFetching,
-    refetch,
-  } = useGetUser({ userId: state?.id as string }, isUpdate);
+  const { data: response, isFetching, refetch } = useGetUser({ userId: state?.id as string }, isUpdate);
 
   const { mutate: createUser, isLoading: createLoading } = useCreateUser();
 
@@ -56,6 +54,8 @@ const User: FC<UserProps> = () => {
   const isUserUpdate = state && state.isUser;
 
   const isSubmitting = !isUpdate ? createLoading : updateLoading;
+
+  const canInteract = !isUpdate ? canCreate : canUpdate;
 
   const pageTitle = () => {
     if (isUserUpdate) return lang.pageComponent.header.profile.user;
@@ -91,7 +91,8 @@ const User: FC<UserProps> = () => {
   const headerProps: ContentHeaderProps = {
     headTitle: pageTitle(),
     right: () =>
-      !isFetching && (
+      !isFetching &&
+      canInteract && (
         <Button type="submit" loading={isSubmitting}>
           {lang.common.actions[!isUpdate ? "create" : "update"]}
         </Button>
@@ -130,6 +131,7 @@ const User: FC<UserProps> = () => {
       <UserAuth
         lang={lang}
         isUpdate={isUpdate}
+        canInteract={canInteract}
         user={response?.data}
         onReFetch={onReFetch}
         handleUpload={handleUpload}
@@ -145,6 +147,7 @@ const User: FC<UserProps> = () => {
         lang={lang}
         isUpdate={isUpdate}
         showAddress={showAddress}
+        canInteract={canInteract}
         address={response?.data?.address}
         onReFetch={onReFetch}
         handleShowAddress={handleShowAddress}
@@ -157,7 +160,7 @@ const User: FC<UserProps> = () => {
       {!isUserUpdate && <Breadcrumb items={items} />}
       <FormLayout<UserFormData>
         loading={isFetching}
-        submitting={isSubmitting}
+        submitting={!canInteract || isSubmitting}
         initialData={initialData}
         headerProps={headerProps}
         leftItems={leftItems}

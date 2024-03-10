@@ -17,6 +17,7 @@ const { Paragraph } = Typography;
 interface OrderReceivedProps {
   lang: Lang;
   isUpdate: boolean;
+  canInteract: boolean;
   shipment: Shipment | undefined;
   onReFetch: () => void;
   handleOpenShipment: () => void;
@@ -27,6 +28,7 @@ interface OrderReceivedProps {
 const OrderReceived: FC<OrderReceivedProps> = ({
   lang,
   isUpdate,
+  canInteract,
   shipment,
   setInfo,
   setShipment,
@@ -83,13 +85,15 @@ const OrderReceived: FC<OrderReceivedProps> = ({
             <Divider>
               <span>{lang.order.form.shipmentInfo}</span>
             </Divider>
-            <Space justify="end">
-              <Tooltip label={lang.common.actions.edit} placement="left" color="green">
-                <Button text onClick={handleEdit}>
-                  <HiPencilAlt size={16} />
-                </Button>
-              </Tooltip>
-            </Space>
+            {canInteract && (
+              <Space justify="end">
+                <Tooltip label={lang.common.actions.edit} placement="left" color="green">
+                  <Button text onClick={handleEdit}>
+                    <HiPencilAlt size={16} />
+                  </Button>
+                </Tooltip>
+              </Space>
+            )}
             <InfoRow {...infoRowProps} label={lang.common.form.label.fullName} text={shipment.fullName} />
             <InfoRow
               {...infoRowProps}
@@ -98,11 +102,13 @@ const OrderReceived: FC<OrderReceivedProps> = ({
             />
             <InfoRow {...infoRowProps} label={lang.common.form.label.email} text={shipment.email} />
             <InfoRow {...infoRowProps} label={lang.common.form.label.fullAddress} text={shipment.address} />
-            <Space justify="end">
-              <Button ghost color="red" onClick={handleRemoveClient}>
-                {lang.common.actions.remove}
-              </Button>
-            </Space>
+            {canInteract && (
+              <Space justify="end">
+                <Button ghost color="red" onClick={handleRemoveClient}>
+                  {lang.common.actions.remove}
+                </Button>
+              </Space>
+            )}
           </Fragment>
         )}
       </Card>

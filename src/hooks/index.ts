@@ -5,6 +5,7 @@ import useOverflow from "./features/useOverflow";
 import useRender from "./features/useRender";
 import useSelectOption from "./features/useSelectOption";
 import useHasLocationState from "./features/useHasLocationState";
+import usePermission from "./features/usePermission";
 import useLang from "./features/useLang";
 import useRule from "./features/useRule";
 
@@ -16,6 +17,7 @@ export {
   useRender,
   useSelectOption,
   useHasLocationState,
+  usePermission,
   useLang,
   useRule,
 };

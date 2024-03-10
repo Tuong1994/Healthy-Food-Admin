@@ -27,9 +27,16 @@ const { SUBCATEGORY, CATEGORY } = linkPaths;
 interface SubCategoriesTableProps {
   locale: ELang;
   lang: Lang;
+  canCreate: boolean;
+  canRemove: boolean;
 }
 
-const SubCategoriesTable: FC<SubCategoriesTableProps> = ({ locale, lang }) => {
+const SubCategoriesTable: FC<SubCategoriesTableProps> = ({
+  locale,
+  lang,
+  canCreate,
+  canRemove,
+}) => {
   const initialApiQuery: ApiQuery = {
     page: 1,
     limit: 10,
@@ -140,7 +147,7 @@ const SubCategoriesTable: FC<SubCategoriesTableProps> = ({ locale, lang }) => {
         rowKey="id"
         hasFilter
         hasPagination
-        hasRowSelection
+        hasRowSelection={canRemove}
         loading={isFetching}
         showRemove={confirmed.open}
         columns={columns}
@@ -167,9 +174,11 @@ const SubCategoriesTable: FC<SubCategoriesTableProps> = ({ locale, lang }) => {
             <Button ghost color="blue" loading={exportLoading} onClick={handleExport}>
               {lang.common.actions.export}
             </Button>
-            <Link to={SUBCATEGORY}>
-              <Button color="green">{lang.common.actions.create}</Button>
-            </Link>
+            {canCreate && (
+              <Link to={SUBCATEGORY}>
+                <Button color="green">{lang.common.actions.create}</Button>
+              </Link>
+            )}
           </Space>
         )}
       />

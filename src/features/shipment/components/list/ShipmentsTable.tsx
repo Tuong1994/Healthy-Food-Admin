@@ -14,6 +14,7 @@ import ConfirmModal from "@/components/Page/ConfirmModal";
 import Error from "@/components/Page/Error";
 import useRemoveShipments from "@/features/shipment/hooks/useRemoveShipments";
 import moment from "moment";
+import { usePermission } from "@/hooks";
 
 const { SHIPMENT, ORDER } = linkPaths;
 
@@ -40,6 +41,8 @@ const ShipmentsTable: FC<ShipmentsTableProps> = ({
   handleReFetch,
   handleResetFilter,
 }) => {
+  const { canRemove } = usePermission();
+
   const [confirmed, setConfirmed] = useState<Confirmed>({ open: false, ids: [] });
 
   const { mutate: onRemoveShipments, isLoading: removeLoading } = useRemoveShipments();
@@ -130,7 +133,7 @@ const ShipmentsTable: FC<ShipmentsTableProps> = ({
         rowKey="id"
         hasFilter
         hasPagination
-        hasRowSelection
+        hasRowSelection={canRemove}
         loading={isLoading}
         showRemove={confirmed.open}
         columns={columns}

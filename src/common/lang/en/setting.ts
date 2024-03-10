@@ -13,6 +13,7 @@ const setting_en = {
   user: {
     title: "User setting",
     selectLabel: "Choose user",
+    note: "You haven't choose user yet",
     settingLabel: {
       create: "Turn on/off create feature",
       update: "Turn on/off update feature",

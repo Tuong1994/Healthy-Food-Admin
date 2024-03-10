@@ -26,6 +26,7 @@ interface UsersTableProps {
   users: ApiResponse<Paging<User>> | undefined;
   isLoading: boolean;
   isError: boolean;
+  canRemove: boolean;
   apiQuery: ApiQuery;
   handleResetFilter: () => void;
   handleReFetch: () => void;
@@ -36,6 +37,7 @@ const UsersTable: FC<UsersTableProps> = ({
   users,
   isLoading,
   isError,
+  canRemove,
   apiQuery,
   setApiQuery,
   handleReFetch,
@@ -144,7 +146,7 @@ const UsersTable: FC<UsersTableProps> = ({
         rowKey="id"
         hasFilter
         hasPagination
-        hasRowSelection
+        hasRowSelection={canRemove}
         loading={isLoading}
         columns={columns}
         showRemove={confirmed.open}

@@ -15,12 +15,13 @@ const { SingleImageUpload } = ImageUpload;
 interface UserAuthProps {
   lang: Lang;
   isUpdate: boolean;
+  canInteract: boolean;
   user: User | undefined;
   onReFetch: () => void;
   handleUpload: (image: File | null) => void;
 }
 
-const UserAuth: FC<UserAuthProps> = ({ lang, user, isUpdate, onReFetch, handleUpload }) => {
+const UserAuth: FC<UserAuthProps> = ({ lang, user, isUpdate, canInteract, onReFetch, handleUpload }) => {
   const [open, setOpen] = useState<boolean>(false);
 
   const { email, password } = useRule();
@@ -43,20 +44,16 @@ const UserAuth: FC<UserAuthProps> = ({ lang, user, isUpdate, onReFetch, handleUp
                 <InputPassword required label={lang.common.form.label.password} />
               </FormItem>
             ) : (
-              <Button color="red" ghost onClick={handleOpenModal}>
-                {lang.user.form.changePass}
-              </Button>
+              canInteract && (
+                <Button color="red" ghost onClick={handleOpenModal}>
+                  {lang.user.form.changePass}
+                </Button>
+              )
             )}
           </Col>
         </Row>
       </Card>
-      <PasswordModal
-        lang={lang}
-        open={open}
-        user={user}
-        onReFetch={onReFetch}
-        onCancel={handleOpenModal}
-      />
+      <PasswordModal lang={lang} open={open} user={user} onReFetch={onReFetch} onCancel={handleOpenModal} />
     </Fragment>
   );
 };

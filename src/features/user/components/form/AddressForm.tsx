@@ -22,12 +22,20 @@ const { Paragraph } = Typography;
 interface AddressFormProps {
   lang: Lang;
   isUpdate: boolean;
+  canInteract: boolean;
   address: UserAddress | undefined;
   onReFetch: () => void;
   handleShowAddress: () => void;
 }
 
-const AddressForm: FC<AddressFormProps> = ({ lang, isUpdate, address, onReFetch, handleShowAddress }) => {
+const AddressForm: FC<AddressFormProps> = ({
+  lang,
+  isUpdate,
+  canInteract,
+  address,
+  onReFetch,
+  handleShowAddress,
+}) => {
   const messageApi = useMessage();
 
   const { common } = useRule();
@@ -136,7 +144,7 @@ const AddressForm: FC<AddressFormProps> = ({ lang, isUpdate, address, onReFetch,
           options={wardOptions}
         />
       </FormItem>
-      <Space justify="end">{renderButton()}</Space>
+      {canInteract && <Space justify="end">{renderButton()}</Space>}
 
       <ConfirmModal
         open={confirmed}

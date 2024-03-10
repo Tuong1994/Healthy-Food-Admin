@@ -26,9 +26,11 @@ const { CATEGORY } = linkPaths;
 interface CategoriesTableProps {
   locale: ELang;
   lang: Lang;
+  canCreate: boolean;
+  canRemove: boolean;
 }
 
-const CategoriesTable: FC<CategoriesTableProps> = ({ locale, lang }) => {
+const CategoriesTable: FC<CategoriesTableProps> = ({ locale, lang, canCreate, canRemove }) => {
   const initialApiQuery: ApiQuery = {
     page: 1,
     limit: 10,
@@ -129,7 +131,7 @@ const CategoriesTable: FC<CategoriesTableProps> = ({ locale, lang }) => {
         rowKey="id"
         hasFilter
         hasPagination
-        hasRowSelection
+        hasRowSelection={canRemove}
         loading={isFetching}
         columns={columns}
         showRemove={confirmed.open}
@@ -156,9 +158,11 @@ const CategoriesTable: FC<CategoriesTableProps> = ({ locale, lang }) => {
             <Button ghost color="blue" loading={exportLoading} onClick={handleExport}>
               {lang.common.actions.export}
             </Button>
-            <Link to={CATEGORY}>
-              <Button color="green">{lang.common.actions.create}</Button>
-            </Link>
+            {canCreate && (
+              <Link to={CATEGORY}>
+                <Button color="green">{lang.common.actions.create}</Button>
+              </Link>
+            )}
           </Space>
         )}
       />

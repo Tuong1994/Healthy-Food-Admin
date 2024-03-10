@@ -29,6 +29,7 @@ interface ProductsTableProps {
   products: ApiResponse<Paging<Product>> | undefined;
   isLoading: boolean;
   isError: boolean;
+  canRemove: boolean;
   apiQuery: ApiQuery;
   handleReFetch: () => void;
   handleResetFilter: () => void;
@@ -39,6 +40,7 @@ const ProductsTable: FC<ProductsTableProps> = ({
   products,
   isLoading,
   isError,
+  canRemove,
   apiQuery,
   setApiQuery,
   handleReFetch,
@@ -155,7 +157,7 @@ const ProductsTable: FC<ProductsTableProps> = ({
         rowKey="id"
         hasFilter
         hasPagination
-        hasRowSelection
+        hasRowSelection={canRemove}
         loading={isLoading}
         columns={columns}
         showRemove={confirmed.open}

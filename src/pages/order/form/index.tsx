@@ -1,6 +1,6 @@
 import { FC, Fragment, useEffect, useMemo, useState } from "react";
 import { Breadcrumb, Button } from "@/components/UI";
-import { useLang, useHasLocationState } from "@/hooks";
+import { useLang, useHasLocationState, usePermission } from "@/hooks";
 import type { Order, OrderFormData, OrderItem } from "@/services/order/type";
 import type { ContentHeaderProps } from "@/components/Page/ContentHeader";
 import type { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
@@ -34,6 +34,8 @@ interface OrderProps {}
 
 const Order: FC<OrderProps> = () => {
   const { lang } = useLang();
+
+  const { canCreate, canUpdate } = usePermission();
 
   const { isUpdate, state } = useHasLocationState();
 
@@ -105,6 +107,8 @@ const Order: FC<OrderProps> = () => {
 
   const isSubmitting = !isUpdate ? createLoading : updateLoading;
 
+  const canInteract = !isUpdate ? canCreate : canUpdate;
+
   const items: BreadcrumbItems = [
     { id: "1", label: <Link to={ORDERS}>{lang.order.list.title}</Link> },
     { id: "2", label: pageTitle, actived: true },
@@ -128,7 +132,8 @@ const Order: FC<OrderProps> = () => {
   const headerProps: ContentHeaderProps = {
     headTitle: pageTitle,
     right: () =>
-      !isFetching && (
+      !isFetching &&
+      canInteract && (
         <Button loading={isSubmitting} disabled={!selectedItems.length} type="submit">
           {lang.common.actions[!isUpdate ? "save" : "update"]}
         </Button>
@@ -168,6 +173,7 @@ const Order: FC<OrderProps> = () => {
     <Fragment>
       <OrderProduct
         isUpdate={isUpdate}
+        canInteract={canInteract}
         selectedItems={selectedItems}
         setSelectedItems={setSelectedItems}
         setItemRemovedIds={setItemRemovedIds}
@@ -189,6 +195,7 @@ const Order: FC<OrderProps> = () => {
       <OrderReceived
         lang={lang}
         isUpdate={isUpdate}
+        canInteract={canInteract}
         shipment={shipment}
         setInfo={setInfo}
         setShipment={setShipment}
@@ -203,7 +210,7 @@ const Order: FC<OrderProps> = () => {
       <Breadcrumb items={items} />
       <FormLayout<Order>
         loading={isFetching}
-        submitting={isSubmitting}
+        submitting={!canInteract || isSubmitting}
         initialData={initialData}
         headerProps={headerProps}
         leftItems={leftItems}

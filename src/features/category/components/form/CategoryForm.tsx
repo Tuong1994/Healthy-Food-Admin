@@ -1,7 +1,7 @@
 import { FC, Fragment, useMemo, useState } from "react";
 import { Grid, Card, Breadcrumb, Button } from "@/components/UI";
 import { FormItem, Input, Select, Upload } from "@/components/Control";
-import { useHasLocationState, useLang, useSelectOption } from "@/hooks";
+import { useHasLocationState, useLang, usePermission, useSelectOption } from "@/hooks";
 import { Link } from "react-router-dom";
 import { linkPaths } from "@/common/constant/url";
 import { ERecordStatus } from "@/common/enum";
@@ -26,6 +26,8 @@ interface CategoryFormProps {}
 const CategoryForm: FC<CategoryFormProps> = () => {
   const options = useSelectOption();
 
+  const { canCreate, canUpdate } = usePermission();
+
   const { lang } = useLang();
 
   const { isUpdate, state } = useHasLocationState();
@@ -46,6 +48,8 @@ const CategoryForm: FC<CategoryFormProps> = () => {
 
   const isSubmitting = !isUpdate ? createLoading : updateLoading;
 
+  const canInteract = !isUpdate ? canCreate : canUpdate;
+
   const statusOptions = options.recordStatus.filter((option) => option.value !== ERecordStatus.ALL);
 
   const items: BreadcrumbItems = [
@@ -56,7 +60,8 @@ const CategoryForm: FC<CategoryFormProps> = () => {
   const headerProps: ContentHeaderProps = {
     headTitle: pageTitle,
     right: () =>
-      !isFetching && (
+      !isFetching &&
+      canInteract && (
         <Button type="submit" loading={isSubmitting}>
           {lang.common.actions[!isUpdate ? "create" : "update"]}
         </Button>
@@ -118,7 +123,7 @@ const CategoryForm: FC<CategoryFormProps> = () => {
       <Breadcrumb items={items} />
       <FormLayout<CategoryFormData>
         loading={isFetching}
-        submitting={isSubmitting}
+        submitting={!canInteract || isSubmitting}
         initialData={initialData}
         headerProps={headerProps}
         leftItems={leftItems}

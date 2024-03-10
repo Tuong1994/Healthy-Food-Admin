@@ -1,6 +1,6 @@
 import { FC, Fragment, useState } from "react";
 import { Space, Button } from "@/components/UI";
-import { useLang } from "@/hooks";
+import { useLang, usePermission } from "@/hooks";
 import { Link } from "react-router-dom";
 import { linkPaths } from "@/common/constant/url";
 import { ESort } from "@/common/enum";
@@ -16,8 +16,6 @@ const { USER } = linkPaths;
 interface UsersProps {}
 
 const Users: FC<UsersProps> = () => {
-  const { locale, lang } = useLang();
-
   const initialApiQuery: ApiQuery = {
     page: 1,
     limit: 10,
@@ -26,6 +24,10 @@ const Users: FC<UsersProps> = () => {
     gender: undefined,
     role: undefined,
   };
+
+  const { locale, lang } = useLang();
+
+  const { canCreate, canRemove } = usePermission();
 
   const [apiQuery, setApiQuery] = useState<ApiQuery>(initialApiQuery);
 
@@ -60,17 +62,20 @@ const Users: FC<UsersProps> = () => {
               <Button ghost color="blue" loading={isLoading} onClick={handleExport}>
                 {lang.common.actions.export}
               </Button>
-              <Link to={USER}>
-                <Button color="green">{lang.common.actions.create}</Button>
-              </Link>
+              {canCreate && (
+                <Link to={USER}>
+                  <Button color="green">{lang.common.actions.create}</Button>
+                </Link>
+              )}
             </Space>
           </Fragment>
         )}
       />
       <UsersTable
         users={users}
-        isLoading={isFetching}
         isError={isError}
+        isLoading={isFetching}
+        canRemove={canRemove}
         apiQuery={apiQuery}
         setApiQuery={setApiQuery}
         handleReFetch={handleReFetch}

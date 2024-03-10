@@ -3,6 +3,7 @@ import { Comment } from "../comment/type";
 import { ImageUpload } from "../image/type";
 import { Order } from "../order/type";
 import { Rate } from "../rate/type";
+import { UserPermission } from "../setting/type";
 import { EGender, ERole } from "./enum";
 
 export type UserAddress = {
@@ -34,6 +35,7 @@ export type User = {
   birthday?: Date | string;
 
   address?: UserAddress;
+  permission?: UserPermission;
   image?: ImageUpload;
   cart?: Cart;
   orders?: Order[];
@@ -46,5 +48,5 @@ export type User = {
 
 export type UserFormData = Omit<
   User,
-  "id" | "fullName" | "cart" | "orders" | "comments" | "rates" | "createdAt" | "updatedAt"
+  "id" | "fullName" | "cart" | "orders" | "comments" | "rates" | "permission" | "createdAt" | "updatedAt"
 >;

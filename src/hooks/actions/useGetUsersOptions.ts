@@ -4,15 +4,15 @@ import { getApiQuery } from "@/services/helper";
 import { getUsers } from "@/services/user/api";
 import type { ApiQuery } from "@/services/type";
 
-const useGetCustomersOptions = (apiQuery: ApiQuery) => {
-  const queryKey = "getCustomersOptions" + getApiQuery(apiQuery);
+const useGetUsersOptions = (apiQuery: ApiQuery) => {
+  const queryKey = "getUsersOptions" + getApiQuery(apiQuery);
 
-  const getCustomersOptions = async () => {
+  const getUsersOptions = async () => {
     const response = await getUsers(apiQuery);
     return response;
   };
 
-  const { refetch, ...rest } = useQuery(queryKey, getCustomersOptions);
+  const { refetch, ...rest } = useQuery(queryKey, getUsersOptions);
 
   useEffect(() => {
     refetch();
@@ -21,4 +21,4 @@ const useGetCustomersOptions = (apiQuery: ApiQuery) => {
   return { refetch, ...rest };
 };
 
-export default useGetCustomersOptions;
+export default useGetUsersOptions;

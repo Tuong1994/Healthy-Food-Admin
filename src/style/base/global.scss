@@ -7,3 +7,12 @@
     color: $text-red;
   }
 }
+
+.text-link {
+  color: $text-blue;
+  cursor: pointer;
+  transition: opacity $transition-time-sm $transition-fn;
+  &:hover {
+    opacity: 0.6;
+  }
+}
