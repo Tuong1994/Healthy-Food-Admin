@@ -63,7 +63,7 @@ const User: FC<UserProps> = () => {
   };
 
   const items: BreadcrumbItems = [
-    { id: "1", label: <Link to={USERS}>{lang.user.list.title}</Link> },
+    { id: "1", label: <Link to={USERS}>{lang.user.list.title.users}</Link> },
     { id: "2", label: pageTitle(), actived: true },
   ];
 

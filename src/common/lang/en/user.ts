@@ -1,6 +1,10 @@
 const user_en = {
   list: {
-    title: "Users",
+    title: {
+      users: "Users",
+      customer: "Customers",
+      staff: "Staffs",
+    },
     filter: {
       placeholder: {
         search: "Search name, email, phone",

@@ -1,88 +1,33 @@
-import { FC, Fragment, useState } from "react";
-import { Space, Button } from "@/components/UI";
+import { FC } from "react";
+import { Tabs } from "@/components/UI";
 import { useLang, usePermission } from "@/hooks";
-import { Link } from "react-router-dom";
-import { linkPaths } from "@/common/constant/url";
-import { ESort } from "@/common/enum";
-import type { ApiQuery } from "@/services/type";
-import ContentHeader from "@/components/Page/ContentHeader";
-import UsersTable from "@/features/user/components/list/UsersTable";
-import useGetUsersPaging from "@/features/user/hooks/useGetUsersPaging";
-import useExportUser from "@/features/user/hooks/useExportUser";
-import useDebounce from "@/hooks/features/useDebounce";
-
-const { USER } = linkPaths;
+import { TabsItems } from "@/components/UI/Tabs/type";
+import CustomersTable from "@/features/user/components/list/CustomersTable";
+import StaffsTable from "@/features/user/components/list/StaffsTable";
 
 interface UsersProps {}
 
 const Users: FC<UsersProps> = () => {
-  const initialApiQuery: ApiQuery = {
-    page: 1,
-    limit: 10,
-    keywords: "",
-    sortBy: ESort.NEWEST,
-    gender: undefined,
-    role: undefined,
-  };
-
-  const { locale, lang } = useLang();
+  const { lang } = useLang();
 
   const { canCreate, canRemove } = usePermission();
 
-  const [apiQuery, setApiQuery] = useState<ApiQuery>(initialApiQuery);
+  const commonProps = { canCreate, canRemove };
 
-  const debounce = useDebounce(apiQuery.keywords as string);
+  const items: TabsItems = [
+    {
+      id: "customer",
+      title: lang.user.list.title.customer,
+      content: <CustomersTable {...commonProps} />,
+    },
+    {
+      id: "staff",
+      title: lang.user.list.title.staff,
+      content: <StaffsTable {...commonProps} />,
+    },
+  ];
 
-  const {
-    data: users,
-    isFetching,
-    isError,
-    refetch,
-  } = useGetUsersPaging({ ...apiQuery, keywords: debounce });
-
-  const { mutate: onExportUser, isLoading } = useExportUser();
-
-  const handleResetFilter = () => setApiQuery(initialApiQuery);
-
-  const handleReFetch = () => refetch();
-
-  const handleExport = () => {
-    const apiQuery: ApiQuery = { langCode: locale };
-    onExportUser(apiQuery);
-  };
-
-  return (
-    <Fragment>
-      <ContentHeader
-        headTitle={lang.user.list.title}
-        total={users?.data?.totalItems}
-        right={() => (
-          <Fragment>
-            <Space>
-              <Button ghost color="blue" loading={isLoading} onClick={handleExport}>
-                {lang.common.actions.export}
-              </Button>
-              {canCreate && (
-                <Link to={USER}>
-                  <Button color="green">{lang.common.actions.create}</Button>
-                </Link>
-              )}
-            </Space>
-          </Fragment>
-        )}
-      />
-      <UsersTable
-        users={users}
-        isError={isError}
-        isLoading={isFetching}
-        canRemove={canRemove}
-        apiQuery={apiQuery}
-        setApiQuery={setApiQuery}
-        handleReFetch={handleReFetch}
-        handleResetFilter={handleResetFilter}
-      />
-    </Fragment>
-  );
+  return <Tabs color="green" defaultActiveId="customer" items={items} />;
 };
 
 export default Users;

@@ -1,6 +1,10 @@
 const user_vn = {
   list: {
-    title: "Người dùng",
+    title: {
+      users: "Người dùng",
+      customer: "Khách hàng",
+      staff: "Nhân viên",
+    },
     filter: {
       placeholder: {
         search: "Tìm kiếm tên, email, điện thoại",

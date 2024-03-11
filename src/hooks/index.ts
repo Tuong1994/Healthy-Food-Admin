@@ -6,6 +6,7 @@ import useRender from "./features/useRender";
 import useSelectOption from "./features/useSelectOption";
 import useHasLocationState from "./features/useHasLocationState";
 import usePermission from "./features/usePermission";
+import useDebounce from "./features/useDebounce";
 import useLang from "./features/useLang";
 import useRule from "./features/useRule";
 
@@ -18,6 +19,7 @@ export {
   useSelectOption,
   useHasLocationState,
   usePermission,
+  useDebounce,
   useLang,
   useRule,
 };

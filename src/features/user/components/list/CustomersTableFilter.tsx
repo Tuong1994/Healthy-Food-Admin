@@ -8,16 +8,16 @@ import type { ApiQuery } from "@/services/type";
 
 const { Col } = Grid;
 
-interface UsersTableFilterProps {
+interface CustomersTableFilterProps {
   lang: Lang;
   apiQuery: ApiQuery;
   setApiQuery: Dispatch<SetStateAction<ApiQuery>>;
 }
 
-const UsersTableFilter: FC<UsersTableFilterProps> = ({ lang, apiQuery, setApiQuery }) => {
+const CustomersTableFilter: FC<CustomersTableFilterProps> = ({ lang, apiQuery, setApiQuery }) => {
   const options = useSelectOption();
 
-  const { keywords, sortBy, gender, role } = apiQuery;
+  const { keywords, sortBy, gender } = apiQuery;
 
   const commonProps: GridColProps = {
     xs: 24,
@@ -46,16 +46,6 @@ const UsersTableFilter: FC<UsersTableFilterProps> = ({ lang, apiQuery, setApiQue
           onChangeSelect={(value: any) => setApiQuery((prev) => ({ ...prev, gender: value }))}
         />
       </Col>
-      <Col {...commonProps} span={4}>
-        <Select
-          sizes="sm"
-          color="green"
-          defaultValue={role}
-          options={options.role}
-          placeholder={lang.user.list.filter.placeholder.role}
-          onChangeSelect={(value: any) => setApiQuery((prev) => ({ ...prev, role: value }))}
-        />
-      </Col>
       <Col {...commonProps}  span={3}>
         <Select
           sizes="sm"
@@ -71,4 +61,4 @@ const UsersTableFilter: FC<UsersTableFilterProps> = ({ lang, apiQuery, setApiQue
   );
 };
 
-export default UsersTableFilter;
+export default CustomersTableFilter;

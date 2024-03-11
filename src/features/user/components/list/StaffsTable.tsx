@@ -1,51 +1,63 @@
-import { FC, Fragment, Key, Dispatch, SetStateAction, useState } from "react";
+import { FC, Fragment, Key, useState } from "react";
 import { Image, Table, Button, Space } from "@/components/UI";
 import type { User, UserAddress } from "@/services/user/type";
 import type { Columns } from "@/components/UI/Table/type";
-import type { ApiQuery, ApiResponse, Paging } from "@/services/type";
+import type { ApiQuery } from "@/services/type";
 import type { Confirmed } from "@/common/type";
 import type { ImageUpload } from "@/services/image/type";
+import { ESort } from "@/common/enum";
 import { EGender, ERole } from "@/services/user/enum";
 import { Link } from "react-router-dom";
 import { linkPaths } from "@/common/constant/url";
 import { PiWarning } from "react-icons/pi";
 import { REPLACE_NUM_REGEX } from "@/common/constant/regex";
-import { useLang } from "@/hooks";
-import UsersTableFilter from "./UsersTableFilter";
+import { useLang, useDebounce } from "@/hooks";
+import StaffsTableFilter from "./StaffsTableFilter";
+import ContentHeader from "@/components/Page/ContentHeader";
 import ConfirmModal from "@/components/Page/ConfirmModal";
 import Error from "@/components/Page/Error";
 import getDisplayGender from "@/features/user/data-display/getDisplayGender";
 import getDisplayRole from "@/features/user/data-display/getDisplayRole";
-import useRemoveUsers from "../../hooks/useRemoveUsers";
+import useGetUsersPaging from "@/features/user/hooks/useGetUsersPaging";
+import useRemoveUsers from "@/features/user/hooks/useRemoveUsers";
+import useExportUser from "@/features/user/hooks/useExportUser";
 import utils from "@/utils";
 import moment from "moment";
 
 const { USER } = linkPaths;
 
-interface UsersTableProps {
-  users: ApiResponse<Paging<User>> | undefined;
-  isLoading: boolean;
-  isError: boolean;
+interface StaffsTableProps {
+  canCreate: boolean;
   canRemove: boolean;
-  apiQuery: ApiQuery;
-  handleResetFilter: () => void;
-  handleReFetch: () => void;
-  setApiQuery: Dispatch<SetStateAction<ApiQuery>>;
 }
 
-const UsersTable: FC<UsersTableProps> = ({
-  users,
-  isLoading,
-  isError,
-  canRemove,
-  apiQuery,
-  setApiQuery,
-  handleReFetch,
-  handleResetFilter,
-}) => {
-  const { lang } = useLang();
+const StaffsTable: FC<StaffsTableProps> = ({ canCreate, canRemove }) => {
+  const initialApiQuery: ApiQuery = {
+    page: 1,
+    limit: 10,
+    keywords: "",
+    sortBy: ESort.NEWEST,
+    gender: undefined,
+    role: undefined,
+    staffOnly: true,
+  };
 
   const [confirmed, setConfirmed] = useState<Confirmed>({ open: false, ids: [] });
+
+  const { locale, lang } = useLang();
+
+  const [apiQuery, setApiQuery] = useState<ApiQuery>(initialApiQuery);
+
+  const debounce = useDebounce(apiQuery.keywords as string);
+
+  const {
+    data: users,
+    isFetching,
+    isError,
+    refetch,
+  } = useGetUsersPaging({ ...apiQuery, keywords: debounce });
+
+  const { mutate: onExportUser, isLoading } = useExportUser();
 
   const dataSource = (): User[] => {
     if (!users) return [];
@@ -121,6 +133,10 @@ const UsersTable: FC<UsersTableProps> = ({
 
   const { mutate: onRemoveUsers, isLoading: removeLoading } = useRemoveUsers();
 
+  const handleReFetch = () => refetch();
+
+  const handleResetFilter = () => setApiQuery(initialApiQuery);
+
   const handleChangePage = (page: number) => setApiQuery((prev) => ({ ...prev, page }));
 
   const handleOpenModal = (ids: Key[]) => setConfirmed((prev) => ({ ...prev, open: true, ids }));
@@ -138,6 +154,11 @@ const UsersTable: FC<UsersTableProps> = ({
     });
   };
 
+  const handleExport = () => {
+    const apiQuery: ApiQuery = { langCode: locale, staffOnly: true };
+    onExportUser(apiQuery);
+  };
+
   const renderContent = () => {
     if (isError) return <Error />;
     return (
@@ -147,12 +168,12 @@ const UsersTable: FC<UsersTableProps> = ({
         hasFilter
         hasPagination
         hasRowSelection={canRemove}
-        loading={isLoading}
+        loading={isFetching}
         columns={columns}
         showRemove={confirmed.open}
         dataSource={dataSource()}
         onSelectRows={handleOpenModal}
-        filter={<UsersTableFilter lang={lang} apiQuery={apiQuery} setApiQuery={setApiQuery} />}
+        filter={<StaffsTableFilter lang={lang} apiQuery={apiQuery} setApiQuery={setApiQuery} />}
         filterProps={{ hasFilterButton: false, onCancelFilter: handleResetFilter }}
         paginationProps={{
           showContent: true,
@@ -165,6 +186,24 @@ const UsersTable: FC<UsersTableProps> = ({
 
   return (
     <Fragment>
+      <ContentHeader
+        headTitle={lang.user.list.title.staff}
+        total={users?.data?.totalItems}
+        right={() => (
+          <Fragment>
+            <Space>
+              <Button ghost color="blue" loading={isLoading} onClick={handleExport}>
+                {lang.common.actions.export}
+              </Button>
+              {canCreate && (
+                <Link to={USER}>
+                  <Button color="green">{lang.common.actions.create}</Button>
+                </Link>
+              )}
+            </Space>
+          </Fragment>
+        )}
+      />
       {renderContent()}
       <ConfirmModal
         open={confirmed.open}
@@ -184,4 +223,4 @@ const UsersTable: FC<UsersTableProps> = ({
   );
 };
 
-export default UsersTable;
+export default StaffsTable;
