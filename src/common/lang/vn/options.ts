@@ -10,8 +10,8 @@ const options_vn = {
   role: {
     manager: "Quản lý",
     leader: "Trưởng bộ phận",
-    staff: "Staff",
-    customer: "Nhân viên",
+    staff: "Nhân viên",
+    customer: "Khách hàng",
   },
   recordStatus: {
     all: "Tất cả",

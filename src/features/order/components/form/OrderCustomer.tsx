@@ -4,6 +4,7 @@ import { FormItem, Select } from "@/components/Control";
 import type { Lang } from "@/common/type";
 import type { ApiQuery } from "@/services/type";
 import type { User } from "@/services/user/type";
+import { ERole } from "@/services/user/enum";
 import { useRule } from "@/hooks";
 import useGetUsersOptions from "@/hooks/actions/useGetUsersOptions";
 import useDebounce from "@/hooks/features/useDebounce";
@@ -18,7 +19,12 @@ interface OrderCustomerProps {
 const OrderCustomer: FC<OrderCustomerProps> = ({ lang }) => {
   const { common } = useRule();
 
-  const [apiQuery, setApiQuery] = useState<ApiQuery>({ page: 1, limit: 10, keywords: "" });
+  const [apiQuery, setApiQuery] = useState<ApiQuery>({
+    page: 1,
+    limit: 10,
+    role: ERole.CUSTOMER,
+    keywords: "",
+  });
 
   const debounce = useDebounce(apiQuery.keywords as string);
 

@@ -1,6 +1,6 @@
 const dashboard_vn = {
   products: "Sản phẩm",
-  users: "Người dùng",
+  customers: "Khách hàng",
   orders: "Đơn hàng",
   revenue: "Doanh thu",
   listTitle: "Đơn hàng gần nhất",

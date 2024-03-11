@@ -6,14 +6,14 @@ const setting_vn = {
       dark: "Tối",
       light: "Sáng",
     },
-    user: {
-      title: "Cài đặt quyền hạn cho người dùng",
+    staff: {
+      title: "Cài đặt quyền hạn cho nhân viên",
     },
   },
-  user: {
-    title: "Thiết lập người dùng",
-    selectLabel: "Chọn người dùng",
-    note: "Bạn chưa chọn người dùng",
+  staff: {
+    title: "Thiết lập nhân viên",
+    selectLabel: "Chọn nhân viên",
+    note: "Bạn chưa chọn nhân viên",
     settingLabel: {
       create: "Bật/Tắt tính năng tạo mới",
       update: "Bật/Tắt tính năng cập nhật",

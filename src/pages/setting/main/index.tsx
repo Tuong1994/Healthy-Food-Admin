@@ -4,7 +4,7 @@ import { ERole } from "@/services/user/enum";
 import { useLang } from "@/hooks";
 import ContentHeader from "@/components/Page/ContentHeader";
 import MainSettingMode from "@/features/setting/components/main/SettingMode";
-import MainSettingUser from "@/features/setting/components/main/SettingUser";
+import MainSettingStaff from "@/features/setting/components/main/SettingStaff";
 import useAuthStore from "@/store/AuthStore";
 
 const { Row, Col } = Grid;
@@ -26,7 +26,7 @@ const MainSetting: FC<MainSettingProps> = () => {
       <Row>
         <Col xs={24} md={20} lg={22} span={14}>
           <MainSettingMode lang={lang} />
-          {canSetting && <MainSettingUser lang={lang} />}
+          {canSetting && <MainSettingStaff lang={lang} />}
         </Col>
       </Row>
     </Fragment>

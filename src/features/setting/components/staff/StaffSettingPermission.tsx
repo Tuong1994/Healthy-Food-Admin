@@ -1,31 +1,29 @@
 import { FC, Fragment, useMemo, useState } from "react";
-import { Space, Divider, Typography, Grid } from "@/components/UI";
+import { Space, Divider, Typography } from "@/components/UI";
 import { Select } from "@/components/Control";
 import type { Lang } from "@/common/type";
 import type { User } from "@/services/user/type";
 import type { ApiQuery } from "@/services/type";
 import type { UserPermission } from "@/services/setting/type";
 import PermissionsLoading from "./PermissionsLoading";
+import PermissionsNote from "./PermissionsNote";
+import PermissionsActions from "./PermissionsActions";
 import useDebounce from "@/hooks/features/useDebounce";
 import useGetUsersOptions from "@/hooks/actions/useGetUsersOptions";
 import useGetUserPermission from "../../hooks/useGetUserPermission";
-import utils from "@/utils";
-import PermissionsNote from "./PermissionsNote";
-import PermissionsActions from "./PermissionsActions";
 import useSetUserPermission from "../../hooks/useSetUserPermission";
+import utils from "@/utils";
 
 const { Paragraph } = Typography;
 
-const { Row, Col } = Grid;
-
-interface UserSettingPermissionsProps {
+interface StaffSettingPermissionProps {
   lang: Lang;
 }
 
-const UserSettingPermissions: FC<UserSettingPermissionsProps> = ({ lang }) => {
-  const [selectedUser, setSelectedUser] = useState<string>("");
+const StaffSettingPermission: FC<StaffSettingPermissionProps> = ({ lang }) => {
+  const [selectedStaff, setSelectedStaff] = useState<string>("");
 
-  const [apiQuery, setApiQuery] = useState<ApiQuery>({ page: 1, limit: 10, keywords: "" });
+  const [apiQuery, setApiQuery] = useState<ApiQuery>({ page: 1, limit: 10, staffOnly: true, keywords: "" });
 
   const debounce = useDebounce(apiQuery.keywords as string);
 
@@ -38,23 +36,23 @@ const UserSettingPermissions: FC<UserSettingPermissionsProps> = ({ lang }) => {
     data: permissionResponse,
     isFetching,
     refetch,
-  } = useGetUserPermission({ userId: selectedUser }, Boolean(selectedUser));
+  } = useGetUserPermission({ userId: selectedStaff }, Boolean(selectedStaff));
 
   const { mutate: onSetUserPermission } = useSetUserPermission();
 
-  const users = useMemo(() => {
+  const staffs = useMemo(() => {
     if (!optionsResponse) return [];
     if (!optionsResponse.data) return [];
     return optionsResponse.data.items || [];
   }, [optionsResponse]);
 
-  const usersOptions = utils.mapDataToOptions<User>(users, "fullName", "id");
+  const staffsOptions = utils.mapDataToOptions<User>(staffs, "fullName", "id");
 
   const handleSearch = (text: string) => setApiQuery((prev) => ({ ...prev, keywords: text }));
 
   const handleChangePage = (page: number) => setApiQuery((prev) => ({ ...prev, page }));
 
-  const handleSelect = (value: any) => setSelectedUser(value);
+  const handleSelect = (value: any) => setSelectedStaff(value);
 
   const handleSetPermission = (permission: UserPermission) => {
     onSetUserPermission(permission, { onSuccess: () => refetch() });
@@ -71,25 +69,23 @@ const UserSettingPermissions: FC<UserSettingPermissionsProps> = ({ lang }) => {
   return (
     <Fragment>
       <Space align="middle" size="lg">
-        <Paragraph>{lang.setting.user.selectLabel}</Paragraph>
+        <Paragraph>{lang.setting.staff.selectLabel}</Paragraph>
         <Select
           async
           color="green"
           hasClear={false}
           loading={optionsLoading}
           total={optionsResponse?.data?.totalItems}
-          options={usersOptions}
+          options={staffsOptions}
           onChangeSelect={handleSelect}
           onChangeSearch={handleSearch}
           onChangePage={handleChangePage}
         />
       </Space>
       <Divider />
-      <Row>
-        <Col span={16}>{renderContent()}</Col>
-      </Row>
+      {renderContent()}
     </Fragment>
   );
 };
 
-export default UserSettingPermissions;
+export default StaffSettingPermission;

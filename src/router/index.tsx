@@ -13,7 +13,7 @@ import Order from "@/pages/order/form";
 import Shipments from "@/pages/shipment/list";
 import Shipment from "@/pages/shipment/form";
 import MainSetting from "@/pages/setting/main";
-import UserSetting from "@/pages/setting/user";
+import StaffSetting from "@/pages/setting/staff";
 import NotFound from "@/pages/404";
 
 const {
@@ -34,7 +34,7 @@ const {
   SHIPMENT_LIST,
   SHIPMENT_FORM,
   MAIN_SETTING,
-  USER_SETTING,
+  STAFF_SETTING,
 } = routerPaths;
 
 export const authRoutes: RouteProps[] = [
@@ -127,9 +127,9 @@ export const pageRoutes: RouteProps[] = [
     element: <MainSetting />,
   },
   {
-    id: "userSetting",
-    path: USER_SETTING,
-    element: <UserSetting />,
+    id: "staffSetting",
+    path: STAFF_SETTING,
+    element: <StaffSetting />,
   },
   {
     id: "notFound",

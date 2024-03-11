@@ -5,25 +5,25 @@ import { Link } from "react-router-dom";
 import { linkPaths } from "@/common/constant/url";
 import type { Lang } from "@/common/type";
 
-const { USER_SETTING } = linkPaths;
+const { STAFF_SETTING } = linkPaths;
 
 const { Paragraph } = Typography;
 
 const { Row, Col } = Grid;
 
-interface MainSettingUserProps {
+interface MainSettingStaffProps {
   lang: Lang;
 }
 
-const MainSettingUser: FC<MainSettingUserProps> = ({ lang }) => {
+const MainSettingStaff: FC<MainSettingStaffProps> = ({ lang }) => {
   return (
-    <Card rootClassName="setting-user">
+    <Card rootClassName="setting-staff">
       <Row justify="between" align="middle">
         <Col>
-          <Paragraph>{lang.setting.main.user.title}</Paragraph>
+          <Paragraph>{lang.setting.main.staff.title}</Paragraph>
         </Col>
         <Col>
-          <Link to={USER_SETTING} className="user-action">
+          <Link to={STAFF_SETTING} className="staff-action">
             <HiChevronRight size={25} />
           </Link>
         </Col>
@@ -32,4 +32,4 @@ const MainSettingUser: FC<MainSettingUserProps> = ({ lang }) => {
   );
 };
 
-export default MainSettingUser;
+export default MainSettingStaff;

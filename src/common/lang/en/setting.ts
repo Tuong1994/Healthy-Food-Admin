@@ -6,14 +6,14 @@ const setting_en = {
       dark: "Dark",
       light: "Light",
     },
-    user: {
-      title: "Set permissions for users",
+    staff: {
+      title: "Set permissions for staffs",
     },
   },
-  user: {
-    title: "User setting",
-    selectLabel: "Choose user",
-    note: "You haven't choose user yet",
+  staff: {
+    title: "Staff setting",
+    selectLabel: "Choose staff",
+    note: "You haven't choose staff yet",
     settingLabel: {
       create: "Turn on/off create feature",
       update: "Turn on/off update feature",

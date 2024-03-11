@@ -11,7 +11,9 @@ interface PermissionsNoteProps {
 const PermissionsNote: FC<PermissionsNoteProps> = ({ lang }) => {
   return (
     <Card>
-      <Paragraph align="center" variant="secondary">{lang.setting.user.note}</Paragraph>
+      <Paragraph align="center" variant="secondary">
+        {lang.setting.staff.note}
+      </Paragraph>
     </Card>
   );
 };

@@ -1,3 +1,5 @@
+import { User } from "../user/type";
+
 export type PermissionType = "create" | "update" | "remove";
 
 export type UserPermission = {
@@ -7,6 +9,7 @@ export type UserPermission = {
   update: boolean;
   remove: boolean;
   userId: string;
+  user?: User;
 
   createdAt?: Date | string;
   updatedAt?: Date | string;
