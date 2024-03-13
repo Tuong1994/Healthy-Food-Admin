@@ -1,6 +1,7 @@
 const authApiPaths = {
   signIn: "api/auth/signIn",
   signUp: "api/auth/signUp",
+  authenticate: 'api/auth/authenticate',
   refresh: "api/auth/refresh",
   changePassword: 'api/auth/changePassword',
   forgotPassword: "api/auth/forgotPassword",

@@ -24,6 +24,12 @@ export const signUp = async (data: AuthSignUp) => {
   return response;
 };
 
+export const authenticate = async () => {
+  const response = await Fetch.Get<Auth>(authApiPaths.authenticate);
+  if (response.success) localStorage.setItem(localStorageKey.AUTH, JSON.stringify(response.data));
+  return response;
+};
+
 export const refresh = async (query: ApiQuery) => {
   const response = await Fetch.Post<any, any>(authApiPaths.refresh + getApiQuery(query), null);
   if (response.success) {
