@@ -1,6 +1,6 @@
 import { getApiQuery } from "../helper";
 import { ApiQuery, List, Paging } from "../type";
-import { Product, ProductFormData } from "./type";
+import { Product } from "./type";
 import productApiPaths from "./path";
 import Fetch from "..";
 

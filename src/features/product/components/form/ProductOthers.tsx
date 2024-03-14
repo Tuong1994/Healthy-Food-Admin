@@ -24,7 +24,7 @@ const ProductOthers: FC<ProductOthersProps> = ({ lang }) => {
       }
     >
       <FormItem name="status" rules={common()}>
-        <Select required label={lang.common.form.label.status} options={options.productStatus} />
+        <Select required label={lang.common.form.label.status} options={options.recordStatus} />
       </FormItem>
       <FormItem name="unit" rules={common()}>
         <Select required label={lang.common.form.label.unit} options={options.unit} />

@@ -1,6 +1,6 @@
 import { getApiQuery } from "../helper";
 import { ApiQuery, List, Paging } from "../type";
-import { SubCategory, SubCategoryFormData } from "./type";
+import { SubCategory } from "./type";
 import subCategoryApiPaths from "./path";
 import Fetch from "..";
 

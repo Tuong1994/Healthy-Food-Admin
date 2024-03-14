@@ -9,7 +9,7 @@ import { linkPaths } from "@/common/constant/url";
 import useLogout from "@/features/auth/hooks/useLogout";
 import useAuthStore from "@/store/AuthStore";
 
-const { CUSTOMER } = linkPaths;
+const { USER } = linkPaths;
 
 const { Row, Col } = Grid;
 
@@ -34,7 +34,7 @@ const HeaderAuth: FC<HeaderAuthProps> = ({ lang }) => {
       label: (
         <Space align="middle">
           <HiUser />
-          <Link to={CUSTOMER} state={{ id: info.id, isUser: true }}>
+          <Link to={USER} state={{ id: info.id, isUser: true }}>
             {lang.pageComponent.header.profile.user}
           </Link>
         </Space>

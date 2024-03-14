@@ -1,6 +1,6 @@
 import { RefObject } from "react";
 import { ELang } from "@/common/enum";
-import { SelectOptions } from "@/components/Control/type";
+import { Option, SelectOptions } from "@/components/Control/type";
 import { ApiQuery } from "@/services/type";
 
 const utils = {
@@ -66,7 +66,7 @@ const utils = {
 
   mapDataToOptions: <M extends object>(list: M[], label: keyof M, value: keyof M) => {
     if (!list.length) return [];
-    const options: SelectOptions = list.map((item) => ({ label: item[label], value: item[value] }));
+    const options: SelectOptions = list.map((item) => ({ label: item[label], value: item[value] } as Option));
     return options;
   },
 };
