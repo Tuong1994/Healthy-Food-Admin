@@ -4,6 +4,7 @@ import { ApiQuery } from "./type";
 export const getApiQuery = (query: ApiQuery) => {
   let {
     langCode = ELang.EN,
+    admin = true,
     page,
     limit,
     keywords,
@@ -31,7 +32,6 @@ export const getApiQuery = (query: ApiQuery) => {
     hasLike,
     convertName,
     staffOnly,
-    admin,
     role,
     gender,
     cateStatus,
