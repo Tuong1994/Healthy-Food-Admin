@@ -1,11 +1,12 @@
-import { FC, ReactNode, Fragment, useCallback, useEffect } from "react";
-import { authenticate, logout } from "@/services/auth/api";
+import { FC, ReactNode, Fragment, useCallback } from "react";
+import { logout } from "@/services/auth/api";
 import { useNavigate } from "react-router";
 import { linkPaths } from "@/common/constant/url";
 import RedirectModal from "./RedirectModal";
 import useAuthStore from "@/store/AuthStore";
 import useRedirect from "./hooks/useRedirect";
 import useRefreshToken from "./hooks/useRefreshToken";
+import useAuthenticate from "./hooks/useAuthenticate";
 
 const { AUTH_SIGN_IN } = linkPaths;
 
@@ -22,6 +23,8 @@ const AppAuth: FC<AppAuthProps> = ({ children }) => {
 
   useRedirect();
 
+  useAuthenticate();
+
   const { isAuth, info } = auth;
 
   const onLogout = useCallback(async () => {
@@ -36,12 +39,6 @@ const AppAuth: FC<AppAuthProps> = ({ children }) => {
     await onLogout();
     navigate(AUTH_SIGN_IN);
   };
-
-  const onAuthenticate = async () => await authenticate();
-
-  useEffect(() => {
-    onAuthenticate();
-  }, []);
 
   return (
     <Fragment>

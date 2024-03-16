@@ -9,9 +9,9 @@ import {
   AuthForgotPassword,
   AuthResetPassword,
 } from "./type";
+import Fetch from "..";
 import localStorageKey from "@/common/constant/storage";
 import authApiPaths from "./path";
-import Fetch from "..";
 
 export const signIn = async (query: ApiQuery, data: AuthSignIn) => {
   const response = await Fetch.Post<AuthSignIn, Auth>(authApiPaths.signIn + getApiQuery(query), data);

@@ -122,7 +122,7 @@ const User: FC<UserProps> = () => {
     }
 
     if (!isUpdate) return createUser(formData);
-    const args = { query: { userId: response?.data?.id }, formData };
+    const args = { query: { userId: response?.data?.id, admin: true }, formData };
     return updateUser(args, { onSuccess: () => onReFetch() });
   };
 
