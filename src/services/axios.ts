@@ -4,7 +4,9 @@ import { getApiQuery } from "./helper";
 import authApiPaths from "./auth/path";
 import localStorageKey from "@/common/constant/storage";
 
-const BASE_URL = "http://localhost:5000/";
+// const BASE_URL = "http://localhost:5000/";
+
+const BASE_URL = "https://healthy-food-api-g4t7.onrender.com/";
 
 export const HttpStatus = {
   BAD_REQUEST: 400,
