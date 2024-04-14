@@ -30,7 +30,7 @@ const useSignIn = () => {
     onSuccess: (response) => {
       if (!response.success) {
         const status = response.error?.status;
-        let message = "";
+        let message = lang.common.message.error.api;
         if (status === HttpStatus.NOT_FOUND) message = lang.common.message.error.authEmail;
         if (status === HttpStatus.FORBIDDEN) message = lang.common.message.error.authPassword;
         if (status === HttpStatus.UNAUTHORIZED) message = lang.common.message.error.unauthorized;

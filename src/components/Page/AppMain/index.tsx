@@ -6,19 +6,24 @@ import { useLang } from "@/hooks";
 import Header from "../Header";
 import HeaderTranslate from "../Header/HeaderTranslate";
 import HeaderAuth from "../Header/HeaderAuth";
-import useMenu from "./useMenu";
 import AppPath from "./AppPath";
+import useMenu from "./useMenu";
+import useAuthStore from "@/store/AuthStore";
 
 const { Container, Head, Body, Side, Content, Menu } = Layout;
 
-interface AppWrapperProps {
+interface AppMainProps {
   children?: ReactNode;
 }
 
-const AppWrapper: FC<AppWrapperProps> = ({ children }) => {
+const AppMain: FC<AppMainProps> = ({ children }) => {
   const { lang } = useLang();
 
+  const auth = useAuthStore((state) => state.auth);
+
   const { isPhone } = useContext(GridAppContext);
+
+  const { isAuth } = auth;
 
   const navigate = useNavigate();
 
@@ -31,39 +36,43 @@ const AppWrapper: FC<AppWrapperProps> = ({ children }) => {
 
   return (
     <AppPath>
-      <Container theme="light" color="green">
-        <Head>
-          <Header />
-        </Head>
-        <Body>
-          <Side hasCollapseButton={false} collapsable>
-            {isPhone && (
-              <Fragment>
-                <Space align="middle" justify="end" size="md" style={{ padding: "0 10px" }}>
-                  <HeaderTranslate />
-                  <HeaderAuth lang={lang} />
-                </Space>
+      {isAuth ? (
+        <Container theme="light" color="green">
+          <Head>
+            <Header />
+          </Head>
+          <Body>
+            <Side hasCollapseButton={false} collapsable>
+              {isPhone && (
+                <Fragment>
+                  <Space align="middle" justify="end" size="md" style={{ padding: "0 10px" }}>
+                    <HeaderTranslate />
+                    <HeaderAuth lang={lang} />
+                  </Space>
 
-                <Divider />
-              </Fragment>
-            )}
+                  <Divider />
+                </Fragment>
+              )}
 
-            <Menu
-              defaultActiveId={["dashboard"]}
-              type="vertical"
-              items={items}
-              onSelectMenu={handleNavigate}
-            />
-          </Side>
-          <Content>
-            <Section>
-              <Routes>{children}</Routes>
-            </Section>
-          </Content>
-        </Body>
-      </Container>
+              <Menu
+                defaultActiveId={["dashboard"]}
+                type="vertical"
+                items={items}
+                onSelectMenu={handleNavigate}
+              />
+            </Side>
+            <Content>
+              <Section>
+                <Routes>{children}</Routes>
+              </Section>
+            </Content>
+          </Body>
+        </Container>
+      ) : (
+        <Routes>{children}</Routes>
+      )}
     </AppPath>
   );
 };
 
-export default AppWrapper;
+export default AppMain;

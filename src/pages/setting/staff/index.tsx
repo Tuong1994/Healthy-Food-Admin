@@ -6,7 +6,7 @@ import { useLang } from "@/hooks";
 import type { BreadcrumbItems } from "@/components/UI/Breadcrumb/type";
 import ContentHeader from "@/components/Page/ContentHeader";
 import StaffSettingPermission from "@/features/setting/components/staff/StaffSettingPermission";
-import ProtectedRoute from "@/components/Page/ProtectedRoute";
+import ValidateRoute from "@/features/setting/components/staff/ValidateRoute";
 
 const { MAIN_SETTING } = linkPaths;
 
@@ -21,11 +21,11 @@ const StaffSetting: FC<StaffSettingProps> = () => {
   ];
 
   return (
-    <ProtectedRoute>
+    <ValidateRoute>
       <Breadcrumb items={items} />
       <ContentHeader hasTotal={false} headTitle={lang.setting.staff.title} />
       <StaffSettingPermission lang={lang} />
-    </ProtectedRoute>
+    </ValidateRoute>
   );
 };
 

@@ -15,6 +15,7 @@ const useAuthenticate = () => {
 
   const onAuthenticate = async () => {
     const response = await authenticate();
+    if (!response.success) return;
     setAuth(response.data);
     navigate(DASHBOARD);
   };

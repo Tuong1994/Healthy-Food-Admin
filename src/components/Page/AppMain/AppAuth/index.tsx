@@ -4,7 +4,6 @@ import { useNavigate } from "react-router";
 import { linkPaths } from "@/common/constant/url";
 import RedirectModal from "./RedirectModal";
 import useAuthStore from "@/store/AuthStore";
-import useRedirect from "./hooks/useRedirect";
 import useRefreshToken from "./hooks/useRefreshToken";
 import useAuthenticate from "./hooks/useAuthenticate";
 
@@ -20,8 +19,6 @@ const AppAuth: FC<AppAuthProps> = ({ children }) => {
   const navigate = useNavigate();
 
   const { open, setOpen, setReLogin } = useRefreshToken();
-
-  useRedirect();
 
   useAuthenticate();
 
