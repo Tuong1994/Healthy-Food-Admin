@@ -21,6 +21,7 @@ import useCreateOrder from "@/features/order/hooks/useCreateOrder";
 import useUpdateOrder from "@/features/order/hooks/useUpdateOrder";
 import sumPrice from "@/features/order/helper/sumPrice";
 import getTotalPayment from "@/features/order/helper/getTotalPayment";
+import OrderCreator from "@/features/order/components/form/OrderCreator";
 
 const { ORDERS } = linkPaths;
 
@@ -123,6 +124,7 @@ const Order: FC<OrderProps> = () => {
       paymentStatus: response ? response.data?.paymentStatus : EPaymentStatus.UNPAID,
       totalPayment: response ? response.data?.totalPayment : 0,
       userId: response ? response.data?.userId : "",
+      creatorId: response ? response.data?.creatorId : "",
       note: response ? response.data?.note : "",
       items: [],
     }),
@@ -191,6 +193,7 @@ const Order: FC<OrderProps> = () => {
         setInfo={setInfo}
         handleOpenShipment={handleOpenShipment}
       />
+      <OrderCreator lang={lang} />
       <OrderCustomer lang={lang} />
       <OrderReceived
         lang={lang}

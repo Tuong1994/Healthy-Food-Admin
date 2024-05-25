@@ -16,6 +16,7 @@ const order_vn = {
     select: "Chọn sản phẩm",
     create: "Tạo sản phẩm mới",
     customer: "Khách hàng",
+    creator: 'Người tạo',
     setting: "Cài đặt",
     orderStatus: "Trạng thái đơn hàng",
     paymentMethods: "Hình thức thanh toán",

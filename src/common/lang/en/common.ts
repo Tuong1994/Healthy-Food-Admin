@@ -125,6 +125,7 @@ const common_en = {
       price: "Price",
       orderNumber: "Order number",
       customer: "Customer",
+      creator: 'Creator',
       status: "Status",
       paymentStatus: "Payment status",
       paymentMethod: "Payment method",

@@ -125,6 +125,7 @@ const common_vn = {
       price: "Đơn giá",
       orderNumber: "Mã đơn hàng",
       customer: "Khách hàng",
+      creator: 'Người tạo',
       status: "Trạng thái",
       paymentStatus: "Tình trạng thanh toán",
       paymentMethod: "Phương thức thanh toán",

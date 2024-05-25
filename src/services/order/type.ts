@@ -23,6 +23,7 @@ export type Order = {
   receivedType: EReceivedType;
   paymentMethod: EPaymentMethod | number;
   userId: string;
+  creatorId: string;
   note: string;
   shipmentFee: number;
   totalPayment: number;
@@ -30,6 +31,7 @@ export type Order = {
   orderNumber?: string;
   shipment?: Shipment;
   user?: User;
+  creator?: User;
 
   createdAt?: Date | string;
   updatedAt?: Date | string;

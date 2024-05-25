@@ -110,16 +110,26 @@ const OrdersTable: FC<OrdersTableProps> = ({
       ),
     },
     {
+      id: "creator",
+      title: lang.common.table.head.creator,
+      dataIndex: "creator",
+      render: (creator: User) => (
+        <Link to={USER} state={{ id: creator.id }}>
+          <Button text>{creator.fullName}</Button>
+        </Link>
+      ),
+    },
+    {
       id: "createdAt",
       title: lang.common.table.head.createdAt,
       dataIndex: "createdAt",
-      render: (date: Date) => <>{moment(date).format("DD/MM/YYYY")}</>,
+      render: (date: Date) => <>{moment(date).format("DD/MM/YYYY hh:mm A")}</>,
     },
     {
       id: "updatedAt",
       title: lang.common.table.head.updatedAt,
       dataIndex: "updatedAt",
-      render: (date: Date) => <>{moment(date).format("DD/MM/YYYY")}</>,
+      render: (date: Date) => <>{moment(date).format("DD/MM/YYYY hh:mm A")}</>,
     },
   ];
 

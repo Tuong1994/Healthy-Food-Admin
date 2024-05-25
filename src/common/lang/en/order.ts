@@ -16,6 +16,7 @@ const order_en = {
     select: "Select product",
     create: "Create new product",
     customer: "Customer",
+    creator: 'Creator',
     setting: "Setting",
     orderStatus: "Order status",
     paymentMethods: "Payment methods",
