@@ -13,6 +13,7 @@ const product_vn = {
   form: {
     addTitle: "Tạo sản phẩm",
     editTitle: "Cập nhật sản phẩm",
+    description: "Mô tả",
     price: "Giá bán",
     storage: "Kho",
     category: "Danh mục",

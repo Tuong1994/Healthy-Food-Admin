@@ -83,7 +83,7 @@ const ProductCategory: FC<ProductCategoryProps> = ({ lang, product }) => {
       }
     >
       <Row justify="between">
-        <Col xs={24} md={24} lg={12} span={12}>
+        <Col xs={24} md={24} lg={24} span={24}>
           <FormItem name="categoryId" rules={common()}>
             <Select
               async
@@ -98,7 +98,7 @@ const ProductCategory: FC<ProductCategoryProps> = ({ lang, product }) => {
             />
           </FormItem>
         </Col>
-        <Col xs={24} md={24} lg={12} span={12}>
+        <Col xs={24} md={24} lg={24} span={24}>
           <FormItem name="subCategoryId" rules={common()}>
             <Select
               async

@@ -13,6 +13,8 @@ export type Product = {
   name: string;
   nameEn?: string;
   nameVn?: string;
+  descriptionEn?: string;
+  descriptionVn?: string;
   costPrice: number;
   profit: number;
   totalPrice: number;

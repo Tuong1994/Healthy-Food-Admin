@@ -1,0 +1,49 @@
+.editor {
+  .editor-label {
+    display: block;
+    margin-bottom: $m-1 - 0.5;
+  }
+}
+
+.quill {
+  .ql-toolbar {
+    border-color: $bg-gray;
+    border-radius: $rounded;
+    border-bottom-left-radius: unset;
+    border-bottom-right-radius: unset;
+  }
+  .ql-container {
+    height: $h-10 * 2;
+    overflow-y: auto;
+    border-color: $bg-gray;
+    border-radius: $rounded;
+    border-top-left-radius: unset;
+    border-top-right-radius: unset;
+  }
+  .ql-toolbar.ql-snow .ql-picker-label {
+    color: inherit !important;
+  }
+  .ql-snow .ql-picker {
+    color: inherit !important;
+  }
+  .quill > .ql-container > .ql-editor.ql-blank::before {
+    /* for placeholder */
+    color: inherit;
+  }
+  .ql-snow.ql-toolbar button svg {
+    opacity: 0.76;
+    color: currentColor;
+  }
+  .ql-snow .ql-stroke {
+    /* for the border of the editor */
+    stroke: currentColor !important;
+  }
+  .ql-snow .ql-fill {
+    /* for the bg color */
+    fill: currentColor !important;
+  }
+  .ql-picker-item {
+    /* for dropdown */
+    color: currentColor !important;
+  }
+}

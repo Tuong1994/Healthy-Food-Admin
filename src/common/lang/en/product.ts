@@ -13,6 +13,7 @@ const product_en = {
   form: {
     addTitle: "Create product",
     editTitle: "Update product",
+    description: 'Description',
     price: "Price",
     storage: "Storage",
     category: "Category",

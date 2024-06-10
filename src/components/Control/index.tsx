@@ -12,6 +12,7 @@ import TreeSelect from "./TreeSelect";
 import DatePicker from "./DatePicker";
 import Radio from "./Radio";
 import CheckBox from "./CheckBox";
+import Editor from "./Editor";
 
 export {
   Upload,
@@ -28,4 +29,5 @@ export {
   DatePicker,
   CheckBox,
   Radio,
+  Editor,
 };

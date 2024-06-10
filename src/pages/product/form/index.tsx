@@ -10,6 +10,7 @@ import { linkPaths } from "@/common/constant/url";
 import { useLang, useHasLocationState, usePermission } from "@/hooks";
 import FormLayout from "@/components/Page/FormLayout";
 import ProductInfo from "@/features/product/components/form/ProductInfo";
+import ProductDescription from "@/features/product/components/form/ProductDescription";
 import ProductPrice from "@/features/product/components/form/ProductPrice";
 import ProductCategory from "@/features/product/components/form/ProductCategory";
 import ProductStorage from "@/features/product/components/form/ProductStorage";
@@ -69,6 +70,8 @@ const Product: FC<ProductProps> = () => {
       supplier: response ? response.data?.supplier : "Healthy Food",
       categoryId: response ? response.data?.categoryId : "",
       subCategoryId: response ? response.data?.subCategoryId : "",
+      descriptionEn: response ? response.data?.descriptionEn : "",
+      descriptionVn: response ? response.data.descriptionVn : "",
     }),
     [response]
   );
@@ -101,14 +104,15 @@ const Product: FC<ProductProps> = () => {
   const leftItems = (
     <Fragment>
       <ProductInfo lang={lang} product={response?.data} handleUpload={handleUpload} />
+      <ProductDescription lang={lang} />
       <ProductPrice product={response?.data} price={price} setPrice={setPrice} />
-      <ProductCategory lang={lang} product={response?.data} />
     </Fragment>
   );
-
+  
   const rightItems = (
     <Fragment>
       <ProductStorage lang={lang} product={response?.data} />
+      <ProductCategory lang={lang} product={response?.data} />
       <ProductOthers lang={lang} />
     </Fragment>
   );
