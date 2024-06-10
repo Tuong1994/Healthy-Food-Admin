@@ -36,11 +36,11 @@ const Editor: ForwardRefRenderFunction<HTMLDivElement, EditorProps> = (
     () => ({
       toolbar: [
         [{ header: [1, 2, 3, 4, 5, 6] }],
-        [{ font: [] }, { size: ["small", false, "large", "huge"] }],
+        [{ size: ["small", false, "large", "huge"] }],
         [{ list: "ordered" }, { list: "bullet" }],
-        ["bold", "italic", "underline", "blockquote"],
+        ["bold", "italic", "underline"],
         [{ align: [] }],
-        ["link", "image"],
+        ["link"],
         ["clean"],
       ],
     }),
