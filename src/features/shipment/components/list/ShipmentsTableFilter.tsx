@@ -29,7 +29,6 @@ const ShipmentsTableFilter: FC<ShipmentsTableFilterProps> = ({ lang, apiQuery, s
     <Fragment>
       <Col {...commonProps} span={5}>
         <Input
-          sizes="sm"
           color="green"
           value={keywords}
           placeholder={lang.shipment.list.filter.placeholder.search}
@@ -38,7 +37,6 @@ const ShipmentsTableFilter: FC<ShipmentsTableFilterProps> = ({ lang, apiQuery, s
       </Col>
       <Col {...commonProps} span={3}>
         <Select
-          sizes="sm"
           color="green"
           hasClear={false}
           defaultValue={sortBy}

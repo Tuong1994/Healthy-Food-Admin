@@ -9,12 +9,12 @@ import { Link } from "react-router-dom";
 import { linkPaths } from "@/common/constant/url";
 import { PiWarning } from "react-icons/pi";
 import { REPLACE_NUM_REGEX } from "@/common/constant/regex";
+import { usePermission } from "@/hooks";
 import ShipmentsTableFilter from "./ShipmentsTableFilter";
 import ConfirmModal from "@/components/Page/ConfirmModal";
 import Error from "@/components/Page/Error";
 import useRemoveShipments from "@/features/shipment/hooks/useRemoveShipments";
 import moment from "moment";
-import { usePermission } from "@/hooks";
 
 const { SHIPMENT, ORDER } = linkPaths;
 
@@ -140,7 +140,11 @@ const ShipmentsTable: FC<ShipmentsTableProps> = ({
         dataSource={dataSource()}
         onSelectRows={handleOpenModal}
         filter={<ShipmentsTableFilter lang={lang} apiQuery={apiQuery} setApiQuery={setApiQuery} />}
-        filterProps={{ hasFilterButton: false, onCancelFilter: handleResetFilter }}
+        filterProps={{
+          hasFilterButton: false,
+          cancelFilterButtonProps: { sizes: "md" },
+          onCancelFilter: handleResetFilter,
+        }}
         paginationProps={{
           showContent: true,
           total: shipments?.data?.totalItems ?? 0,

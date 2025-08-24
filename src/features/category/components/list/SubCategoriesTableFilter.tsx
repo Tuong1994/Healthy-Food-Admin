@@ -29,7 +29,6 @@ const SubCategoriesTableFilter: FC<SubCategoriesTableFilterProps> = ({ lang, api
     <Fragment>
       <Col {...commonProps} span={5}>
         <Input
-          sizes="sm"
           color="green"
           value={keywords}
           placeholder={lang.category.filter.placeholder.search}
@@ -38,7 +37,6 @@ const SubCategoriesTableFilter: FC<SubCategoriesTableFilterProps> = ({ lang, api
       </Col>
       <Col {...commonProps} span={3}>
         <Select
-          sizes="sm"
           color="green"
           hasClear={false}
           defaultValue={subCateStatus}
@@ -48,7 +46,6 @@ const SubCategoriesTableFilter: FC<SubCategoriesTableFilterProps> = ({ lang, api
       </Col>
       <Col {...commonProps} span={3}>
         <Select
-          sizes="sm"
           color="green"
           hasClear={false}
           defaultValue={sortBy}

@@ -138,7 +138,11 @@ const CategoriesTable: FC<CategoriesTableProps> = ({ locale, lang, canCreate, ca
         dataSource={dataSource()}
         onSelectRows={handleOpenConfirmModal}
         filter={<CategoriesTableFilter lang={lang} apiQuery={apiQuery} setApiQuery={setApiQuery} />}
-        filterProps={{ hasFilterButton: false, onCancelFilter: handleResetFilter }}
+        filterProps={{
+          hasFilterButton: false,
+          cancelFilterButtonProps: { sizes: "md" },
+          onCancelFilter: handleResetFilter,
+        }}
         paginationProps={{
           showContent: true,
           total: categories?.data?.totalItems ?? 0,

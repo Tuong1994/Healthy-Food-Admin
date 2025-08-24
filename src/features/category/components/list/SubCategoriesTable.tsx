@@ -31,12 +31,7 @@ interface SubCategoriesTableProps {
   canRemove: boolean;
 }
 
-const SubCategoriesTable: FC<SubCategoriesTableProps> = ({
-  locale,
-  lang,
-  canCreate,
-  canRemove,
-}) => {
+const SubCategoriesTable: FC<SubCategoriesTableProps> = ({ locale, lang, canCreate, canRemove }) => {
   const initialApiQuery: ApiQuery = {
     page: 1,
     limit: 10,
@@ -154,7 +149,11 @@ const SubCategoriesTable: FC<SubCategoriesTableProps> = ({
         dataSource={dataSource()}
         onSelectRows={handleOpenConfirmModal}
         filter={<SubCategoriesTableFilter lang={lang} apiQuery={apiQuery} setApiQuery={setApiQuery} />}
-        filterProps={{ hasFilterButton: false, onCancelFilter: handleResetFilter }}
+        filterProps={{
+          hasFilterButton: false,
+          cancelFilterButtonProps: { sizes: "md" },
+          onCancelFilter: handleResetFilter,
+        }}
         paginationProps={{
           showContent: true,
           total: subCategories?.data?.totalItems ?? 0,

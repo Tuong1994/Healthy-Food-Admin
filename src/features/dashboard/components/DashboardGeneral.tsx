@@ -64,12 +64,12 @@ const DashboardGeneral: FC<DashboardGeneralProps> = () => {
           head={
             <Row justify="between" rootClassName="item-head">
               <Col>
-                <Paragraph size={16} weight={600}>
+                <Paragraph size={18} weight={600}>
                   {item.title}
                 </Paragraph>
               </Col>
               <Col>
-                <Paragraph size={10} italic>
+                <Paragraph size={12} italic>
                   {lang.common.unit.year} {new Date().getFullYear()}
                 </Paragraph>
               </Col>

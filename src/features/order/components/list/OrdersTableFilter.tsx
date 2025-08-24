@@ -29,7 +29,6 @@ const OrdersTableFilter: FC<OrdersTableFilterProps> = ({ lang, apiQuery, setApiQ
     <Fragment>
       <Col {...commonProps}>
         <Input
-          sizes="sm"
           color="green"
           value={keywords}
           placeholder={lang.order.list.filter.placeholder.search}
@@ -38,7 +37,6 @@ const OrdersTableFilter: FC<OrdersTableFilterProps> = ({ lang, apiQuery, setApiQ
       </Col>
       <Col {...commonProps} span={4}>
         <Select
-          sizes="sm"
           color="green"
           defaultValue={orderStatus}
           options={options.orderStatus}
@@ -48,7 +46,6 @@ const OrdersTableFilter: FC<OrdersTableFilterProps> = ({ lang, apiQuery, setApiQ
       </Col>
       <Col {...commonProps} span={5}>
         <Select
-          sizes="sm"
           color="green"
           defaultValue={paymentMethod}
           options={options.paymentMethod}
@@ -58,7 +55,6 @@ const OrdersTableFilter: FC<OrdersTableFilterProps> = ({ lang, apiQuery, setApiQ
       </Col>
       <Col {...commonProps} span={5}>
         <Select
-          sizes="sm"
           color="green"
           defaultValue={paymentStatus}
           options={options.paymentStatus}
@@ -68,7 +64,6 @@ const OrdersTableFilter: FC<OrdersTableFilterProps> = ({ lang, apiQuery, setApiQ
       </Col>
       <Col {...commonProps} span={3}>
         <Select
-          sizes="sm"
           color="green"
           hasClear={false}
           defaultValue={sortBy}

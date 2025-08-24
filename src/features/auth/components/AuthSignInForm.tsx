@@ -29,7 +29,7 @@ const AuthSignInForm: FC<AuthSignInFormProps> = () => {
 
   return (
     <Card head={<Title level={3}>{lang.auth.signIn.title}</Title>} rootClassName="content-form">
-      <Form<AuthSignIn> color="green" disabled={isLoading} initialData={initialData} onFinish={handleSubmit}>
+      <Form<AuthSignIn> sizes="lg" color="green" disabled={isLoading} initialData={initialData} onFinish={handleSubmit}>
         <FormItem name="email" rules={email()}>
           <Input required label={lang.common.form.label.email} />
         </FormItem>
@@ -43,7 +43,7 @@ const AuthSignInForm: FC<AuthSignInFormProps> = () => {
         </Space>
         <Divider />
         <Space>
-          <Button loading={isLoading} type="submit" rootClassName="form-btn">
+          <Button sizes="lg" loading={isLoading} type="submit" rootClassName="form-btn">
             {lang.auth.signIn.title}
           </Button>
         </Space>

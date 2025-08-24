@@ -30,7 +30,6 @@ const ProductsTableFilter: FC<ProductsTableFilterProps> = ({ lang, apiQuery, set
     <Fragment>
       <Col {...colProps}>
         <Input
-          sizes="sm"
           color="green"
           value={keywords}
           placeholder={lang.product.list.filter.placeholder.search}
@@ -39,7 +38,6 @@ const ProductsTableFilter: FC<ProductsTableFilterProps> = ({ lang, apiQuery, set
       </Col>
       <Col {...colProps} span={4}>
         <Select
-          sizes="sm"
           color="green"
           placeholder={lang.product.list.filter.placeholder.unit}
           defaultValue={productUnit}
@@ -49,7 +47,6 @@ const ProductsTableFilter: FC<ProductsTableFilterProps> = ({ lang, apiQuery, set
       </Col>
       <Col {...colProps} span={4}>
         <Select
-          sizes="sm"
           color="green"
           placeholder={lang.product.list.filter.placeholder.inventory}
           defaultValue={inventoryStatus}
@@ -59,7 +56,6 @@ const ProductsTableFilter: FC<ProductsTableFilterProps> = ({ lang, apiQuery, set
       </Col>
       <Col {...colProps} span={4}>
         <Select
-          sizes="sm"
           color="green"
           placeholder={lang.product.list.filter.placeholder.status}
           defaultValue={productStatus}
@@ -69,7 +65,6 @@ const ProductsTableFilter: FC<ProductsTableFilterProps> = ({ lang, apiQuery, set
       </Col>
       <Col {...colProps} span={3}>
         <Select
-          sizes="sm"
           color="green"
           hasClear={false}
           placeholder={lang.common.form.placeholder.sortBy}

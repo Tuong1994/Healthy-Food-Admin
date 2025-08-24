@@ -30,7 +30,6 @@ const StaffsTableFilter: FC<StaffsTableFilterProps> = ({ lang, apiQuery, setApiQ
     <Fragment>
       <Col {...commonProps} span={6}>
         <Input
-          sizes="sm"
           color="green"
           value={keywords}
           placeholder={lang.user.list.filter.placeholder.search}
@@ -39,7 +38,6 @@ const StaffsTableFilter: FC<StaffsTableFilterProps> = ({ lang, apiQuery, setApiQ
       </Col>
       <Col {...commonProps} span={4}>
         <Select
-          sizes="sm"
           color="green"
           defaultValue={gender}
           options={options.gender}
@@ -49,7 +47,6 @@ const StaffsTableFilter: FC<StaffsTableFilterProps> = ({ lang, apiQuery, setApiQ
       </Col>
       <Col {...commonProps} span={4}>
         <Select
-          sizes="sm"
           color="green"
           defaultValue={role}
           options={options.role.filter((option) => option.value !== ERole.CUSTOMER)}
@@ -59,7 +56,6 @@ const StaffsTableFilter: FC<StaffsTableFilterProps> = ({ lang, apiQuery, setApiQ
       </Col>
       <Col {...commonProps} span={3}>
         <Select
-          sizes="sm"
           color="green"
           hasClear={false}
           defaultValue={sortBy}

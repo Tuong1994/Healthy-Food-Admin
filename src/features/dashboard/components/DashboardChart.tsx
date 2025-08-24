@@ -1,8 +1,17 @@
 import { FC, useMemo } from "react";
-import { LineChart, CartesianGrid, XAxis, YAxis, Tooltip, Line, TooltipProps } from "recharts";
 import { InfoRow } from "@/components/UI";
-import type { InfoRowProps } from "@/components/UI/InfoRow";
+import {
+  ResponsiveContainer,
+  LineChart,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Line,
+  TooltipProps,
+} from "recharts";
 import type { NameType, ValueType } from "recharts/types/component/DefaultTooltipContent";
+import type { InfoRowProps } from "@/components/UI/InfoRow";
 import type { StatisticRevenue } from "@/services/statistic/type";
 import { useLang } from "@/hooks";
 import useGetChartRevenue from "../hooks/useGetChartRevenue";
@@ -56,13 +65,15 @@ const DashboardChart: FC<DashboardChartProps> = () => {
 
   return (
     <div className="dashboard-chart">
-      <LineChart width={650} height={400} data={data}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="date" />
-        <YAxis tickFormatter={totalNumberFormat} />
-        <Tooltip wrapperClassName="chart-tooltip" content={(props) => renderTooltipContent(props)} />
-        <Line type="monotone" dataKey="total" stroke="#10b981" strokeWidth={3} />
-      </LineChart>
+      <ResponsiveContainer width="100%" height="100%">
+        <LineChart data={data}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="date" />
+          <YAxis tickFormatter={totalNumberFormat} />
+          <Tooltip wrapperClassName="chart-tooltip" content={(props) => renderTooltipContent(props)} />
+          <Line type="monotone" dataKey="total" stroke="#10b981" strokeWidth={3} />
+        </LineChart>
+      </ResponsiveContainer>
     </div>
   );
 };

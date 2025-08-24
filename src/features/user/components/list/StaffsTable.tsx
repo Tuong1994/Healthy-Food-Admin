@@ -174,7 +174,11 @@ const StaffsTable: FC<StaffsTableProps> = ({ canCreate, canRemove }) => {
         dataSource={dataSource()}
         onSelectRows={handleOpenModal}
         filter={<StaffsTableFilter lang={lang} apiQuery={apiQuery} setApiQuery={setApiQuery} />}
-        filterProps={{ hasFilterButton: false, onCancelFilter: handleResetFilter }}
+        filterProps={{
+          hasFilterButton: false,
+          cancelFilterButtonProps: { sizes: "md" },
+          onCancelFilter: handleResetFilter,
+        }}
         paginationProps={{
           showContent: true,
           total: users?.data?.totalItems ?? 0,

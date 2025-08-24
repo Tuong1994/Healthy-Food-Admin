@@ -200,7 +200,11 @@ const OrdersTable: FC<OrdersTableProps> = ({
         expandRowTable={expandRowTable}
         onSelectRows={handleOpenModal}
         filter={<OrdersTableFilter lang={lang} apiQuery={apiQuery} setApiQuery={setApiQuery} />}
-        filterProps={{ hasFilterButton: false, onCancelFilter: handleResetFilter }}
+        filterProps={{
+          hasFilterButton: false,
+          cancelFilterButtonProps: { sizes: "md" },
+          onCancelFilter: handleResetFilter,
+        }}
         paginationProps={{
           showContent: true,
           total: orders?.data?.totalItems ?? 0,

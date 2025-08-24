@@ -1,7 +1,7 @@
 .auth {
   width: $w-full;
   min-height: $h-screen;
-  padding: $p-5 + 5 $p-5;
+  padding: $p-5 + 5 $p-5 * 6;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,9 +14,17 @@
     width: $w-8;
     position: absolute;
     top: 5rem;
-    right: 5rem;
+    right: 30rem;
     z-index: 20;
+    @include respond(laptop) {
+      top: 1rem;
+      right: 5rem;
+    }
     @include respond(mdTablet) {
+      top: 1rem;
+      right: 10rem;
+    }
+    @include respond(smTablet) {
       top: 1rem;
       right: 5rem;
     }
@@ -46,8 +54,11 @@
       }
     }
   }
-  @include respond(mdTablet) {
+  @include respond(laptop) {
     padding: $p-5;
+  }
+  @include respond(mdTablet) {
+    padding: $p-5 $p-5 * 2;
   }
   @include respond(mdPhone) {
     padding: $p-5 $p-1;

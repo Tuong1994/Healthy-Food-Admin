@@ -51,28 +51,36 @@ const PermissionsActions: FC<PermissionsActionsProps> = ({ lang, permission, onS
     const { fullName, phone, email, gender, birthday, role } = user;
     const commonProps: InfoRowProps = {
       hasColon: true,
+      labelProps: { size: 16 },
+      textProps: { size: 16 },
       labelSpanProps: { xs: 2, md: 2, lg: 2, span: 2 },
     };
     return (
       <Card>
-        <InfoRow {...commonProps} labelElement={<HiUser />} text={fullName} />
-        <InfoRow {...commonProps} labelElement={<HiPhone />} text={phone} />
-        <InfoRow {...commonProps} labelElement={<HiMail />} text={email} />
-        <InfoRow
-          {...commonProps}
-          labelElement={<FaTransgender />}
-          textElement={getDisplayGender(lang, gender as EGender)}
-        />
-        <InfoRow
-          {...commonProps}
-          labelElement={<HiCalendar />}
-          text={moment(birthday).format("DD/MM/YYYY")}
-        />
-        <InfoRow
-          {...commonProps}
-          labelElement={<HiBookmark />}
-          textElement={getDisplayRole(lang, role as ERole)}
-        />
+        {fullName && <InfoRow {...commonProps} labelElement={<HiUser size={20} />} text={fullName} />}
+        {phone && <InfoRow {...commonProps} labelElement={<HiPhone size={20} />} text={phone} />}
+        {email && <InfoRow {...commonProps} labelElement={<HiMail size={20} />} text={email} />}
+        {gender && (
+          <InfoRow
+            {...commonProps}
+            labelElement={<FaTransgender size={20} />}
+            textElement={getDisplayGender(lang, gender as EGender)}
+          />
+        )}
+        {birthday && (
+          <InfoRow
+            {...commonProps}
+            labelElement={<HiCalendar size={20} />}
+            text={moment(birthday).format("DD/MM/YYYY")}
+          />
+        )}
+        {role && (
+          <InfoRow
+            {...commonProps}
+            labelElement={<HiBookmark size={20} />}
+            textElement={getDisplayRole(lang, role as ERole)}
+          />
+        )}
       </Card>
     );
   };

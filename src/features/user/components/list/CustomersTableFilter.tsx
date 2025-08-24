@@ -29,7 +29,6 @@ const CustomersTableFilter: FC<CustomersTableFilterProps> = ({ lang, apiQuery, s
     <Fragment>
       <Col {...commonProps} span={6}>
         <Input
-          sizes="sm"
           color="green"
           value={keywords}
           placeholder={lang.user.list.filter.placeholder.search}
@@ -38,7 +37,6 @@ const CustomersTableFilter: FC<CustomersTableFilterProps> = ({ lang, apiQuery, s
       </Col>
       <Col {...commonProps} span={4}>
         <Select
-          sizes="sm"
           color="green"
           defaultValue={gender}
           options={options.gender}
@@ -48,7 +46,6 @@ const CustomersTableFilter: FC<CustomersTableFilterProps> = ({ lang, apiQuery, s
       </Col>
       <Col {...commonProps}  span={3}>
         <Select
-          sizes="sm"
           color="green"
           hasClear={false}
           defaultValue={sortBy}

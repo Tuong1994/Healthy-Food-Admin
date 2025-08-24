@@ -37,6 +37,7 @@ const AuthForgotPasswordForm: FC<AuthForgotPasswordFormProps> = () => {
       return (
         <Form<AuthForgotPassword>
           color="green"
+          sizes="lg"
           disabled={isLoading}
           initialData={initialData}
           onFinish={handleSubmit}
@@ -46,7 +47,7 @@ const AuthForgotPasswordForm: FC<AuthForgotPasswordFormProps> = () => {
           </FormItem>
           <Divider />
           <Space align="middle">
-            <Button loading={isLoading} type="submit">
+            <Button sizes="lg" loading={isLoading} type="submit">
               {lang.auth.forgotPassword.action}
             </Button>
             <span>|</span>

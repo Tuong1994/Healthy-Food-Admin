@@ -43,6 +43,7 @@ const AuthResetPasswordForm: FC<AuthResetPasswordFormProps> = () => {
   return (
     <Card head={<Title level={3}>{lang.auth.resetPassword.title}</Title>} rootClassName="content-form">
       <Form<AuthResetPassword>
+        sizes="lg"
         color="green"
         disabled={isLoading}
         initialData={initialData}
@@ -56,7 +57,7 @@ const AuthResetPasswordForm: FC<AuthResetPasswordFormProps> = () => {
         </FormItem>
         <Divider />
         <Space align="middle">
-          <Button type="submit" loading={isLoading}>
+          <Button sizes="lg" type="submit" loading={isLoading}>
             {lang.auth.resetPassword.action}
           </Button>
           <span>|</span>

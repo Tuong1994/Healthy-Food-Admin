@@ -17,13 +17,13 @@ const AuthLogo: FC<AuthLogoProps> = () => {
       <Logo rootClassName="content-logo" width={250} height={150} />
       <List rootClassName="content-list">
         <ListItem>
-          <Paragraph size={16}>{lang.auth.content_1}</Paragraph>
+          <Paragraph size={18}>{lang.auth.content_1}</Paragraph>
         </ListItem>
         <ListItem>
-          <Paragraph size={16}>{lang.auth.content_2}</Paragraph>
+          <Paragraph size={18}>{lang.auth.content_2}</Paragraph>
         </ListItem>
         <ListItem>
-          <Paragraph size={16}>{lang.auth.content_3}</Paragraph>
+          <Paragraph size={18}>{lang.auth.content_3}</Paragraph>
         </ListItem>
       </List>
     </Fragment>

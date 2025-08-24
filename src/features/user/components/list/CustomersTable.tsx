@@ -173,7 +173,11 @@ const CustomersTable: FC<CustomersTableProps> = ({ canCreate, canRemove }) => {
         dataSource={dataSource()}
         onSelectRows={handleOpenModal}
         filter={<CustomersTableFilter lang={lang} apiQuery={apiQuery} setApiQuery={setApiQuery} />}
-        filterProps={{ hasFilterButton: false, onCancelFilter: handleResetFilter }}
+        filterProps={{
+          hasFilterButton: false,
+          cancelFilterButtonProps: { sizes: "md" },
+          onCancelFilter: handleResetFilter,
+        }}
         paginationProps={{
           showContent: true,
           total: users?.data?.totalItems ?? 0,

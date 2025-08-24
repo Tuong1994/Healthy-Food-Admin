@@ -164,7 +164,11 @@ const ProductsTable: FC<ProductsTableProps> = ({
         dataSource={dataSource()}
         onSelectRows={handleOpenModal}
         filter={<ProductsTableFilter lang={lang} apiQuery={apiQuery} setApiQuery={setApiQuery} />}
-        filterProps={{ hasFilterButton: false, onCancelFilter: handleResetFilter }}
+        filterProps={{
+          hasFilterButton: false,
+          cancelFilterButtonProps: { sizes: "md" },
+          onCancelFilter: handleResetFilter,
+        }}
         paginationProps={{
           showContent: true,
           total: products?.data?.totalItems ?? 0,
