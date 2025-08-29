@@ -24,3 +24,11 @@
     justify-content: space-between;
   }
 }
+
+.header-auth {
+  .auth-logout {
+    width: $w-full;
+    border: unset;
+    background: transparent;
+  }
+}
