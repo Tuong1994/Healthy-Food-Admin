@@ -136,7 +136,7 @@ const Order: FC<OrderProps> = () => {
     right: () =>
       !isFetching &&
       canInteract && (
-        <Button loading={isSubmitting} disabled={!selectedItems.length} type="submit">
+        <Button loading={isSubmitting} disabled={!selectedItems.length || isSubmitting} type="submit">
           {lang.common.actions[!isUpdate ? "save" : "update"]}
         </Button>
       ),

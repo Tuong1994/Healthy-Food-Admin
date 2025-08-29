@@ -50,7 +50,7 @@ const Shipments: FC<ShipmentsProps> = () => {
         total={shipments?.data?.totalItems}
         right={() => (
           <Space>
-            <Button ghost color="blue" loading={isLoading} onClick={handleExport}>
+            <Button ghost color="blue" loading={isLoading} disabled={isLoading} onClick={handleExport}>
               {lang.common.actions.export}
             </Button>
           </Space>

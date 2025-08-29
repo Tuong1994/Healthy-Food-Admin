@@ -4,6 +4,7 @@ import { useMutation } from "react-query";
 import { useNavigate } from "react-router";
 import { createProduct } from "@/services/product/api";
 import { linkPaths } from "@/common/constant/url";
+import helper from "@/helper";
 
 const { PRODUCT } = linkPaths;
 
@@ -21,7 +22,10 @@ const useCreateProduct = () => {
 
   const mutation = useMutation(onCreateProduct, {
     onSuccess: (response) => {
-      if (!response.success) return messageApi.error(lang.common.message.error.create);
+      if (!response.success) {
+        if (helper.isAbort(response)) return;
+        return messageApi.error(lang.common.message.error.create);
+      }
       messageApi.success(lang.common.message.success.create);
       navigate(PRODUCT, { state: { id: response.data?.id } });
     },

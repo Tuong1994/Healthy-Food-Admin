@@ -5,6 +5,7 @@ import { createShipment } from "@/services/shipment/api";
 import { linkPaths } from "@/common/constant/url";
 import type { ShipmentFormData } from "@/services/shipment/type";
 import useMessage from "@/components/UI/ToastMessage/useMessage";
+import helper from "@/helper";
 
 const { SHIPMENT } = linkPaths;
 
@@ -22,7 +23,10 @@ const useCreateShipment = () => {
 
   const mutation = useMutation(onCreateShipment, {
     onSuccess: (response) => {
-      if (!response.success) return messageApi.error(lang.common.message.error.create);
+      if (!response.success) {
+        if (helper.isAbort(response)) return;
+        return messageApi.error(lang.common.message.error.create);
+      }
       messageApi.success(lang.common.message.success.create);
       navigate(SHIPMENT, { state: response?.data?.id });
     },

@@ -60,7 +60,7 @@ const Orders: FC<OrdersProps> = () => {
         right={() => (
           <Fragment>
             <Space>
-              <Button ghost color="blue" loading={isLoading} onClick={handleExport}>
+              <Button ghost color="blue" loading={isLoading} disabled={isLoading} onClick={handleExport}>
                 {lang.common.actions.export}
               </Button>
               {canCreate && (

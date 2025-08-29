@@ -3,9 +3,9 @@
   display: inline-block;
   background: $bg-white;
   border-radius: $rounded;
-  transition: all $transition-time-sm $transition-fn;
+  transition: background-color $transition-time-sm $transition-fn;
 }
 
 .logo-dark {
-  background: $bg-deep-blue;
+  background: $bg-dark;
 }

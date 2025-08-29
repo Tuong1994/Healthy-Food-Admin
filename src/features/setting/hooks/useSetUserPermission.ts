@@ -3,6 +3,7 @@ import { useMutation } from "react-query";
 import { settingPermission } from "@/services/setting/api";
 import type { UserPermission } from "@/services/setting/type";
 import useMessage from "@/components/UI/ToastMessage/useMessage";
+import helper from "@/helper";
 
 const useSetUserPermission = () => {
   const messageApi = useMessage();
@@ -16,7 +17,10 @@ const useSetUserPermission = () => {
 
   const mutation = useMutation(onSetUserPermission, {
     onSuccess: (response) => {
-      if (!response.success) return messageApi.error(lang.common.message.success.setting);
+      if (!response.success) {
+        if (helper.isAbort(response)) return;
+        return messageApi.error(lang.common.message.success.setting);
+      }
       messageApi.success(lang.common.message.success.setting);
     },
     onError: () => messageApi.error(lang.common.message.error.setting),

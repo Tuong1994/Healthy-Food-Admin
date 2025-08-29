@@ -50,7 +50,7 @@ const Shipment: FC<ShipmentProps> = () => {
     right: () =>
       !isFetching &&
       canUpdate && (
-        <Button loading={updateLoading} type="submit">
+        <Button loading={updateLoading} disabled={updateLoading} type="submit">
           {lang.common.actions.update}
         </Button>
       ),
