@@ -74,7 +74,7 @@ const SubCategoryForm: FC<SubCategoryFormProps> = () => {
     right: () =>
       !isFetching &&
       canCreate && (
-        <Button loading={isSubmitting} type="submit">
+        <Button loading={isSubmitting} disabled={isSubmitting} type="submit">
           {lang.common.actions[!isUpdate ? "create" : "update"]}
         </Button>
       ),

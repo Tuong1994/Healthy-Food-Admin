@@ -62,7 +62,7 @@ const CategoryForm: FC<CategoryFormProps> = () => {
     right: () =>
       !isFetching &&
       canInteract && (
-        <Button type="submit" loading={isSubmitting}>
+        <Button type="submit" loading={isSubmitting} disabled={isSubmitting}>
           {lang.common.actions[!isUpdate ? "create" : "update"]}
         </Button>
       ),

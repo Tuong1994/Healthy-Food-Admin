@@ -20,16 +20,16 @@ export const getWard = async (query: ApiQuery) => {
 };
 
 export const createWard = async (data: WardFormData) => {
-  const response = await Fetch.Post<WardFormData, Ward>(wardApiPaths.create, data);
+  const response = await Fetch.Post<WardFormData, Ward>(wardApiPaths.create, data, 'createWard');
   return response;
 };
 
 export const updateWard = async (query: ApiQuery, data: WardFormData) => {
-  const response = await Fetch.Put<WardFormData, any>(wardApiPaths.update + getApiQuery(query), data);
+  const response = await Fetch.Put<WardFormData, any>(wardApiPaths.update + getApiQuery(query), data, 'updateWard');
   return response;
 };
 
 export const removeWards = async (query: ApiQuery) => {
-  const response = await Fetch.Delete<any>(wardApiPaths.remove + getApiQuery(query));
+  const response = await Fetch.Delete<any>(wardApiPaths.remove + getApiQuery(query), 'removeWards');
   return response;
 };

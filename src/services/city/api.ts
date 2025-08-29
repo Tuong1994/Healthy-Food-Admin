@@ -20,16 +20,16 @@ export const getCity = async (query: ApiQuery) => {
 };
 
 export const createCity = async (data: CityFormData) => {
-  const response = await Fetch.Post<CityFormData, City>(cityApiPaths.create, data);
+  const response = await Fetch.Post<CityFormData, City>(cityApiPaths.create, data, "createCity");
   return response;
 };
 
 export const updateCity = async (query: ApiQuery, data: CityFormData) => {
-  const response = await Fetch.Put<CityFormData, any>(cityApiPaths.update + getApiQuery(query), data);
+  const response = await Fetch.Put<CityFormData, any>(cityApiPaths.update + getApiQuery(query), data, "updateCity");
   return response;
 };
 
 export const removeCities = async (query: ApiQuery) => {
-  const response = await Fetch.Delete<any>(cityApiPaths.remove + getApiQuery(query));
+  const response = await Fetch.Delete<any>(cityApiPaths.remove + getApiQuery(query), "removeCities");
   return response;
 };

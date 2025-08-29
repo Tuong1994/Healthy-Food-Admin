@@ -7,7 +7,8 @@ import imageApiPaths from "./path";
 export const customerUpload = async (query: ApiQuery, data: FormData) => {
   const response = await Fetch.Post<FormData, ImageUpload>(
     imageApiPaths.customerUpload + getApiQuery(query),
-    data
+    data,
+    "customerUpload"
   );
   return response;
 };
@@ -15,12 +16,13 @@ export const customerUpload = async (query: ApiQuery, data: FormData) => {
 export const productUpload = async (query: ApiQuery, data: FormData) => {
   const response = await Fetch.Post<FormData, ImageUpload>(
     imageApiPaths.productUpload + getApiQuery(query),
-    data
+    data,
+    "productUpload"
   );
   return response;
 };
 
 export const removeImages = async (query: ApiQuery) => {
-  const response = await Fetch.Delete<any>(imageApiPaths.remove + getApiQuery(query));
+  const response = await Fetch.Delete<any>(imageApiPaths.remove + getApiQuery(query), "removeImages");
   return response;
 };

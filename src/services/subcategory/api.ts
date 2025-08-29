@@ -22,16 +22,16 @@ export const getSubCategory = async (query: ApiQuery) => {
 };
 
 export const createSubCategory = async (data: FormData) => {
-  const response = await Fetch.Post<FormData, SubCategory>(subCategoryApiPaths.create, data);
+  const response = await Fetch.Post<FormData, SubCategory>(subCategoryApiPaths.create, data, 'createSubCategory');
   return response;
 };
 
 export const updateSubCategory = async (query: ApiQuery, data: FormData) => {
-  const response = await Fetch.Put<FormData, any>(subCategoryApiPaths.update + getApiQuery(query), data);
+  const response = await Fetch.Put<FormData, any>(subCategoryApiPaths.update + getApiQuery(query), data, 'updateSubCategory');
   return response;
 };
 
 export const removeSubCategories = async (query: ApiQuery) => {
-  const response = await Fetch.Delete<any>(subCategoryApiPaths.remove + getApiQuery(query));
+  const response = await Fetch.Delete<any>(subCategoryApiPaths.remove + getApiQuery(query), 'removeSubCategories');
   return response;
 };

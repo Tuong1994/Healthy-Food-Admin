@@ -65,6 +65,7 @@ export type ApiQuery = {
 export type ApiConfig<T> = {
   method: string;
   apiPath: string;
+  abortKey?: string;
   body?: T;
   config?: AxiosRequestConfig<T>;
 };

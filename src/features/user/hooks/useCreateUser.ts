@@ -4,6 +4,7 @@ import { useLang } from "@/hooks";
 import { useNavigate } from "react-router";
 import { linkPaths } from "@/common/constant/url";
 import useMessage from "@/components/UI/ToastMessage/useMessage";
+import helper from "@/helper";
 
 const { USER } = linkPaths;
 
@@ -21,7 +22,10 @@ const useCreateUser = () => {
 
   const mutation = useMutation(createNewUser, {
     onSuccess: (response) => {
-      if (!response.success) return messageApi.error(lang.common.message.error.create);
+      if (!response.success) {
+        if(helper.isAbort(response)) return;
+        return messageApi.error(lang.common.message.error.create)
+      };
       messageApi.success(lang.common.message.success.create);
       navigate(USER, { state: { id: response.data?.id } });
     },

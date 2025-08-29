@@ -4,6 +4,7 @@ import { useLang } from "@/hooks";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router";
 import useMessage from "@/components/UI/ToastMessage/useMessage";
+import helper from "@/helper";
 
 const { SUBCATEGORY } = linkPaths;
 
@@ -21,7 +22,10 @@ const useCreateSubCategory = () => {
 
   const mutation = useMutation(onCreateSubCategory, {
     onSuccess: (response) => {
-      if (!response.success) return messageApi.error(lang.common.message.error.create);
+      if (!response.success) {
+        if (helper.isAbort(response)) return;
+        return messageApi.error(lang.common.message.error.create);
+      }
       messageApi.success(lang.common.message.success.create);
       navigate(SUBCATEGORY, { state: { id: response.data?.id } });
     },

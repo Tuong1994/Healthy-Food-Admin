@@ -170,7 +170,7 @@ const SubCategoriesTable: FC<SubCategoriesTableProps> = ({ locale, lang, canCrea
         total={subCategories?.data?.totalItems}
         right={() => (
           <Space>
-            <Button ghost color="blue" loading={exportLoading} onClick={handleExport}>
+            <Button ghost color="blue" loading={exportLoading} disabled={exportLoading} onClick={handleExport}>
               {lang.common.actions.export}
             </Button>
             {canCreate && (

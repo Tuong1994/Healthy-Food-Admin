@@ -20,16 +20,16 @@ export const getProduct = async (query: ApiQuery) => {
 };
 
 export const createProduct = async (data: FormData) => {
-  const response = await Fetch.Post<FormData, Product>(productApiPaths.create, data);
+  const response = await Fetch.Post<FormData, Product>(productApiPaths.create, data, 'createProduct');
   return response;
 };
 
 export const updateProduct = async (query: ApiQuery, data: FormData) => {
-  const response = await Fetch.Put<FormData, any>(productApiPaths.update + getApiQuery(query), data);
+  const response = await Fetch.Put<FormData, any>(productApiPaths.update + getApiQuery(query), data, 'updateProduct');
   return response;
 };
 
 export const removeProducts = async (query: ApiQuery) => {
-  const response = await Fetch.Delete<any>(productApiPaths.remove + getApiQuery(query));
+  const response = await Fetch.Delete<any>(productApiPaths.remove + getApiQuery(query), 'removeProducts');
   return response;
 };

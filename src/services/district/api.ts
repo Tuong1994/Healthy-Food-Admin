@@ -20,16 +20,16 @@ export const getDistrict = async (query: ApiQuery) => {
 };
 
 export const createDistrict = async (data: DistrictFormData) => {
-  const response = await Fetch.Post<DistrictFormData, District>(districtApiPaths.create, data);
+  const response = await Fetch.Post<DistrictFormData, District>(districtApiPaths.create, data, "createDistrict");
   return response;
 };
 
 export const updateDistrict = async (query: ApiQuery, data: DistrictFormData) => {
-  const response = await Fetch.Put<DistrictFormData, any>(districtApiPaths.update + getApiQuery(query), data);
+  const response = await Fetch.Put<DistrictFormData, any>(districtApiPaths.update + getApiQuery(query), data, "updateDistrict");
   return response;
 };
 
 export const removeDistricts = async (query: ApiQuery) => {
-  const response = await Fetch.Delete<any>(districtApiPaths.remove + getApiQuery(query));
+  const response = await Fetch.Delete<any>(districtApiPaths.remove + getApiQuery(query), "removeDistricts");
   return response;
 };

@@ -10,6 +10,6 @@ export const getUserPermission = async (query: ApiQuery) => {
 };
 
 export const settingPermission = async (data: UserPermissionRequest) => {
-  const response = await Fetch.Put<UserPermissionRequest, any>(settingApiPaths.settingPermission, data);
+  const response = await Fetch.Put<UserPermissionRequest, any>(settingApiPaths.settingPermission, data, 'settingPermission');
   return response;
 };

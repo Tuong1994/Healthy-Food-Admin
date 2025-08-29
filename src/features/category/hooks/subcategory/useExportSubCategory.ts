@@ -3,8 +3,9 @@ import { subCategoryExport } from "@/services/export/api";
 import { useLang } from "@/hooks";
 import { useMutation } from "react-query";
 import type { ApiQuery } from "@/services/type";
-import useMessage from "@/components/UI/ToastMessage/useMessage";
 import FileSaver from "file-saver";
+import useMessage from "@/components/UI/ToastMessage/useMessage";
+import helper from "@/helper";
 
 const useExportSubCategory = () => {
   const messageApi = useMessage();
@@ -18,7 +19,10 @@ const useExportSubCategory = () => {
 
   const mutation = useMutation(onExportSubCategory, {
     onSuccess: (response) => {
-      if (!response.success) return messageApi.error(lang.common.message.error.export);
+      if (!response.success) {
+        if (helper.isAbort(response)) return;
+        return messageApi.error(lang.common.message.error.export);
+      }
       const blob = new Blob([response.data], { type: BLOB_DOCUMENT_TYPE });
       FileSaver.saveAs(blob, "subcategories.xlsx");
     },

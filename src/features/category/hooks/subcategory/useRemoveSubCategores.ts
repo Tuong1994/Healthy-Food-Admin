@@ -3,6 +3,7 @@ import { useMutation } from "react-query";
 import { removeSubCategories } from "@/services/subcategory/api";
 import type { ApiQuery } from "@/services/type";
 import useMessage from "@/components/UI/ToastMessage/useMessage";
+import helper from "@/helper";
 
 const useRemoveSubCategories = () => {
   const messageApi = useMessage();
@@ -16,7 +17,10 @@ const useRemoveSubCategories = () => {
 
   const mutation = useMutation(onRemoveSubCategories, {
     onSuccess: (response) => {
-      if (!response.success) return messageApi.error(lang.common.message.error.remove);
+      if (!response.success) {
+        if (helper.isAbort(response)) return;
+        return messageApi.error(lang.common.message.error.remove);
+      }
       messageApi.success(lang.common.message.success.remove);
     },
     onError: () => messageApi.error(lang.common.message.error.remove),

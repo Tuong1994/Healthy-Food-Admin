@@ -20,16 +20,16 @@ export const getCategory = async (query: ApiQuery) => {
 };
 
 export const createCategory = async (data: FormData) => {
-  const response = await Fetch.Post<FormData, Category>(categoryApiPaths.create, data);
+  const response = await Fetch.Post<FormData, Category>(categoryApiPaths.create, data, "createCategory");
   return response;
 };
 
 export const updateCategory = async (query: ApiQuery, data: FormData) => {
-  const response = await Fetch.Put<FormData, any>(categoryApiPaths.update + getApiQuery(query), data);
+  const response = await Fetch.Put<FormData, any>(categoryApiPaths.update + getApiQuery(query), data, "updateCategory");
   return response;
 };
 
 export const removeCategories = async (query: ApiQuery) => {
-  const response = await Fetch.Delete<any>(categoryApiPaths.remove + getApiQuery(query));
+  const response = await Fetch.Delete<any>(categoryApiPaths.remove + getApiQuery(query), "removeCategories");
   return response;
 };

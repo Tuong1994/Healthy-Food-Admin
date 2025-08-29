@@ -3,6 +3,7 @@ import { removeUsers } from "@/services/user/api";
 import { useMutation } from "react-query";
 import type { ApiQuery } from "@/services/type";
 import useMessage from "@/components/UI/ToastMessage/useMessage";
+import helper from "@/helper";
 
 const useRemoveUsers = () => {
   const messageApi = useMessage();
@@ -16,7 +17,10 @@ const useRemoveUsers = () => {
 
   const mutation = useMutation(onRemoveUsers, {
     onSuccess: (response) => {
-      if (!response.success) return messageApi.error(lang.common.message.error.remove);
+      if (!response.success) {
+        if (helper.isAbort(response)) return;
+        return messageApi.error(lang.common.message.error.remove);
+      }
       messageApi.success(lang.common.message.success.remove);
     },
     onError: () => messageApi.error(lang.common.message.error.remove),
