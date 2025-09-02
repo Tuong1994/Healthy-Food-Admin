@@ -15,7 +15,6 @@ import authApiPaths from "./path";
 
 export const signIn = async (query: ApiQuery, data: AuthSignIn) => {
   const response = await Fetch.Post<AuthSignIn, Auth>(authApiPaths.signIn + getApiQuery(query), data, 'signIn');
-  if (response.success) localStorage.setItem(localStorageKey.AUTH, JSON.stringify(response.data));
   return response;
 };
 
@@ -26,19 +25,11 @@ export const signUp = async (data: AuthSignUp) => {
 
 export const authenticate = async () => {
   const response = await Fetch.Get<Auth>(authApiPaths.authenticate);
-  if (response.success) localStorage.setItem(localStorageKey.AUTH, JSON.stringify(response.data));
   return response;
 };
 
-export const refresh = async (query: ApiQuery) => {
-  const response = await Fetch.Post<any, any>(authApiPaths.refresh + getApiQuery(query), null);
-  if (response.success) {
-    if (localStorage.getItem(localStorageKey.AUTH)) {
-      const oldAuth = JSON.parse(localStorage.getItem(localStorageKey.AUTH) ?? "") as Auth;
-      const newAuth = { ...oldAuth, ...response.data };
-      localStorage.setItem(localStorageKey.AUTH, JSON.stringify(newAuth));
-    }
-  }
+export const refresh = async () => {
+  const response = await Fetch.Post<any, any>(authApiPaths.refresh, null);
   return response;
 };
 

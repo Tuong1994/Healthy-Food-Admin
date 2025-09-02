@@ -90,7 +90,7 @@ const CustomersTable: FC<CustomersTableProps> = ({ canCreate, canRemove }) => {
       id: "phone",
       title: lang.common.table.head.phone,
       dataIndex: "phone",
-      render: (phone: string) => <>{utils.formatPhoneNumber(phone)}</>,
+      render: (phone: string) => <>{phone ? utils.formatPhoneNumber(phone) : "--"}</>,
     },
     {
       id: "gender",
@@ -102,7 +102,7 @@ const CustomersTable: FC<CustomersTableProps> = ({ canCreate, canRemove }) => {
       id: "birthday",
       title: lang.common.table.head.birthday,
       dataIndex: "birthday",
-      render: (date: Date) => <>{moment(date).format("DD/MM/YYYY")}</>,
+      render: (date: Date) => <>{date ? moment(date).format("DD/MM/YYYY") : "--"}</>,
     },
     {
       id: "address",

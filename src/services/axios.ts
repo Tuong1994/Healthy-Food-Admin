@@ -1,12 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { Auth } from "./auth/type";
-import { getApiQuery } from "./helper";
 import authApiPaths from "./auth/path";
 import localStorageKey from "@/common/constant/storage";
-
-// const BASE_URL = "http://localhost:5000/";
-
-// const BASE_URL = "https://healthy-food-api-g4t7.onrender.com/";
 
 const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/";
 
@@ -15,6 +10,7 @@ export const HttpStatus = {
   UNAUTHORIZED: 401,
   FORBIDDEN: 403,
   NOT_FOUND: 404,
+  GATEWAY_TIME_OUT: 504,
   INTERNAL_SERVER: 500,
 };
 
@@ -23,43 +19,27 @@ const Axios = axios.create({
   withCredentials: true,
 });
 
-Axios.interceptors.request.use(
-  (config) => {
-    if (typeof window === "undefined") return config;
-    if (localStorage.getItem(localStorageKey.AUTH)) {
-      const auth = JSON.parse(localStorage.getItem(localStorageKey.AUTH) ?? "") as Auth;
-      if (!auth) return config;
-      config.headers["Authorization"] = `Bearer ${auth.accessToken}`;
-    }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
-
 Axios.interceptors.response.use(
   (response) => response,
   async (error) => {
     if (typeof window === "undefined") return Promise.reject(error);
+    if (error?.code === HttpStatus.GATEWAY_TIME_OUT) return Promise.reject(error);
     const config = error?.config;
     const response = error?.response;
     if (localStorage.getItem(localStorageKey.AUTH)) {
-      const auth = JSON.parse(localStorage.getItem(localStorageKey.AUTH) ?? "") as Auth;
+      const raw = localStorage.getItem(localStorageKey.AUTH);
+      if (!raw) return Promise.reject(error);
+      const auth = JSON.parse(raw) as Auth;
       if (!auth) return Promise.reject(error);
+      if (!auth.isAuth) return Promise.reject(error);
       if (
-        response?.status === HttpStatus.UNAUTHORIZED ||
-        response?.status === HttpStatus.FORBIDDEN ||
+        (response?.status === HttpStatus.UNAUTHORIZED || response?.status === HttpStatus.FORBIDDEN) &&
         !config?._retry
       ) {
         config._retry = true;
         try {
-          const response = await axios.post(
-            BASE_URL + authApiPaths.refresh + getApiQuery({ userId: auth.info.id })
-          );
-          const data = response.data as Auth;
-          const newAuth: Auth = { ...auth, accessToken: data.accessToken, expired: data.expired };
-          localStorage.setItem(localStorageKey.AUTH, JSON.stringify(newAuth));
-          config.headers["Authorization"] = `Bearer ${data.accessToken}`;
-          return axios(config) as Promise<AxiosResponse>;
+          await Axios.post(BASE_URL + authApiPaths.refresh);
+          return Axios(config) as Promise<AxiosResponse>;
         } catch (error) {
           return Promise.reject(error);
         }

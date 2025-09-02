@@ -1,6 +1,7 @@
 import localStorageKey from "@/common/constant/storage";
 import { Auth, AuthInfo } from "@/services/auth/type";
 import { create, StateCreator } from "zustand";
+import { persist } from "zustand/middleware";
 
 interface AuthState {
   auth: Auth;
@@ -8,7 +9,7 @@ interface AuthState {
   resetAuth: () => void;
 }
 
-const defaultAuth = { accessToken: "", expired: 0, info: {} as AuthInfo, isAuth: false };
+const defaultAuth: Auth = { expired: 0, info: {} as AuthInfo, isAuth: false };
 
 const storage = () => {
   let authStorage: Auth = defaultAuth;
@@ -21,10 +22,14 @@ const storage = () => {
 
 const store: StateCreator<AuthState> = (set) => ({
   auth: storage(),
-  setAuth: (auth) => set((state) => ({ ...state, auth })),
+  setAuth: (authPayload) => set((state) => ({ ...state, auth: { ...state.auth, ...authPayload } })),
   resetAuth: () => set((state) => ({ ...state, auth: defaultAuth })),
 });
 
-const useAuthStore = create(store);
+const useAuthStore = create(
+  persist(store, {
+    name: localStorageKey.AUTH,
+  })
+);
 
 export default useAuthStore;

@@ -12,6 +12,9 @@ const getDisplayGender = (lang: Lang, gender: EGender) => {
     [EGender.MALE]: "blue",
     [EGender.FEMALE]: "pink",
   };
+
+  if (!gender) return <>--</>;
+  
   return (
     <Badge ghost shape="square" color={color[gender]}>
       {genders[gender]}

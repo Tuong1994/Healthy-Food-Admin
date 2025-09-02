@@ -16,6 +16,9 @@ const getDisplayRole = (lang: Lang, role: ERole) => {
     [ERole.STAFF]: "purple",
     [ERole.CUSTOMER]: "green",
   };
+
+  if (!role) return <>--</>;
+
   return (
     <Badge shape="square" color={color[role]}>
       {roles[role]}
